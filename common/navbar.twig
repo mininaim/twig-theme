@@ -1,0 +1,407 @@
+{% if not 
+('hide_store_logo' in navbar_settings.navbar_options) or not   
+('hide_store_title' in navbar_settings.navbar_options) or not   
+('hide_search_bar' in navbar_settings.navbar_options) or not   
+('hide_account' in navbar_settings.navbar_options) or not   
+('hide_language_shipping' in navbar_settings.navbar_options) or not    
+('hide_cart' in navbar_settings.navbar_options)
+%}
+<nav class="navbar navbar-expand-lg py-2 px-1 px-sm-0 border-bottom border-secondary border-opacity-10 z-2 bg-light-subtle navbar-sticky" role="navigation" aria-label="{{locals.accessibility.navigation.main}}" id="navbar">
+		<div class="container gap-3 gap-lg-0 position-relative">
+			{# {% if not ('hide_store_logo' in navbar_settings.navbar_options) %}
+				{% set logoUrl = navbar_settings.navbar_logo %}
+			{% else %}
+				{% set logoUrl = store.logo %}
+			{% endif %} #}
+			{# {% if not ('hide_store_logo' in navbar_settings.navbar_options) and ('hide_store_title' in navbar_settings.navbar_options) %} #}
+				<a class="navbar-brand ps-0 order-0 order-lg-0 me-auto align-items-center d-inline-flex" style="height: 50px !important; width: auto !important;" href="/" title="{{ store.name }}">
+					{% if not ('hide_store_logo' in navbar_settings.navbar_options) %}
+						
+						{% set logoUrl = navbar_settings.logos_logo ?? store.logo %}
+						<img src="{{ imageUrl(logoUrl, { w: 200, q: 100 }) }}" alt="{{ store.name }}" class="w-auto css-logo css-mode-toggle{% if navbar_settings.logos_logo_mobile %} d-none d-lg-flex{% endif %}">
+
+						{% if navbar_settings.logos_logo_mobile %}
+							{% set logoUrlMobile = navbar_settings.logos_logo_mobile %}
+							<img src="{{ imageUrl(logoUrlMobile, { h: 200, q: 100 }) }}" alt="{{ store.name }}" class="w-auto css-logo css-mode-toggle d-flex d-lg-none">
+						{% endif %}
+					
+					{% endif %}
+					{% if not ('hide_store_title' in navbar_settings.navbar_options) %}
+						{# <span class="px-1 text-truncate" style="max-width: 160px;">{{ store.name }}</span> #}
+						<span class="px-1">{{ store.name }}</span>
+					{% endif %}
+				</a>
+			{# {% endif %} #}
+			<a class="d-lg-none nav-link link-secondary position-relative order-1 d-print-none" title="{{ locals.navbar_menu_title }}" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" href="#offcanvasMenu">
+				<i class="ti ti-menu-2 fs-3 align-middle" aria-hidden="true"></i>
+				<span class="visually-hidden">{{ locals.navbar_menu_title }}</span>
+			</a>
+			
+				 {% if not ('hide_search_bar' in navbar_settings.navbar_options) %}
+				 <button type="button" class="btn btn-link d-lg-none nav-link link-secondary position-relative order-2 d-print-none" title="{{ locals.navbar.search}}" id="js-search-mobile">
+						<i class="ti ti-search fs-3 align-middle" aria-hidden="true"></i>
+						<span class="visually-hidden">{{ locals.navbar.search}}</span>
+					
+					</button>
+
+					<div class="position-fixed top-0 start-50 w-100 bg-light-subtle py-0 z-3 translate-middle-x bg-body js-search-mobile-container" style="display: none;">
+						{% include 'navbar-search-mobile.twig' with { 'search_placeholder' : navbar_settings.navbar_search_placeholder } %}
+					</div>
+				{% endif %}
+
+				{% if not ('hide_cart' in navbar_settings.navbar_options) %}
+					<a class="me-1 d-lg-none nav-link link-secondary position-relative order-3 d-print-none" title="{{ locals.navbar.cart}}" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart" href="#offcanvasCart">
+						<i class="ti ti-shopping-bag fs-3 align-middle" aria-hidden="true"></i>
+						<span class="visually-hidden">{{ locals.navbar.cart}}</span>
+						<span class="position-absolute top-0 start-100 translate-middle badge text-bg-primary rounded-pill d-none js-cart-badge"></span>
+					</a>
+
+					
+				{% endif %}
+
+				
+
+					{# {% if not ('hide_search_bar' in navbar_settings.navbar_options) %}
+						{% include 'navbar-search.twig' with { 'search_placeholder' : navbar_settings.navbar_search_placeholder } %}
+					{% else %}
+						<div class="mx-auto"></div>
+					{% endif %} #}
+
+				<div class="collapse navbar-collapse{% if not ('hide_account' in navbar_settings.navbar_options) or not ('hide_language_shipping' in navbar_settings.navbar_options) or not ('hide_cart' in navbar_settings.navbar_options) %}{% else %} flex-row-reverse{% endif %}" id="navbarSupportedContent">
+					{% if not ('hide_search_bar' in navbar_settings.navbar_options) %}
+						{% include 'navbar-search.twig' with { 'search_placeholder' : navbar_settings.navbar_search_placeholder } %}
+					{% else %}
+						<div class="mx-auto"></div>
+					{% endif %}
+
+					{% if not 
+					('hide_account' in navbar_settings.navbar_options) or not     
+					('hide_dark_mode' in navbar_settings.navbar_options) or not    
+					('hide_language_shipping' in navbar_settings.navbar_options) or not    
+					('hide_cart' in navbar_settings.navbar_options)
+					%}
+					<ul class="navbar-nav mb-2 mb-lg-0 me-0">
+						{% if not ('hide_account' in navbar_settings.navbar_options) %}
+							<li class="nav-item mx-1 dropdown js-profile-account">
+								{% if customer %}
+									<a class="nav-link link-secondary" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+										<i class="ti ti-user fs-4 !align-middle" data-bs-placement="bottom" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{locals.navbar.profile}}</small>" data-bs-offset="0,5"></i>
+										<span class="visually-hidden">{{locals.navbar.profile}}</span>
+									</a>
+								{% else %}
+									<a class="nav-link link-secondary" href="/auth/login">
+										<i class="ti ti-user-circle fs-4 !align-middle" data-bs-placement="bottom" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.mobile.menu.title.login }}</small>" data-bs-offset="0,5"></i>
+										<span class="visually-hidden">{{ locals.mobile.menu.title.login }}</span>
+									</a>
+	
+								{% endif %}
+								<ul class="dropdown-menu dropdown-menu-lg-end dropdown-menu-minimal shadow-lg border-0 rounded rounded-3 animated slideIn">
+									{% if customer %}
+									<li>
+										<h6 class="dropdown-header py-0 text-body fw-light">
+											<span class="js-user-greeting lh-base"></span>
+										</h6>
+									</li>
+									<li><hr class="dropdown-divider border-secondary border-opacity-10"></li>
+									{% endif %}
+									
+									<li>
+										{% if customer %}
+											<div class="mb-0 dropdown-header d-flex flex-wrap justify-content-between align-items-center">
+												<div class="vstack gap-0 text-secondary">
+													<strong class="text-capitalize d-flex hstack align-items-center gap-2">
+													  {# <span class="d-inline-flex rounded-pill js-user-avatar" style="width: 20px;height: 20px;" data-email="{{ customer.email }}"></span> #}
+													  {{ customer.name }}
+													</strong>
+													<span class="text-wrap" style="word-break:break-word!important">{{ customer.email }}</span>
+												</div>
+											</div>
+										{% else %}
+											<div class="mb-0 dropdown-header">
+												<div class="vstack" hidden>
+													<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-store" width="40" height="40" viewbox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+														<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+														<line x1="3" y1="21" x2="21" y2="21"></line>
+														<path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4"></path>
+														<line x1="5" y1="21" x2="5" y2="10.85"></line>
+														<line x1="19" y1="21" x2="19" y2="10.85"></line>
+														<path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4"></path>
+													</svg>
+													<h6 class="mb-0">
+														{{ locals.mobile.menu.greeting_user }}
+													</h6>
+												</div>
+												<div class="vstack gap-2">
+													<a href="/auth/login" class="btn btn-sm btn-primary flex-fill">
+													<i class="ti ti-user align-middle" aria-hidden="true"></i>
+														<span class="px-1">{{ locals.mobile.menu.title.login }}</span>
+													</a>
+													<a href="/auth/register" class="btn btn-sm btn-link text-center">
+
+													<i class="ti ti-fingerprint align-middle" aria-hidden="true"></i>
+														<span class="px-0">{{ locals.mobile.menu.title.register }}</span>
+													</a>
+												</div>
+											</div>
+										{% endif %}
+									</li>
+									{% if customer %}
+										<li>
+											<hr class="dropdown-divider border-secondary border-opacity-10">
+										</li>
+										<li>
+											<a class="dropdown-item py-2 !rounded{% if '/account-profile' == requestUri()  %} text-primary bg-light-subtle{% endif %}" href="/account-profile">
+												<i class="ti ti-id fs-5 align-middle" aria-hidden="true"></i>
+												<span class="px-1">{{ locals.navbar.account.personal }}</span>
+											</a>
+										</li>
+										<li>
+											<a class="dropdown-item py-2 {% if '/account-addresses' == requestUri()  %} text-primary bg-light-subtle{% endif %}" href="/account-addresses">
+												<i class="ti ti-live-view fs-5 align-middle" aria-hidden="true"></i>
+												<span class="px-1">{{ locals.profile.addresses }}</span>
+											</a>
+										</li>
+										<li>
+											<a class="dropdown-item py-2 !rounded{% if '/account-orders' == requestUri()  %} text-primary bg-light-subtle{% endif %}" href="/account-orders">
+												<i class="ti ti-basket fs-5 align-middle" aria-hidden="true"></i>
+												<span class="px-1">{{ locals.navbar.account.orders }}</span>
+											</a>
+										</li>
+										<li><hr class="dropdown-divider border-secondary border-opacity-10"></li>
+										<li>
+											<form action="/auth/logout" method="POST">
+												<input type="hidden" name="_token" value="{{ csrf_token }}">
+												<input type="hidden" name="redirect_to" value="{{ requestUri() }}">
+												<input type="hidden" name="form_type" value="customer_logout">
+												<button type="submit" class="dropdown-item py-2">
+													<i class="ti ti-log{% if session.lang.code == 'ar' %}out{% else %}in{% endif %} fs-5 align-middle" aria-hidden="true"></i>
+													<span class="px-1">{{ locals.navbar.account.logout }}</span>
+												</button>
+											</form>
+										</li>
+									{% endif %}
+								</ul>
+							</li>
+						{% endif %}
+
+						
+						{# {% if not ('hide_recently_visited' in navbar_settings.navbar_options) %} #}
+						{% if false  %} 
+						<li class="nav-item mx-1 dropdown js-history">
+							<a class="nav-link link-secondary js-history-activity" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<span class="ti ti-history fs-4 !align-middle position-relative" data-bs-placement="bottom" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.navbar.visited_pages}}</small>" data-bs-offset="0,5"></span>
+								<span class="visually-hidden">
+									{{ locals.navbar.visited_pages}}
+								</span>
+							</a>
+							<ul class="dropdown-menu dropdown-menu-lg-end !dropdown-menu-minimal shadow-lg border-0 rounded rounded-3 !p-3 animated slideIn" id="visited-pages"></ul>
+						</li>
+						{% endif %}
+
+						{# {% if not ('hide_dark_mode' in navbar_settings.navbar_options) %} #}
+						{% if false %}
+						<li class="nav-item mx-1 dropdown animate__animated animate__zoomIn d-flex justify-content-center" style="width:2.5rem">
+							<button class="btn btn-link link-secondary text-decoration-none px-2 rounded-0 py-0" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static">
+								{# <i class="ti ti-dot fs-4 align-middle theme-icon-active" aria-hidden="true" data-bs-placement="bottom" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{locals.navbar.mode.toggle}}</small>" data-bs-offset="0,5"></i> #}
+								<span class="visually-hidden">{{locals.navbar.mode.toggle}}</span>
+								<span class="theme-icon-active d-inline-block fs-4" data-bs-placement="bottom" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{locals.navbar.mode.toggle}}</small>" data-bs-offset="-2,0"></span>
+							</button>
+							<ul class="dropdown-menu dropdown-menu-lg-end shadow-lg border-0 rounded rounded-3 !p-3 animated slideIn" aria-labelledby="bd-theme" style="--bs-dropdown-min-width: 2rem;">
+								<li>
+									<button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" data-theme-icon="ti-sun">
+										<i class="ti ti-sun-high theme-icon" aria-hidden="true"></i>
+										<span class="px-1">{{locals.navbar.mode.light}}</span>
+									</button>
+								</li>
+								<li>
+									<button type="button" class="dropdown-item d-flex align-items-center active" data-bs-theme-value="dark" data-theme-icon="ti-moon">
+										<i class="ti ti-moon theme-icon" aria-hidden="true"></i>
+										<span class="px-1">{{locals.navbar.mode.dark}}</span>
+									</button>
+								</li>
+								<li>
+									<button type="button" class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" data-theme-icon="ti-brightness-off">
+										<i class="ti ti-devices theme-icon" aria-hidden="true"></i>
+										<span class="px-1">{{locals.navbar.mode.auto}}</span>
+									</button>
+								</li>
+							</ul>
+						</li>
+						{% endif %}
+						{% if not ('hide_language_shipping' in navbar_settings.navbar_options) %}
+							<li class="nav-item mx-1">
+								<a class="nav-link link-secondary position-relative js-language-shipping" title="{{ locals.navbar.language_shipping}}" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCountries" aria-controls="offcanvasCountries" href="#">
+									<i class="ti ti-world fs-4 !align-middle" data-bs-placement="bottom" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.navbar.language_shipping}}</small>" data-bs-offset="0,5"></i>
+									<span class="visually-hidden">{{ locals.navbar.language_shipping}}</span>
+								</a>
+							</li>
+						{% endif %}
+						{% if not ('hide_cart' in navbar_settings.navbar_options) %}
+							<li class="nav-item mx-1 position-relative">
+								<a class="nav-link link-secondary position-relative" title="{{ locals.navbar.cart}}" data-bs-toggle="offcanvas" data-bs-target="#offcanvasCart" aria-controls="offcanvasCart" href="#offcanvasCart">
+									<span class="ti ti-refresh fs-4 !align-middle d-inline-block animate__animated animate__rotateIn animate__infinite js-cart-status" data-bs-placement="bottom" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.navbar.cart}}</small>" data-bs-offset="0,5"></span>
+									<span class="visually-hidden">{{ locals.navbar.cart}}</span>
+									<span class="position-absolute top-0 start-100 translate-middle-x badge bg-primary rounded-pill d-none js-cart-badge"></span> 
+
+
+
+								</a>
+								
+							</li>
+
+
+						{% endif %}
+					</ul>
+					{% else %}
+					<div class="flex-fill"></div>
+					{% endif %}
+				</div>
+
+
+										{# cart.products_count > 0 and store.gift_order_settings.is_gift_order_enabled == 1 and 	
+																		 #}
+									{% if store.gift_order_settings.is_gift_order_customer_motivation_enabled == '1' %}
+										{# <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+										
+												<lottie-player src="https://assets7.lottiefiles.com/packages/lf20_3zbuyrkf.json" background="transparent" speed="0.5" loop autoplay class="w-50"></lottie-player> 
+
+										<sup id="js-gift-card-popover" class="position-absolute top-100 end-50 translate-middle" data-bs-placement="bottom" data-bs-html="true" data-bs-toggle="popover" data-bs-title="<span class='text-secondary-emphasis'>{% if gift_card_details_length > 0 %}{{ locals.cart_send_as_gift_saved }}{% else %}{{ locals.cart_send_as_gift }}{% endif %}</span>" data-bs-content='
+										
+								
+										<br>
+										<a href="/cart/view" class="btn btn-primary d-flex justify-content-between align-items-center">
+											{{ locals.offcanvasCart.footer.checkout }}
+											<span class="fw-bold">
+												<i class="ti ti-arrow-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %} fs-5 align-middle" aria-hidden="true"></i>
+											</span>
+										</a>
+
+										'>
+											<i class="ti ti-gift text-primary align-middle small" aria-hidden="true"></i>
+											<span class="visually-hidden">
+												{{ locals.gift.popover.title }}
+											</span>
+										</sup> #}
+
+										<div class="toast align-items-center shadow-lg border-secondary-subtle mt-5 ms-0 ms-lg-5 position-absolute end-0 top-0 !translate-middle-x z-3 border-0" style="width:200px" id="giftToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="false">
+												<div class="toast-header border-secondary-subtle">
+													<strong class="me-auto">{% if gift_card_details_length > 0 %}{{ locals.cart_send_as_gift_saved }}{% else %}{{ locals.cart_send_as_gift }}{% endif %}</strong>
+															<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="{{locals.accessibility.close.label}}"></button>
+												</div>
+												<div class="toast-body bg-light-subtle text-secondary-emphasis rounded-bottom text-center">
+
+													<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+																						
+																								<lottie-player src="https://assets8.lottiefiles.com/packages/lf20_LJ6eMa.json" background="transparent" speed="0.5" loop autoplay class="mx-auto" style="width: 120px;"></lottie-player> 
+
+
+
+															<p class="my-2 mb-3">
+															{{ locals.gift.popover.message }}
+															</p>
+																<a href="/cart/view" class="btn btn-sm btn-outline-primary">
+																							{{ locals.offcanvasCart.footer.checkout }}
+																							<span class="fw-bold">
+																								<i class="ti ti-arrow-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %} fs-5 align-middle" aria-hidden="true"></i>
+																							</span>
+																						</a>
+												</div>
+												</div>
+
+								
+									{% endif %}
+
+				
+			
+		</div>
+		
+</nav>
+
+
+{% endif %} 
+
+{# {% endif %} #}
+
+<!-- // ToDo: to use mustach.js -->
+{#
+<script id="localsData" type="application/json">
+	{
+		"en": {
+			"daytime": {
+				"start": "Happy start of",
+				"middle": "Enjoy your",
+				"end": "Great end of"
+			},
+			"day_sunday": "Sunday",
+			"day_monday": "Monday",
+			"day_tuesday": "Tuesday",
+			"day_wednesday": "Wednesday",
+			"day_thursday": "Thursday",
+			"day_friday": "Friday",
+			"day_saturday": "Saturday",
+			"day_other": "Day",
+			"greeting_morning": "Good morning",
+			"greeting_afternoon": "Good afternoon",
+			"greeting_evening": "Good evening"
+		},
+		"ar": {
+			"daytime": {
+				"start": "بداية",
+				"middle": "يوم",
+				"end": "نهاية"
+			},
+			"day_sunday": "أحد",
+			"day_monday": "اثنين",
+			"day_tuesday": "ثلاثاء",
+			"day_wednesday": "أربعاء",
+			"day_thursday": "خميس",
+			"day_friday": "جمعة",
+			"day_saturday": "سبت",
+			"day_other": "يوم",
+			"greeting_morning": "صباح الخير",
+			"greeting_afternoon": "مرحبا بك",
+			"greeting_evening": "مساء الخير"
+		}
+	}
+</script>
+<script defer src="{{ assetUrl('mustache.js') }}"></script>
+#}
+<script defer src="{{ asset_url ~ 'navbar-profile.js' }}"></script>
+
+<script defer>
+const generateAvatarColor = (selector) => {
+  const avatar = document.querySelector(selector);
+  if (!avatar) return;
+  const email = avatar.dataset.email;
+  const enc = new TextEncoder();
+  const data = enc.encode(email);
+  crypto.subtle.digest("SHA-256", data).then(function (hash) {
+    const emailHash = Array.prototype.map.call(new Uint8Array(hash), x => (x < 16 ? "0" + x.toString(16) : x.toString(16))).join("");
+    const color = `#${emailHash.slice(0, 6)}`;
+    avatar.style.backgroundColor = color;
+  });
+}
+generateAvatarColor('.js-user-avatar');
+
+</script>
+
+{# <script>
+window.onload = function () {
+  const toastEl = document.querySelector('#giftToast');
+
+  if (toastEl) {
+    const toast = new bootstrap.Toast(toastEl);
+
+    toastEl.addEventListener('hidden.bs.toast', function (event) {
+      event.preventDefault();
+    });
+
+    setTimeout(() => {
+      toast.show();
+    }, 3000);
+  } else {
+    console.log("Element with id 'giftToast' not found");
+  }
+};
+</script> #}
+

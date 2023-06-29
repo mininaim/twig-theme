@@ -1,0 +1,43 @@
+{% extends "layout.twig" %}
+
+{% block main_content %}
+
+ <section class="position-relative">
+        <div class="container d-flex flex-column">
+            <div class="row vh-100 justify-content-center align-items-center">
+                <div class="col-sm-10 mx-auto p-sm-5 rounded">
+                    <div class="row justify-content-center align-items-center text-center text-sm-start">
+                        <div class="col-sm-6 col-lg-8 order-1 order-0 order-sm-0 mt-0 mt-sm-0">
+                            <div class="mb-0 mb-sm-0 text-secondary">
+                                <h1 class="display-1 mb-0 mb-sm-0 animated slideIn hinge">
+                                    {{ locals.search_page_heading}}
+                                </h1>
+                                <h4 class="animate__animated animated slideIn hinge">
+                                    {{ locals.search_page_title }}
+                                </h4>
+                                <p class="mb-4 animate__animated animated slideIn hinge">
+                                    {{ locals.search_page_description }}
+                                </p>
+                                <div class="hstack animate__animated animate__delay-2s animate__fadeInUp">
+                                    <a href="{{ store.permalink }}" class="btn btn-primary btn-lg d-block mx-auto ms-sm-0">
+                                        <i class="ti ti-building-store align-middle fs-5" aria-hidden="true"></i>
+                                        <span class="px-1">
+                                            {{ locals.search_page_back_to_home }}
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-none d-sm-block mt-5 mt-sm-0 col-sm-6 col-lg-4 order-1 order-sm-1">
+                            {# A static SVG file is supported too, hide the inline code and show the 404.svg #}
+                            {# <img src="{{ asset_url ~ '404.svg'}}" alt="" class="img-fluid">  #}
+                            <div class="svg-animated col-sm-4 col-lg-auto me-sm-auto me-lg-0" data-tilt data-tilt-scale="1.1">
+                                <svg class="text-primary text-opacity-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 626 816" preserveAspectRatio="xMidYMid meet" width="360"><defs><clipPath id="__lottie_element_1465"><rect width="626" height="816" x="0" y="0" class="svg-elem-1"></rect></clipPath></defs><g clip-path="url(#__lottie_element_1465)"><g transform="matrix(1,0,0,1,307.98907470703125,409.91510009765625)" opacity="1" style="display: block;"><g opacity="1" transform="matrix(1,0,0,1,0,0)"><path stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" stroke="currentColor" stroke-opacity="1" stroke-width="40" d=" M222.53900146484375,-196.98699951171875 C222.53900146484375,-196.98699951171875 -220.53900146484375,-196.98699951171875 -220.53900146484375,-196.98699951171875 C-220.53900146484375,-196.98699951171875 -258.53900146484375,252.98699951171875 -258.53900146484375,252.98699951171875 C-258.53900146484375,296.98699951171875 -222.53900146484375,332.98699951171875 -178.53900146484375,332.98699951171875 C-178.53900146484375,332.98699951171875 178.53900146484375,332.98699951171875 178.53900146484375,332.98699951171875 C222.53900146484375,332.98699951171875 258.53900146484375,296.98699951171875 258.53900146484375,252.98699951171875 C258.53900146484375,252.98699951171875 222.53900146484375,-196.98699951171875 222.53900146484375,-196.98699951171875z" class="svg-elem-2"></path></g></g><g transform="matrix(1,0,0,1,307.98907470703125,409.91510009765625)" opacity="1" style="display: block;"><g opacity="1" transform="matrix(1,0,0,1,0,0)"><path stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" stroke="currentColor" stroke-opacity="1" stroke-width="40" d=" M-120.6500015258789,-115.69100189208984 C-120.8740005493164,-118.76499938964844 -120.98899841308594,-197.86900329589844 -120.98899841308594,-201 C-120.98899841308594,-270.5820007324219 -64.58200073242188,-326.989013671875 5,-326.989013671875 C74.58200073242188,-326.989013671875 130.98899841308594,-270.5820007324219 130.98899841308594,-201 C130.98899841308594,-197.86099243164062 130.87399291992188,-118.7490005493164 130.6479949951172,-115.66699981689453" class="svg-elem-3"></path></g></g><g transform="matrix(0.7071067690849304,0.7071067690849304,-0.7071067690849304,0.7071067690849304,352.53680419921875,428.36737060546875)" opacity="1" style="display: block;"><g opacity="1" transform="matrix(1,0,0,1,0,0)"><path stroke-linecap="round" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="10" stroke="currentColor" stroke-opacity="1" stroke-width="40" d=" M-105,63 C-105,63 105,63 105,63" class="svg-elem-4"></path></g><g opacity="1" transform="matrix(1,0,0,1,0,0)"><path stroke-linecap="round" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="10" stroke="currentColor" stroke-opacity="1" stroke-width="40" d=" M0,-42 C0,-42 0,168 0,168" class="svg-elem-5"></path></g></g></g></svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</section>
+
+{% endblock %} 

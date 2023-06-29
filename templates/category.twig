@@ -1,0 +1,212 @@
+{% extends "layout.twig" %}
+
+{% block header %}
+	{% include 'header.twig' %}
+{% endblock %}
+
+{# 
+{% block css_files_inner %}
+  <link rel="stylesheet" href="{{ assetUrl('nouislider.min.css') }}">
+  <link rel="stylesheet" href="{{ assetUrl('nouislider.css') }}">
+{% endblock %} 
+#}
+
+{# 
+  {% if category.cover_image %} 
+  class="bg-overlay" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{{ category.cover_image }}'); background-size: cover; background-position: center; background-repeat: no-repeat;"
+  {% endif %}> #}
+
+{% block main_content %}
+  <section class="bg-primary text-center py-5">
+    <div class="container">
+      <div class="row">
+         <div class="col-sm-6 mx-auto">
+            <h1 class="h2 text-white">{{ category.name }}</h1>
+            
+            {% if category.description %}
+              <p class="text-white mb-0 small">{{ category.description }}</p>
+            {% endif %}
+
+        </div>
+      </div>
+    </div>
+  
+  </section>
+
+      {% if category.sub_categories | length > 0 %}
+<section class="py-3">
+	<div class="container">
+		<div class="d-flex justify-content-between align-items-center mb-2 mb-sm-3">
+			<div class="flex-grow-1">
+				<h2 class="h6 mb-0">
+					<i class="ti ti-tags mr-2" aria-hidden="true"></i>
+					{{ locals.sub_categories }}
+				</h2>
+			</div>
+
+        {% if category.sub_categories | length > 6 %}
+			<div class="position-relative mt-3 mt-sm-3 z-1">
+				<div class="swiper-button-next swiper-button-next-sm swiper-button-next-category link-secondary bg-light-subtle rounded-pill gradient-link"></div>
+				<div class="swiper-button-prev swiper-button-prev-sm swiper-button-prev-category link-secondary bg-light-subtle rounded-pill gradient-link"></div>
+   
+
+    
+			</div>
+      {% endif %}
+		</div>
+		<div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6 g-0">
+
+		<div class="swiper-container js-anime-widget animate__animated animate__fadeIn animate__delay-1s" data-swiper='{
+					"navigation": {
+						{% if session.lang.code == 'ar' %}
+							"nextEl": ".swiper-button-prev-category",
+							"prevEl": ".swiper-button-next-category"
+						{% else %}
+							"nextEl": ".swiper-button-next-category",
+							"prevEl": ".swiper-button-prev-category"
+						{% endif %}
+					},
+          "autoplay": {
+            "delay": 2000,
+            "disableOnInteraction": true
+          },
+          "effect": "slide"
+				    }'>
+			<div class="swiper-wrapper">
+					{% for subCategory in category.sub_categories %}
+						<div class="swiper-slide position-relative">
+
+							<a href="/categories/{{ subCategory.id }}/{{ subCategory.slug }}" class="text-decoration-none text-reset">
+								<div class="card border-secondary border-opacity-10 shadow-sm p-0 h-100 rounded-top shadow-sm">
+									<div class="card-header p-0 border-0">
+
+
+										<div class="overflow-hidden rounded-top zooming js-loaded-image">
+											{% if subCategory.image is not empty %}
+												<img src="{{ imageUrl(subCategory.image, { w: 260, q: 100, f:'auto' }) }}" alt="{{subCategory.name}}" class="card-img-top animate__animated animate__fadeIn">
+											{% else %}
+												<svg class="placeholder-img img-fluid mx-auto card-img-top rounded-0 text-primary" width="235" height="235" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="{{locals.category_placeholder_image}}" preserveaspectratio="xMidYMid slice" focusable="false">
+													<title>{{locals.category_placeholder_image}}</title>
+													<rect width="100%" height="100%" fill="currentColor"></rect>
+													<text x="50%" y="50%" fill="#fff" dy=".3em">
+														{{locals.category_placeholder_image}}
+													</text>
+												</svg>
+											{% endif %}
+										</div>
+									</div>
+									<h6 class="card-footer p-2 text-body mb-0 bg-transparent border-0 small">
+										{{ subCategory.name }}
+									</h6>
+								</div>
+							</a>
+
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</section>
+
+    {% endif %}
+
+
+  {% if products.data | length > 0  %}
+
+
+ 
+
+
+    <section class="!shadow-sm border-secondary border-top border-bottom border-opacity-10 py-2">
+      <div class="container">
+        {% include 'products-filters.twig' with { 'count' : products.total } %}
+      </div>
+    </section>
+    <section class="py-3 position-relative" role="products">
+      <div class="container">
+        <div id="noResults" class="row row-cols-1 g-4 mb-3 animated slideIn" style="display: none;">
+          <div class="col">
+            <div class="card border-secondary border-opacity-10 shadow-sm">
+              <div class="card-body">
+                <p class="card-title mb-0 text-muted">
+                  <i class="ti ti-basket-off align-middle" aria-hidden="true"></i>
+                  <span class="px-1">
+                    {{ locals.products_search_no_results_in_page }}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row row-cols-2 row-cols-sm-4 row-cols-lg-6 g-3 js-products-switch js-row-grid" id="productsFiltered">
+          {% for product in products.data %}
+            <div class="col animated slideIn">
+              {% include 'product-item.twig' with {'product' : product, 'index': key} %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    <section class="border-secondary border-top border-bottom border-opacity-10 py-2" role="pagination">
+      <div class="container">
+        <div class="hstack gap-3">
+          <div class="me-0 hstack gap-1 text-muted small d-none d-sm-block">
+            <span>{{ locals.page }}</span>
+            <span class="fw-bold">{{ products.current_page }}</span>
+            <span>{{ locals.of }}</span>
+            <span class="fw-bold">{{ products.last_page }}</span>
+            <span class="vr mx-2"></span>
+            <span>{{ locals.showing }}</span>
+            <span class="fw-bold">{{ products.data | length }}</span>
+            <span>{{ locals.items_from }}</span>
+            <span class="fw-bold">{{ products.total }}</span>
+            <span>
+              {% if products.total > 1 and products.total < 11 %}
+                {{ locals.items }}
+              {% else %}
+                {{ locals.item }}
+              {% endif %}
+            </span>
+          </div>
+          <div class="mx-auto me-sm-0 z-1">
+            {% include 'pagination.twig' with { 'totalPages': products.last_page, 'currentPage': products.current_page } %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {% include 'offcanvas-products-prices.twig' %}
+
+  {% else %}
+    <section class="py-3">
+      <div class="container">
+        <div class="row row-cols-1 g-4">
+          <div class="col">
+            <div class="card border-secondary border-opacity-10 shadow-sm">
+              <div class="card-body">
+                <p class="card-title mb-0 text-muted">
+                  <i class="ti ti-folder-off align-middle" aria-hidden="true"></i>
+                  <span class="px-1">
+                    {{ locals.category_no_products}}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+{% endblock %}
+
+{% block footer %}
+	{% include 'footer.twig' %}
+{% endblock %}
+
+{% block footer_scripts %}
+  <script defer src="{{ assetUrl('nouislider.min.js') }}"></script>
+  <script defer src="{{ assetUrl('wNumb.min.js') }}"></script>
+  <script defer src="{{ assetUrl('createSlider.js') }}"></script>
+  <script defer src="{{ assetUrl('filterByDataAttribute.js') }}"></script>
+  <script defer src="{{ assetUrl('resetFilters.js') }}"></script>
+{% endblock %}

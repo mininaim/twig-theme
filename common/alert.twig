@@ -1,0 +1,37 @@
+{% if ab_settings.announcement_bar_display %}
+	{% if (ab_settings.announcement_bar_page_display is empty)
+        or (template == 'home' and ab_settings.announcement_bar_page_display == 'home')
+        or ab_settings.announcement_bar_page_display == 'all'
+    %}
+		<div class="alert bg-primary alert-dismissible fade show rounded-0 border-0 mb-0 text-sm-center small px-3 py-2{% if ab_settings.announcement_bar_background_color %} has-background-color{% endif %}{% if ab_settings.announcement_bar_text_color %} has-text-color{% endif %}" role="alert">
+			<style>
+				{% if ab_settings.announcement_bar_background_color %}
+					.alert.has-background-color {
+						background-color: {{ab_settings.announcement_bar_background_color}}
+						!important;
+					}
+				{% endif %}
+				{% if ab_settings.announcement_bar_text_color %}
+					.alert.has-text-color {
+						color: {{ab_settings.announcement_bar_text_color}}
+						!important;
+					}
+				{% endif %}
+			</style>
+			<div class="hstack gap-2 gap-sm-3 !flex-wrap-reverse justify-content-center animate__animated animate__flipInX">
+				<div class="mb-0 mb-sm-0" {% if ab_settings.announcement_bar_text_color %} style="color: {{ ab_settings.announcement_bar_text_color }} !important" {% endif %}>
+					{% if ab_settings.announcement_bar_url %}
+						<a href="{{ ab_settings.announcement_bar_url }}" target="_self" class="text-light" {% if ab_settings.announcement_bar_text_color %} style="color: {{ ab_settings.announcement_bar_text_color }} !important" {% endif %}>
+							{{ ab_settings.announcement_bar_text }}
+						</a>
+					{% else %}
+						{{ ab_settings.announcement_bar_text }}
+					{% endif %}
+				</div>
+				<button type="button" class="btn btn-none btn-close-rotate text-light p-0 animate__animated animate__delay-1s animate__rotateIn" aria-pressed="false" data-bs-dismiss="alert" aria-label="{{ locals.accessibility.close.label }}" {% if ab_settings.announcement_bar_text_color %} style="color: {{ ab_settings.announcement_bar_text_color }} !important;" {% endif %}>
+					<i class="ti ti-x align-middle fs-5 grow"></i>
+				</button>
+			</div>
+		</div>
+	{% endif %}
+{% endif %}

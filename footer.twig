@@ -1,0 +1,622 @@
+<footer class="bg-secondary bg-opacity-10 shadow-sm animate__animated animate__fadeIn animate__delay-1s" role="contentinfo">
+	{% if not (settings.about_hide) or not (settings.links_hide) or not (settings.social_hide) or not (settings.info_hide) 
+	or not (settings.download_hide) %}
+		<section class="bg-transparent px-1 px-sm-0 pt-4 pb-3 py-sm-4">
+			<div class="container py-sm-5">
+				<div class="row flex-sm-row flex-column justify-content-between">
+					{% if not (settings.about_hide) %}
+						<div class="col col-sm-auto col-lg-3 mb-3 mb-sm-4 mb-lg-0">
+							<h2 class="h6 text-body fw-bold">
+								{% if settings.about_title %}
+									{{ settings.about_title }}
+								{% else %}
+									{{ locals.about_title }} 
+								{% endif %}
+							</h2>
+							<div data-toggle="js-data-toggle">
+								<p class="mt-0 mt-sm-3 text-body-secondary pt-2 pt-sm-0 mb-0 pb-3 py-sm-0 col-lg-10">
+									{{ settings.about_des | raw }}
+								</p>
+								{# {% if store.social_media.items.phone == true or store.social_media.items.email == true or store.social_media.items.website == true %}
+									<div class="hstack gap-2 mt-3 d-print-none">
+										{% if store.social_media.items.phone %}
+											<a class="link-secondary rounded-pill bg-secondary bg-opacity-10 px-2 py-1" href="tel:{{ store.social_media.items.phone }}" target="_blank" data-tilt data-tilt-scale="1.1">
+												<i class="ti ti-phone align-middle lh-base fs-6" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" data-bs-title="<small>{{ locals.footer.content.follow.mobile }}</small>" data-bs-offset="0,10"></i>
+												<span class="visually-hidden">{{ locals.footer.content.follow.mobile }}</span>
+											</a>
+
+										{% endif %}
+										{% if store.social_media.items.email %}
+											<a class="link-secondary rounded-pill bg-secondary bg-opacity-10 px-2 py-1" href="mailto:{{ store.social_media.items.email }}" target="_blank" data-tilt data-tilt-scale="1.1">
+												<i class="ti ti-mail-opened align-middle lh-base fs-6" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" data-bs-title="<small>{{ locals.footer.content.follow.email }}</small>" data-bs-offset="0,10"></i>
+												<span class="visually-hidden">
+													{{ locals.footer.content.follow.email }}
+												</span>
+											</a>
+										{% endif %}
+										{% if store.social_media.items.website %}
+											<a class="link-secondary rounded-pill bg-secondary bg-opacity-10 px-2 py-1" href="{{ store.social_media.items.website }}" target="_blank" data-tilt data-tilt-scale="1.1">
+												<i class="ti ti-world-www align-middle lh-base fs-6" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true" data-bs-title="<small>{{ locals.footer.content.follow.url }}</small>" data-bs-offset="0,10"></i>
+												<span class="visually-hidden">
+													{{ locals.footer.content.follow.url }}
+												</span>
+											</a>
+										{% endif %}
+									</div>
+								{% endif %} #}
+							</div>
+						</div>
+					{% endif %}
+					
+					{% if not (settings.info_hide) %}
+						<div class="col mb-3 mb-sm-0">
+							<h2 class="h6 text-body fw-bold">
+								{% if settings.info_title %}
+									{{ settings.info_title }}
+								{% else %}
+									{{ locals.footer.widget.info }}
+								{% endif %}
+							</h2>
+
+							<div data-toggle="js-data-toggle">
+								{% if store.vat_settings.vat_number == true or store.commercial_registration_number == true %}
+									<div class="mt-0 mt-sm-3 d-grid gap-1 justify-content-start justify-content-sm-start align-items-center text-body-secondary pt-2 pt-sm-0 pb-3 py-sm-0">
+										{% if store.vat_settings.vat_number %}
+											<div class="vstack gap-1">
+												<span>{{ locals.footer.content.info.vat }}</span>
+												<span>{{ store.vat_settings.vat_number }}</span>
+											</div>
+										{% endif %}
+										{% if store.commercial_registration_number == true %}
+											<div class="vstack gap-1 mt-2">
+												<span>{{ locals.footer.content.info.commercial }}</span>
+												<span>{{ store.commercial_registration_number }}</span>
+											</div>
+										{% endif %}
+									</div>
+								{% endif %}
+								{% if store.social_media.items.maroof == true or store.vat_settings.is_certificate_visible == true %}
+									<div class="hstack gap-2 mt-0 mt-sm-2 pb-2 pb-sm-0">
+										{% if store.social_media.items.maroof %}
+											<a href="{{ store.social_media.items.maroof }}" target="_blank">
+												<img src="{{ assetUrl('maroof.svg') }}" alt="{{ locals.footer.maroof }}" class="img-fluid mx-sm-0 mx-auto rounded-1 border css-mode-toggle logo-40 grow" loading="lazy">
+											</a>
+										{% endif %}
+										{% if store.vat_settings.is_certificate_visible %}
+											<a href="{{ store.vat_settings.tax_registration_certificate }}" target="_blank">
+												<img src="{{ assetUrl('vat.svg') }}" alt="{{ locals.footer.vat }}" class="img-fluid mx-sm-0 mx-auto rounded-1 border logo-40 grow" loading="lazy">
+											</a>
+										{% endif %}
+									</div>
+								{% endif %}
+							</div>
+						</div>
+					{% endif %}
+					{% if store.business_location.show_location == true %}
+						<div class="col mb-3 mb-sm-0">
+							<h2 class="h6 text-body fw-bold">
+							{% if settings.address_title %}
+									{{ settings.address_title }}
+								{% else %}
+									{{ locals.business_location }}
+								{% endif %}		
+							</h2>
+							<div data-toggle="js-data-toggle">
+							<address class="mt-0 mt-sm-3 d-grid gap-1 justify-content-start justify-content-sm-start align-items-center text-body-secondary pt-2 pt-sm-0 mb-0 pb-3 py-sm-0">
+							
+							<span>
+							 {# <img src="{{ store.business_location.country.flag }}" alt="{{ store.business_location.country.country_code }}" style="width: 20px">   #}
+							 {{ session.lang.code == 'ar' ? store.business_location.city.country_name : store.business_location.city.country_code }}
+							</span>
+						
+							<span class="mb-2">
+							{% if store.business_location.city.ar_name %} {{ session.lang.code == 'ar' ? store.business_location.city.ar_name : store.business_location.city.en_name }} {% endif %}
+							{% if store.business_location.district %}  {{ store.business_location.district }} {% endif %}
+							{% if store.business_location.street %}  {{ store.business_location.street }} {% endif %}
+							</span>
+							
+
+						
+						{% if store.business_location.building_no %} <span>
+								{{ locals.business_location_building_no }}
+						 {{ store.business_location.building_no }} </span> {% endif %}
+							{% if store.business_location.postal_code %} <span> 	{{ locals.business_location_postal_code }}  {{ store.business_location.postal_code }} </span> {% endif %}
+							{% if store.business_location.additional_postal_code %} <span> 	{{ locals.business_location_additional_postal_code}}  {{ store.business_location.additional_postal_code }} </span> {% endif %}
+							
+							
+							{% if store.business_location.lat == true %}
+							<a href="https://maps.google.com/?q={{ store.business_location.lat }},{{ store.business_location.lng }}" target="_blank" class="link-secondary mt-2">
+								
+								<span class="d-inline-block border-bottom border-primary border-opacity-10 py-0 border-2">
+									
+									{{ locals.business_location_map}}
+								
+								</span> 
+								<sup class="ti ti-arrow-up-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %} align-middle" aria-hidden="true"></sup>
+							</a>
+							 {% endif %}
+							 </address>
+
+
+							</div>
+						</div>
+					{% endif %}
+					{% if not (settings.links_hide) %}
+						<div class="col mb-3 mb-sm-0">
+							<h2 class="h6 text-body fw-bold"> {{ settings.links_title }} </h2>
+							<div data-toggle="js-data-toggle">
+								<ul class="nav flex-column mt-0 mt-sm-3 pt-2 pt-sm-0 pb-2 py-sm-0">
+									{% for getUrl in settings.links_urls %}
+										<li class="nav-item mb-2">
+											<a href="{{ getUrl.url }}" class="nav-link link-secondary d-inline-block p-0{% if getUrl.url == requestUri() %} text-primary{% endif %}">
+												<span class="d-inline-block border-bottom border-primary border-opacity-10 py-0 border-2">
+													{{ getUrl.title }}
+												</span>
+											</a>
+										</li>
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+					{% endif %}
+					{% if not (settings.social_hide) %}
+						<div class="col mb-3 mb-sm-0">
+							<h2 class="h6 text-body fw-bold">
+								{% if settings.social_title %}
+									{{ settings.social_title }}
+								{% else %}
+									{{ locals.follow_us }}
+								{% endif %}
+							</h2>
+							<div data-toggle="js-data-toggle">
+								<ul class="nav flex-column mt-0 mt-sm-3 pt-2 pt-sm-0 pb-2 py-sm-0">
+									{% if store.social_media.items.twitter %}
+								  <li class="nav-item mb-2">
+											<a class="nav-link link-secondary d-inline-block p-0" href="https://twitter.com/{{ store.social_media.items.twitter }}" target="_blank">
+												
+													<i class="ti ti-brand-twitter fs-5 align-middle" aria-hidden="true"></i>
+												<span class="px-1">{{ locals.footer.content.follow.twitter }}</span>
+												
+											</a>
+								  </li>
+									{% endif %}
+									{% if store.social_media.items.facebook %}
+									  <li class="nav-item mb-2">
+											<a class="nav-link link-secondary d-inline-block p-0" href="https://www.facebook.com/{{ store.social_media.items.facebook }}" target="_blank">
+												<i class="ti ti-brand-facebook fs-5 align-middle" aria-hidden="true"></i>
+												<span class="px-1">{{ locals.footer.content.follow.facebook }}</span>
+											</a>
+									  </li>
+									{% endif %}
+									{% if store.social_media.items.instagram %}
+										  <li class="nav-item mb-2">
+											<a class="nav-link link-secondary d-inline-block p-0" href="https://www.instagram.com/{{ store.social_media.items.instagram }}" target="_blank">
+												<i class="ti ti-brand-instagram fs-5 align-middle" aria-hidden="true"></i>
+												<span class="px-1">
+													{{ locals.footer.content.follow.instagram }}
+												</span>
+											</a>
+									  </li>
+									{% endif %}
+									{% if store.social_media.items.snapchat %}
+									  <li class="nav-item mb-2">
+											<a class="nav-link link-secondary d-inline-block p-0" href="https://www.snapchat.com/add/{{ store.social_media.items.snapchat }}" target="_blank">
+												<i class="ti ti-brand-snapchat fs-5 align-middle" aria-hidden="true"></i>
+												<span class="px-1">{{ locals.footer.content.follow.snapchat }}</span>
+											</a>
+									  </li>
+									{% endif %}
+									{% if store.social_media.items.tiktok %}
+							  <li class="nav-item mb-2">
+											<a class="nav-link link-secondary d-inline-block p-0" href="https://www.tiktok.com/@{{ store.social_media.items.tiktok }}" target="_blank">
+												<i class="ti ti-brand-tiktok fs-5 align-middle" aria-hidden="true"></i>
+												<span class="px-1">{{ locals.footer.content.follow.tiktok }}</span>
+											</a>
+							  </li>
+									{% endif %}
+
+
+									{% if store.social_media.items.phone %}
+								  <li class="nav-item mb-2">
+											<a class="nav-link link-secondary d-inline-block p-0" href="tel:{{ store.social_media.items.phone }}" target="_blank">
+												<i class="ti ti-phone fs-5 align-middle" aria-hidden="true"></i>
+												<span class="px-1">{{ locals.footer.content.follow.phone }}</span>
+											</a>
+									  </li>
+									{% endif %}
+									{% if store.social_media.items.email %}
+								  <li class="nav-item mb-2">
+											<a class="nav-link link-secondary d-inline-block p-0" href="mailto:{{ store.social_media.items.email }}" target="_blank">
+												<i class="ti ti-mail-opened fs-5 align-middle" aria-hidden="true"></i>
+												<span class="px-1">{{ locals.footer.content.follow.email }}</span>
+											</a>
+										  </li>
+									{% endif %}
+									{% if store.social_media.items.website %}
+									  <li class="nav-item mb-2">
+											<a class="nav-link link-secondary d-inline-block p-0" href="{{ store.social_media.items.website }}" target="_blank">
+												<i class="ti ti-world-www fs-5 align-middle" aria-hidden="true"></i>
+												<span class="px-1">{{ locals.footer.content.follow.website }}</span>
+											</a>
+										  </li>
+									{% endif %}
+								</ul>
+							</div>
+						</div>
+					{% endif %}
+
+{% if not (settings.download_hide) %}
+	{% if store.apps.ios_app_id == true or store.apps.android_package_name == true  %}
+		<div class="col col-sm-auto">
+			<h2 class="h6 text-body fw-bold">
+				<span class="px-0">
+					{% if settings.download_apps %}
+						{{ settings.download_apps }}
+					{% else %}
+						{{ locals.footer_apps_download}}
+					{% endif %}
+				</span>
+			</h2>
+			<div data-toggle="js-data-toggle">
+				<div class="d-grid gap-2 mt-0 mt-sm-3 pt-2 pt-sm-0 pb-3 py-sm-0">
+					{% if store.apps.ios_app_id %}
+						<a href="https://apps.apple.com/app/id{{ store.apps.ios_app_id }}" target="_blank">
+							<img src="{{ asset_url ~ 'app_store_badge_en.svg' }}" alt="{{ locals.footer_ios_app}}" class="logo-120 rounded grow">
+						</a>
+					{% endif %}
+					{% if store.apps.android_package_name %}
+						<a href="https://play.google.com/store/apps/details?id={{ store.apps.android_package_name }}" target="_blank">
+							<img src="{{ asset_url ~ 'google_store_badge_en.svg' }}" alt="{{ locals.footer_android_app }}" class="logo-120 rounded grow">
+						</a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	{% endif %}
+{% endif %}
+
+				</div>
+			</div>
+		</section>
+	{% endif %}
+<section class="border-secondary border-top border-bottom border-opacity-10 px-1 px-sm-0 pt-0 pb-2 py-sm-3 d-print-none" data-section="js-copyright">
+    <div class="container">
+        
+		{% if store.shipping_methods == true or store.payment_methods == true %}
+			<h2 class="h6 text-body fw-bold d-sm-none">
+            {{ locals.mainNavigation.shipping_delivery }}
+        </h2>
+		{% endif %}
+        <div class="d-grid gap-lg-3 d-lg-flex text-sm-start justify-content-lg-between align-items-center">
+<div data-toggle="js-data-toggle">
+    {% if store.shipping_methods == true or store.payment_methods == true %}
+        <div class="my-0 my-sm-0 hstack gap-2 gap-sm-1 gap-lg-2 flex-wrap justify-content-start py-3 py-sm-0">
+            {% set count = 0 %}
+            {% for shipping_method in store.shipping_methods %}
+                {% if count < 12 %}
+                    <img src="{{ imageUrl(shipping_method.icon,{h: 100, q: 100 }) }}" loading="lazy" class="logo-w-h-30 js-shipping-icon" alt="{{shipping_method.name }}" title="{{shipping_method.name }}">
+                    {% set count = count + 1 %}
+                {% endif %}
+            {% endfor %}
+            {% for payment_method in store.payment_methods %}
+                {% if count < 12 %}
+                    <img src="{{ imageUrl(payment_method.icon,{ h: 100, q: 100}) }}" loading="lazy" class="logo-w-h-30 object-fit-scale js-shipping-icon" alt="{{payment_method.name }}" title="{{payment_method.name }}" style="height: 30px;">
+                    {% set count = count + 1 %}
+                {% endif %}
+            {% endfor %}
+            {% if store.shipping_methods|length + store.payment_methods|length > 8 %}
+		<a class="hstack gap-1 text-dark-emphasis{% if '/shipping-and-payment' == requestUri()  %} text-primary{% endif %}" href="/shipping-and-payment" title="{{ locals.mainNavigation.shipping_delivery }}">
+    <span class="px-0" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-original-title="{{ locals.shipping_and_payment_tools_expand }}">
+       		<i class="ti ti-dots fs-5 align-middle grow" aria-hidden="true"></i>
+			<span class="visually-hidden">{{ locals.shipping_and_payment_tools_expand }}</span>
+    </span>
+</a>
+
+            {% endif %}
+        </div>
+    {% else %}
+        <span class="d-none"></span>
+    {% endif %}
+</div>
+
+            
+            <div class="d-none d-sm-flex hstack gap-lg-2 mt-sm-3 mt-lg-0">
+                <span class="rotate-center">{{ store.copyrights | raw}}</span>
+                <a data-scroll href="#main" class="text-secondary translateY">
+                    <svg aria-hidden="true" width="20" height="20" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.14645 2.14645C7.34171 1.95118 7.65829 1.95118 7.85355 2.14645L11.8536 6.14645C12.0488 6.34171 12.0488 6.65829 11.8536 6.85355C11.6583 7.04882 11.3417 7.04882 11.1464 6.85355L8 3.70711L8 12.5C8 12.7761 7.77614 13 7.5 13C7.22386 13 7 12.7761 7 12.5L7 3.70711L3.85355 6.85355C3.65829 7.04882 3.34171 7.04882 3.14645 6.85355C2.95118 6.65829 2.95118 6.34171 3.14645 6.14645L7.14645 2.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                        <span class="visually-hidden">{{ locals.to_top }}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+	{% if not (settings.lang_hide) %}
+	<section class="px-1 px-sm-0 py-1 mb-2 my-sm-0 d-sm-none d-print-none">
+		<div class="container">
+			<div class="d-flex justify-content-between align-items-center gap-2">
+				<form action="/customer/lang-shipping-country" class="row gx-1 me-auto w-100" method="POST" id="changeLanguageCountry">
+					<input type="hidden" name="_token" value="{{ csrf_token }}">
+					<input type="hidden" id="redirect-to-footer" name="redirect_to" value="{{ requestUri() }}">
+					<input type="hidden" id="input-change-session-currency-footer" data-currency="currency" name="currency" value="{{session.currency.code}}">
+					<input type="hidden" id="input-change-session-currency-symbol-footer" data-currency-symbol="currency_symbol" name="currency_symbol" value="{{session.currency.symbol}}">
+					{% if not ('hide_language' in settings.header_options) %}
+						<div class="col">
+							<select name="language" class="form-select form-select-sm" id="floatingSelectLanguageFooter" aria-label="{{ locals.accessibility.select.language }}">
+								{% for storeLang in store.languages %}
+									<option value="{{ storeLang.code }}" {% if session.lang.code == storeLang.code %} selected {% endif %}>{{ storeLang.name }}</option>
+								{% endfor %}
+							</select>
+						</div>
+					{% endif %}
+					{% if not ('hide_country' in settings.header_options) %}
+						<div class="col">
+							<select name="country" class="form-select form-select-sm" id="floatingSelectCountryFooter" aria-label="{{ locals.accessibility.select.country }}">
+								{% for storeCurrency in store.currencies %}
+									<option data-currency="{{ storeCurrency.code }}" data-currency-symbol="{{ storeCurrency.symbol }}" value="{{ storeCurrency.country.code }}" {% if session.currency.country.code == storeCurrency.country.code %} selected {% endif %}>
+										{{ storeCurrency.country.name }}
+									</option>
+								{% endfor %}
+							</select>
+						</div>
+					{% endif %}
+				</form>
+			</div>
+		</div>
+	</section>
+	{% endif %}
+	
+	<section class="px-1 px-sm-0 py-2 bg-light-subtle my-0 d-sm-none">
+		<div class="container">
+			<div class="d-flex justify-content-between align-items-center gap-2">
+				<div class="px-1 rotate-center">
+					{{ store.copyrights | raw}}
+				</div>
+	
+			</div>
+		</div>
+	</section>
+</footer>
+
+{% if store.editing_mode == false %}
+	{# {% include 'cookies.twig' with { 'privacy_settings' : settings } %}
+	{% include 'toolbar.twig' %} #}
+{% endif %} 
+
+
+
+{% schema %}
+{
+  "name": {
+    "ar": "أسفل الصفحة",
+    "en": "footer"
+  },
+  "icon": "fa fa-square",
+  "display": true,
+  "settings": {
+    "about": {
+      "type": "fieldset",
+      "label": {
+        "ar": "عن المتجر",
+        "en": "About us"
+      },
+      "icon": "font_awesome",
+      "expandable": true,
+      "settings": {
+        "hide": {
+          "type": "checkbox",
+          "label": {
+            "ar": " ",
+            "en": " "
+          },
+          "option": {
+            "ar": "إخفاء",
+            "en": "Hide"
+          },
+          "noLabel": true
+        },
+        "title": {
+          "type": "text",
+          "label": {
+            "ar": "العنوان",
+            "en": "Title"
+          }
+        },
+        "des": {
+          "type": "textarea",
+          "label": {
+            "ar": "النص",
+            "en": "Description"
+          }
+        }
+      }
+    },
+    "address": {
+      "type": "fieldset",
+      "label": {
+        "ar": "العنوان التجاري",
+        "en": "Business Address"
+      },
+      "icon": "font_awesome",
+      "expandable": true,
+      "settings": {
+        "title": {
+          "type": "text",
+          "label": {
+            "ar": "العنوان",
+            "en": "Title"
+          }
+        }
+      }
+    },
+    "links": {
+      "type": "fieldset",
+      "label": {
+        "ar": "روابط مهمة",
+        "en": "Links"
+      },
+      "icon": "font_awesome",
+      "expandable": true,
+      "settings": {
+        "hide": {
+          "type": "checkbox",
+          "label": {
+            "ar": " ",
+            "en": " "
+          },
+          "option": {
+            "ar": "إخفاء",
+            "en": "Hide"
+          },
+          "noLabel": true
+        },
+        "title": {
+          "type": "text",
+          "label": {
+            "ar": "العنوان",
+            "en": "Title"
+          }
+        },
+        "urls": {
+          "type": "list",
+          "settings_label": {
+            "ar": "الروابط",
+            "en": "Links"
+          },
+          "noLabel": true,
+          "settings": {
+            "title": {
+              "type": "text",
+              "label": {
+                "ar": "العنوان",
+                "en": "Title"
+              }
+            },
+            "url": {
+              "type": "url",
+              "label": {
+                "ar": "الرابط",
+                "en": "Link"
+              }
+            }
+          }
+        }
+      }
+    },
+    "social": {
+      "type": "fieldset",
+      "label": {
+        "ar": "وسائل التواصل",
+        "en": "Social Media"
+      },
+      "icon": "font_awesome",
+      "expandable": true,
+      "settings": {
+        "hide": {
+          "type": "checkbox",
+          "label": {
+            "ar": " ",
+            "en": " "
+          },
+          "option": {
+            "ar": "إخفاء",
+            "en": "Hide"
+          },
+          "noLabel": true
+        },
+        "title": {
+          "type": "text",
+          "label": {
+            "ar": "العنوان",
+            "en": "Title"
+          }
+        }
+      }
+    },
+    "info": {
+      "type": "fieldset",
+      "label": {
+        "ar": "معلومات أخرى",
+        "en": "More Info"
+      },
+      "icon": "font_awesome",
+      "expandable": true,
+      "settings": {
+        "hide": {
+          "type": "checkbox",
+          "label": {
+            "ar": " ",
+            "en": " "
+          },
+          "option": {
+            "ar": "إخفاء",
+            "en": "Hide"
+          },
+          "noLabel": true
+        },
+        "title": {
+          "type": "text",
+          "label": {
+            "ar": "العنوان",
+            "en": "Title"
+          }
+        }
+      }
+    },
+    "download": {
+      "type": "fieldset",
+      "label": {
+        "ar": "تطبيقات الهاتف",
+        "en": "Mobile Apps"
+      },
+      "icon": "font_awesome",
+      "expandable": true,
+      "settings": {
+		"hide": {
+          "type": "checkbox",
+          "label": {
+            "ar": " ",
+            "en": " "
+          },
+          "option": {
+            "ar": "إخفاء",
+            "en": "Hide"
+          },
+          "noLabel": true
+        },
+        "apps": {
+          "type": "text",
+          "label": {
+            "ar": "العنوان",
+            "en": "Title"
+          }
+        }
+      }
+    },
+    "lang": {
+      "type": "fieldset",
+      "label": {
+        "ar": "اللغة والشحن -  نسخة الجوال",
+        "en": "Hide Language and Shipping - Mobile Version"
+      },
+      "icon": "font_awesome",
+      "expandable": true,
+      "settings": {
+        "hide": {
+          "type": "checkbox",
+          "label": {
+            "ar": " ",
+            "en": " "
+          },
+          "option": {
+            "ar": "إخفاء",
+            "en": "Hide"
+          },
+          "noLabel": true
+        }
+      }
+    }
+  }
+}
+{% endschema %}

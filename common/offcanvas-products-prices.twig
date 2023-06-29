@@ -1,0 +1,229 @@
+<form
+	method="GET" id="attribute_form" action="{{ requestUri() }}">
+	{# 
+			{% for key, input in requestInputs() %}
+				<input type="hidden" name="{{ key }}" value="{{ input }}">
+			{% endfor %} 
+		#}
+
+	{% for key, input in requestInputs() %}
+		{% if key != 'from_price' and key != 'to_price' and key != 'on_sale' %}
+			<input type="hidden" name="{{ key }}" value="{{ input }}">
+		{% endif %}
+	{% endfor %}
+
+	{# {% for key1, attribute in products.filters.attributes %}
+					{% for key2, item in attribute.data %}
+						<input type="checkbox" name="attribute_values[{{ attribute.slug }}][]" value="{{ item.id }}" {% if item.id in requestGet('attribute_values')[attribute.slug] %}checked{% endif %}>
+					{% endfor %}
+		{% endfor %} #}
+
+	<div class="offcanvas offcanvas-end border-0 shadow-sm" tabindex="-1" data-bs-scroll="true" id="offcanvasProductsFilter" aria-labelledby="offcanvasProductsFilterLabel">
+		<div class="offcanvas-header bg-secondary-subtle">
+			<h6 class="offcanvas-title fw-bold" id="offcanvasProductsFilterLabel">
+				{{ locals.offcanvasFilter.header.title }}
+			</h6>
+			<button type="button" class="btn-none p-0 text-body-emphasis grow" data-bs-dismiss="offcanvas" aria-label="{{ locals.accessibility.close.label }}">
+				<i class="ti ti-x align-middle fs-6" aria-hidden="true"></i>
+			</button>
+		</div>
+		<div class="offcanvas-body p-0">
+			<div class="p-3">
+				<div class="accordion" id="accordionPrice">
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+
+								<i class="ti ti-receipt-2 fs-6 align-middle" aria-hidden="true"></i>
+								<span class="px-1">{{ locals.offcanvas_price_select_range }}</span>
+
+							</button>
+						</h2>
+						<div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionPrice">
+							<div class="accordion-body">
+
+								<div class="flex-shrink-0 p-0">
+									<div class="tab-content" id="priceFiltrationTabs">
+										<div class="tab-pane fade show active p-0" id="slider-tab-pane" role="tabpanel" aria-labelledby="slider-tab" tabindex="0">
+											<div class="card border-0 border-secondary border-opacity-10 !shadow-sm !p-3 !mt-3 p-0">
+												<div class="mx-3">
+													<div id="range-slider" class="mt-5 mb-3"></div>
+												</div>
+												<hr class="border-secondary border-opacity-50 mt-2 mb-3">
+												<div class="row g-3">
+													<div
+														class="col">
+														{# <label for="productMin" class="col-form-label">
+																													{{ locals.offcanvasFilter.body.price.from }}
+																												</label> #}
+														<div class="input-group input-group-sm">
+															<span class="input-group-text">
+																{{ locals.offcanvasFilter.body.price.from }}
+															</span>
+															<input class="form-control" name="from_price" type="number" id="productMin" min="0" max="10000" pattern="[0-9]{1,3}" oninput="validity.valid||(value='0');" value="{{ requestGet('from_price') }}">
+															<span class="input-group-text">
+																{{ session.currency.code }}
+															</span>
+														</div>
+													</div>
+													<div
+														class="col">
+														{# <label for="productMax" class="col-form-label">
+																													{{ locals.offcanvasFilter.body.price.to }}
+																												</label> #}
+														<div class="input-group input-group-sm">
+
+															<span class="input-group-text">
+																{{ locals.offcanvasFilter.body.price.to }}
+															</span>
+															<input class="form-control" name="to_price" type="number" id="productMax" min="0" max="10000" pattern="[0-9]{1,3}" oninput="validity.valid||(value='0');" value="{{ requestGet('to_price') }}">
+															<span class="input-group-text">
+																{{ session.currency.code }}
+															</span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+								<i class="ti ti-gift fs-6 align-middle mr-1" aria-hidden="true"></i>
+								<span class="px-1">{{ locals.offcanvasFilter.attributes.discount }}</span>
+							</button>
+						</h2>
+						<div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionPrice">
+							<div class="accordion-body">
+								<div class="form-check form-switch">
+									<input class="form-check-input !pulse-grouped" name="on_sale" type="checkbox" role="switch" id="inputShowDiscounts" onclick="playSound('inputShowDiscounts', 'soundChecked')">
+									<label class="form-check-label" for="inputShowDiscounts">
+										<span class="px-0">{{ locals.offcanvasFilter.body.discount }}</span>
+									</label>
+								</div>
+								<audio id="soundChecked">
+									<source src="https://s3.eu-west-1.amazonaws.com/media.zid.store/static/default/sounds/click.mp3" type="audio/mpeg">
+								</audio>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				{% if products.filters|length > 0 %}
+					<div class="accordion mt-2" id="attributeAccordion">
+						{% for key1, attribute in products.filters.attributes %}
+							<div class="accordion-item">
+								<h2 class="accordion-header">
+									<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ key1 }}" aria-expanded="true" aria-controls="collapse{{ key1 }}">
+										{{ attribute.name }}
+										<sup class="text-secondary ps-1 x-small">({{ attribute.data|length }})</sup>
+									</button>
+								</h2>
+								<div id="collapse{{ key1 }}" class="accordion-collapse collapse" data-bs-parent="#attributeAccordion">
+									<div class="accordion-body">
+
+										<div id="filter-container">
+
+
+											<div class="mb-3">
+												<input type="search" id="attribute-search-{{ key1 }}" class="form-control form-control-sm" placeholder="{{ locals.offcanvasFilter.attributes.search }}" data-collapse-id="collapse{{ key1 }}">
+											</div>
+
+
+											{% for key2, item in attribute.data %}
+												<div class="filter-row {% if item.type == 'color' or item.type == 'icon' %}d-inline-flex{% endif %} {% if key2 > 3 %}d-none{% endif %}">
+													<div class="form-check{% if item.type == 'color' or item.type == 'icon' %} m-1 px-0{% endif %}">
+														{% if item.type not in ['icon', 'color'] %}
+															<input type="checkbox" class="form-check-input" name="attribute_values[{{ attribute.slug }}]" id="{{ item.id }}" value="{{ item.id }}" {% if requestGet('attribute_values')[attribute.slug] == item.id %} checked {% endif %}>
+														{% endif %}
+														<label class="form-check-label attribute-label{% if item.type == 'color' or item.type == 'icon' %} cool-color-label{% endif %}" data-attribute-id="{{ key1 }}" for="{{ item.id }}">
+															<div class="attribute-label-extra d-inline-block">
+																{% if item.type == 'icon' or item.type == 'color' %}
+																	<input type="checkbox" class="btn-check visually-hidden" name="attribute_values[{{ attribute.slug }}]" id="{{ item.id }}-checkbox" value="{{ item.id }}" {% if requestGet('attribute_values')[attribute.slug] == item.id %} checked {% endif %} autocomplete="off">
+
+																	{% if item.type == 'icon' %}
+																		<label class="btn btn-outline-primary shadow-sm" for="{{ item.id }}-checkbox">
+																			<img class="img-fluid rounded-circle border shadow-sm attribute-image" style="width:36px" src="{{ imageUrl(item.type_value.thumbnail) }}">
+																			<span class="px-1 small">{{ item.value }}</span>
+																		</label>
+																	{% elseif item.type == 'color' %}
+																		<label class="btn btn-outline-dark rounded-pill btn-sm px-3" style="!border-color: {{ item.type_value }};" for="{{ item.id }}-checkbox">
+
+
+																			<span class="position-relative d-inline-block">
+																				<span class="">
+																					<svg class="rounded-pill mt-1" style="color: {{ item.type_value }};" width="12" height="12" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+																						<rect width="100%" height="100%" fill="currentColor"></rect>
+																					</svg>
+																				</span>
+
+																				<span class="px-1">{{ item.value }}</span>
+																			</span>
+
+
+																		</label>
+																	{% endif %}
+																{% else %}
+																	{{ item.value }}
+																{% endif %}
+															</div>
+
+														</label>
+													</div>
+												</div>
+											{% endfor %}
+										</div>
+
+
+										<button type="button" class="mt-2 btn btn-sm btn-link link-dark text-decoration-none px-0 {% if attribute.data|length <= 4 %} d-none{% endif %}" data-attribute-id="{{ key1 }}">
+											<i class="ti ti-plus align-middle fs-6" aria-hidden="true"></i>
+											<span class="px-0">
+												{{ locals.offcanvasFilter.attributes.loadMore }}
+											</span>
+										</button>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				{% endif %}
+
+
+			</div>
+		</div>
+		<div class="px-3 py-3 p-md-3 sticky-bottom bg-secondary-subtle">
+			<div class="d-flex gap-2">
+				<button type="reset" class="btn btn-outline-secondary w-100 !mx-0 !js-button-reset" onclick="resetFiltersAttribute()">
+
+
+					<i class="ti ti-clear-all align-middle fs-6" aria-hidden="true"></i>
+					<span class="px-1">
+						{{ locals.offcanvasFilter.footer.clear }}
+					</span>
+				</button>
+
+				<button type="submit" class="btn btn-primary w-100 !mx-0 !mt-2 js-button-filter">
+					<i class="ti ti-filter align-middle fs-6" aria-hidden="true"></i>
+					<span class="px-1">
+						{{ locals.offcanvasFilter.footer.filter }}
+					</span>
+				</button>
+
+			</div>
+		</div>
+
+
+	</div>
+</form>
+
+<script defer src="{{ assetUrl('offcanvas-products-prices.js') }}"></script>
+<script defer src="{{ assetUrl('offcanvas-products-filters.js') }}"></script>
+

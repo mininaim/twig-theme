@@ -1,0 +1,164 @@
+ {% if settings.categories %}
+ 
+ <section section-id="{{ sectionId }}" class="py-4 p-sm-5 border-top border-secondary border-opacity-10 css-categories">
+	<div class="container">
+			<div class="d-flex justify-content-between align-items-center mb-2 mb-sm-3">
+				<div class="flex-grow-1">
+					{% if settings.title %}
+						<h2 class="h5 py-0 py-sm-2 fw-bold">
+							{{ settings.title }}
+						</h2>
+					{% endif %}
+				</div>
+				<div class="position-relative mt-0 mt-sm-3 z-1">
+					<div class="swiper-button-next swiper-button-next-sm swiper-button-next-{{ sectionId }} link-secondary bg-light-subtle rounded-pill gradient-link"></div>
+					<div class="swiper-button-prev swiper-button-prev-sm swiper-button-prev-{{ sectionId }} link-secondary bg-light-subtle rounded-pill gradient-link"></div>
+					<div class="swiper-pagination"></div>
+				</div>
+			</div>
+			<div class="swiper-container js-anime-widget animate__animated animate__fadeIn animate__delay-1s" data-swiper='{
+				"navigation": {
+					{% if session.lang.code == 'ar' %}
+						"nextEl": ".swiper-button-prev-{{ sectionId }}",
+						"prevEl": ".swiper-button-next-{{ sectionId }}"
+					{% else %}
+						"nextEl": ".swiper-button-next-{{ sectionId }}",
+						"prevEl": ".swiper-button-prev-{{ sectionId }}"
+					{% endif %}
+				},
+					"slidesPerView": 2,
+					"centeredSlides": false,
+					"spaceBetween": 10,
+					"breakpoints": {
+
+						"576": {
+							"slidesPerView": 3,
+							"spaceBetween": 10
+						},
+						"768": {
+							"slidesPerView": 4,
+							"spaceBetween": 10
+						},
+						"992": {
+							"slidesPerView": 5,
+							"spaceBetween": 10
+
+						},
+						"1200": {
+							"slidesPerView": 6,
+							"spaceBetween": 10
+						}
+					}
+				    }'>
+
+	
+			<div class="swiper-wrapper">
+				{% for categoryItem in settings.categories %}
+				<div class="swiper-slide position-relative">
+					<a href="/categories/{{ categoryItem.category.id }}/{{ categoryItem.category.slug }}" title="{{categoryItem.category.name}}">
+						<div class="card card-product border-secondary border-opacity-10 shadow-sm h-100 js-card-item">
+							<div class="js-card-top">
+								<div class="d-flex justify-content-center py-4 js-loaded-spinner">
+									<div class="spinner-border text-primary" role="status">
+										<span class="visually-hidden">{{ locals.accessibility.spinner.label }}</span>
+									</div>
+								</div>
+								<div class="d-none overflow-hidden position-relative rounded-top bg-primary bg-opacity-10 zooming js-loaded-image">
+									{% if categoryItem.category.image %}
+										<img src="{{ imageUrl(categoryItem.category.image, { w: 235, q: 100, f:'auto' }) }}" alt="{{categoryItem.category.img_alt_text}}" class="card-img-top swiper-slide-image swiper-carousel-animate-opacity swiper-lazy object-fit-cover animate__animated animate__fadeIn" data-swiper-parallax="10%">
+									{% else %}
+										<svg class="placeholder-img img-fluid mx-auto card-img-top rounded-0 text-primary swiper-slide-image swiper-carousel-animate-opacity swiper-lazy object-fit-cover animate__animated animate__fadeIn" width="235" height="235" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="{{locals.category_placeholder_image}}" preserveaspectratio="xMidYMid slice" focusable="false">
+											<title>{{locals.category_placeholder_image}}</title>
+											<rect width="100%" height="100%" fill="currentColor"></rect>
+											<text x="50%" y="50%" fill="#fff" dy=".3em">
+												{{locals.category_placeholder_image}}
+											</text>
+										</svg>
+									{% endif %}
+									<div class="swiper-lazy-preloader align-self-center"></div>
+								</div>
+							</div>
+							<div class="card-footer bg-transparent border-secondary border-opacity-10">
+								<h6 class="card-title mb-0 hstack gap-2 lh-base text-secondary fw-light">
+									{{categoryItem.category.name}}
+									<span class="badge bg-primary text-white rounded-pill ms-auto" hidden>{{categoryItem.category.products_count}}</span>
+									<i class="ti ti-circle-chevron-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %} align-middle ms-auto" aria-hidden="true"></i>
+								</h6>
+							</div>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+		</div>
+		{% if settings.more_text %}
+			<div class="d-flex mt-3">
+				<div class="flex-grow-1"></div>
+				<div class="flex-shrink-0">
+					<a href="/categories" class="link-primary">
+						<span class="px-1">{{ settings.more_text }}</span>
+						<i class="ti ti-arrow-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %} align-middle" aria-hidden="true"></i>
+					</a>
+				</div>
+			</div>
+		{% endif %}
+	</div>
+</section>
+
+{% endif %}
+
+{% schema %}
+{
+  "name": {
+    "ar": "التصانيف",
+    "en": "Categories"
+  },
+  "icon": "fal fa-cabinet-filing",
+  "display": true,
+  "settings": {
+    "title": {
+      "type": "text",
+      "label": {
+        "ar": "العنوان",
+        "en": "Title"
+      }
+    },
+    "categories": {
+      "type": "list",
+      "noLabel": true,
+      "settings_label": {
+        "ar": "التصنيف",
+        "en": "Category"
+      },
+      "settings": {
+        "category": {
+          "type": "category",
+          "label": {
+            "ar": "اختر التصنيف",
+            "en": "Select Category"
+          }
+        }
+      }
+    },
+    "display_more": {
+      "type": "checkbox",
+      "label": {
+        "ar": "",
+        "en": ""
+      },
+      "noLabel": true,
+      "option": {
+        "ar": "عرض رابط الكل",
+        "en": "Display All Button"
+      }
+    },
+    "more_text": {
+      "type": "text",
+      "label": {
+        "ar": "عبارة الرابط",
+        "en": "Placeholder Text"
+      }
+    }
+  }
+}
+{% endschema %}

@@ -1,0 +1,173 @@
+{% extends "layout.twig" %}
+
+{% block header %}
+	{{ include('header.twig') }}
+{% endblock %}
+
+{% block js_files_inner %}
+ {% if blog.content | length > 0 %}
+	<script src="{{ assetUrl('countWord.js') }}"></script>
+	<script src="{{ assetUrl('estimateReadingTime.js') }}"></script>
+ {% endif %}
+{% endblock %}
+
+{% block main_content %}
+	<section class="bg-primary text-center py-5">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="text-white">
+						<h1 class="h2">{{blog.title }}</h1>
+						{# <a href="/blogs" class="btn btn-sm btn-outline-light d-print-none">
+							<span class="px-1">
+								{{ locals.blogs_back }}
+							</span>
+							<i class="ti ti-arrow-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %} 
+								align-middle fs-6" aria-hidden="true">
+							</i>
+						</a> #}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	{% if blog.content | length > 0 %}
+	<section class="border-secondary border-top border-bottom border-opacity-10 py-2 position-relative z-1 d-print-none">
+			<div class="container">
+				<div class="d-flex justify-content-between gap-2 gap-sm-0 justify-content-sm-between align-items-center animated slideIn">
+					<div class="hstack gap-0 gap-sm-1 text-secondary !d-none d-sm-flex">
+
+						<a href="/blogs" class="btn btn-sm btn-outline-secondary d-print-none">
+							
+							<i class="ti ti-arrow-{% if session.lang.code == 'ar' %}right{% else %}left{% endif %} 
+								align-middle fs-6" aria-hidden="true">
+							</i>
+							
+							<span class="px-1">
+								{{ locals.blogs_back }}
+							</span>
+		
+						</a>
+
+						{# <span>
+							<i class="ti ti-notebook align-middle fs-6 d-none d-sm-inline-flex" aria-hidden="true"></i>
+							<span class="px-0 px-sm-1 js-reading-time">
+								<script>
+									let blogContent = "{{ blog.content }}";
+									const elementEstimateReadingTime = document.querySelector(".js-reading-time");
+									estimateReadingTime(blogContent).then(estimate => {
+										elementEstimateReadingTime.innerHTML = estimate;
+									});
+								</script>
+							</span>
+						</span>
+						<span class="d-none d-sm-inline-flex">|</span>
+						<span>
+							<span class="px-1 js-count-words">
+								<script>
+									const elementCountWords = document.querySelector(".js-count-words");
+									countWordsInText(blogContent).then(wordCountString => {
+										elementCountWords.innerHTML = wordCountString;
+									});
+								</script>
+							</span>
+						</span> #}
+					</div>
+					<div class="btn-group btn-group-sm" role="group" aria-label="{{ locals.accessibility.group_buttons.label }}">
+			
+						<button class="btn btn-sm btn-outline-secondary" type="button" 
+						data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="ti ti-share align-middle fs-6" aria-hidden="true"></i>
+							<span class="visually-hidden">{{ locals.shareLabel }}</span>
+
+							{# <span class="px-1">{{ locals.shareLabel }}</span> #}
+						</button>
+						<ul class="dropdown-menu dropdown-menu-lg-end shadow-lg border-0 rounded rounded-3 !p-3">
+							<li>
+								<a class="dropdown-item py-2 animated slideIn" target="_blank" 
+								href="http://api.whatsapp.com/send?text={{ blog.title }}%20{{ store.permalink }}blogs/{{ blog.slug }}">
+									<i class="ti ti-brand-whatsapp align-middle fs-6" aria-hidden="true"></i>
+									<span class="px-1">{{ locals.shareWhatsapp }}</span>
+								</a>
+							</li>
+							<li>
+								<a class="dropdown-item py-2 animated slideIn" target="_blank" 
+								href="http://t.me/share/url?url={{ store.permalink }}blogs/{{ blog.slug }}&amp;text={{ blog.title }}">
+									<i class="ti ti-brand-telegram align-middle fs-6" aria-hidden="true"></i>
+									<span class="px-1">{{ locals.shareTelegram }}</span>
+								</a>
+							</li>
+							<li>
+								<a class="dropdown-item py-2 animated slideIn" target="_blank" 
+								href="http://www.facebook.com/sharer/sharer.php?u={{ store.permalink }}blogs/{{ blog.slug }}">
+									<i class="ti ti-brand-facebook align-middle fs-6" aria-hidden="true"></i>
+									<span class="px-1">
+										{{ locals.shareFacebook }}</span>
+								</a>
+							</li>
+							<li>
+								<a class="dropdown-item py-2 animated slideIn" target="_blank" 
+								href="http://twitter.com/intent/tweet?text={{ blog.title }}&amp;url={{ store.permalink }}blogs/{{ blog.slug }}">
+									<i class="ti ti-brand-twitter align-middle fs-6" aria-hidden="true"></i>
+									<span class="px-1">{{ locals.shareTwitter }}</span>
+								</a>
+							</li>
+							<li>
+								<a class="dropdown-item py-2 animated slideIn" target="_blank" 
+								href="http://linkedin.com/sharing/share-offsite/?url={{ store.permalink }}blogs/{{ blog.slug }}">
+									<i class="ti ti-brand-linkedin align-middle fs-6" aria-hidden="true"></i>
+									<span class="px-1">{{ locals.shareLinkedIn }}</span>
+								</a>
+							</li>
+							<li>
+								<hr class="dropdown-divider border-secondary border-opacity-10">
+							</li>
+							<li>
+								<a class="dropdown-item py-2 animated slideIn" target="_blank" 
+								href="mailto:?subject={{ blog.title }}&amp;body={{ store.permalink }}blogs/{{ blog.slug }}">
+									<i class="ti ti-at align-middle fs-6" aria-hidden="true"></i>
+									<span class="px-1">{{ locals.shareMail }}</span>
+								</a>
+							</li>
+						</ul>
+									<button type="button" class="btn btn-outline-secondary" onclick="printThisPage()">
+							<i class="ti ti-printer align-middle fs-6" aria-hidden="true"></i>
+							<span class="visually-hidden">{{ locals.sharePrint }}</span>
+							{# <span class="px-1">{{ locals.sharePrint }}</span> #}
+						</button>
+						<button type="button" class="btn btn-outline-secondary btn-clipboard" 
+						data-clipboard-text="{{ store.permalink }}blogs/{{ blog.slug }}">
+							<i class="ti ti-link align-middle fs-6" aria-hidden="true"></i>
+							<span class="visually-hidden">{{ locals.shareCopyClipboard }}</span>
+						</button>
+					</div>
+				</div>
+			</div>
+	</section>
+	{% endif %}
+	<section class="py-3">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<article class="card border-secondary border-opacity-10 p-3 text-secondary lh-base shadow-sm">
+						{{ blog.content | raw }}
+					</article>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	{% include 'toast.twig'%}
+
+{% endblock %}
+
+{% block footer %}
+	{{ include('footer.twig') }}
+{% endblock %}
+
+{% block footer_scripts %}
+	<script defer src="{{ assetUrl('clipboard.min.js') }}"></script>
+	<script defer src="{{ assetUrl('clipboardInit.js') }}"></script>
+	<script defer src="{{ assetUrl('printPage.js') }}"></script>
+{% endblock %}
+

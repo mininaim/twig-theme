@@ -1,0 +1,82 @@
+:root {
+  /* --font-family: 'IBM Plex Sans Arabic', 'Amiri', 'Cairo', 'Alexandria', 'Marhey', 'Tajawal', 'Inter', 'Rubik', 'Lato', 'Montserrat', 'Oswald', 'Outfit', sans-serif;
+  --font-primary: 'IBM Plex Sans Arabic', 'Amiri', 'Cairo', 'Alexandria', 'Marhey', 'Tajawal', 'Inter', 'Rubik', 'Lato', 'Montserrat', 'Oswald', 'Outfit', sans-serif; */
+  --swiper-theme-color: var(--color-primary);
+  --plyr-color-main: var(--color-primary);
+  --grayscale-value: 100%;
+  --distance: 0%;
+  --invert-value: 1;
+  --transition-duration: 0.5s;
+  --zoom-factor: 1.1;
+  --transition-duration: 0.5s;
+}
+
+:root:lang(en) {
+  --font-family: 'Inter', 'Montserrat', 'Lato', 'Oswald', 'Outfit', sans-serif;
+  --font-primary: 'Inter', 'Montserrat', 'Lato', 'Oswald', 'Outfit', sans-serif;
+}
+
+:root:lang(ar) {
+  --font-family: 'IBM Plex Sans Arabic', 'Amiri', 'Cairo', 'Alexandria', 'Marhey', 'Tajawal', sans-serif;
+  --font-primary: 'IBM Plex Sans Arabic', 'Amiri', 'Cairo', 'Alexandria', 'Marhey', 'Tajawal', sans-serif;
+}
+
+
+body {
+  font-family: var(--font-family) !important;
+  color: var(--text-color-primary-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osxfont-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: var(--bs-white);
+}
+
+::-moz-selection {
+  background-color: var(--color-primary);
+  color: var(--bs-white);
+}
+
+a {
+  text-decoration: none !important;
+}
+
+:focus-visible {
+  outline: none !important;
+  border-color: none !important;
+}
+
+kbd {
+  font-size: .7em;
+  background-color: var(--color-primary);
+  border-radius: inherit;
+}
+
+.ltr {
+  direction: ltr;
+}
+
+.rtl {
+  direction: rtl;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Boxed Layout Styles */
+#main:not(.full-width) {
+  max-width: 1200px;
+  margin: 0 auto;
+}

@@ -1,0 +1,148 @@
+<div class="card card-product bg-transparent border-secondary border-opacity-25 rounded-3 h-100 js-card-item">
+	<div class="js-card-top">
+		<div class="d-flex justify-content-center py-4 js-loaded-spinner">
+			<div class="spinner-border text-primary" role="status">
+				<span class="visually-hidden">{{ locals.accessibility.spinner.label }}</span>
+			</div>
+		</div>
+		<div class="d-none overflow-hidden position-relative rounded-top bg-primary bg-opacity-10 zooming js-loaded-image">
+			{% if product.images %}
+				<a href="/products/{{ product.slug }}" title="{{ product.name }}" class="css-thumbnail">
+					<img src="{{ product.images[0]['image']['large'] }}" alt="{{ product.name }}" class="mx-auto card-img-top rounded-0 img-fluid{% if swiper %} swiper-lazy{% endif %}">
+				</a>
+				{% if swiper %}
+					<div class="swiper-lazy-preloader align-self-center"></div>
+				{% endif %}
+			{% else %}
+				<a href="/products/{{ product.slug }}" title="{{ product.name }}" class="css-thumbnail">
+					<svg class="placeholder-img img-fluid mx-auto card-img-top rounded-0 text-primary" width="100%" height="200px" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="{{locals.category_placeholder_image}}" preserveaspectratio="xMidYMid slice" focusable="false">
+						<title>{{locals.category_placeholder_image}}</title>
+						<rect width="100%" height="100%" fill="currentColor"></rect>
+						<text x="50%" y="50%" fill="#fff" dy=".3em">
+							{{locals.category_placeholder_image}}
+						</text>
+					</svg>
+				</a>
+			{% endif %}
+			<span class="d-none position-absolute top-0 start-0 badge bg-light-subtle text-dark-emphasis shadow-lg border border-secondary-subtle rounded-pill mt-3 ms-3 px-2 fw-light small" data-bundle-offer-product-id="{{ product.id }}"></span>
+
+
+		</div>
+	</div>
+	<div class="card-body list-group list-group-flush px-0 border-0 py-0">
+		<h2 class="list-group-item border-0 border-secondary border-opacity-10 lh-base h6 py-1 mb-0">
+			<a href="/products/{{ product.slug }}" title="{{ product.name }}" class="text-dark-emphasis">
+				{{ product.name }}
+			</a>
+		</h2>
+				{% if product.is_infinite or product.quantity > 0 %}
+			{% if (product.has_options ) %}
+				<div class="list-group-item border-0 border-secondary border-opacity-10 py-0">
+					<span class="small badge text-warning-emphasis px-0 rounded-pill">
+						<i class="ti ti-regex-off align-middle" aria-hidden="true"></i>
+						<span>
+							{{ locals.product_has_options }}
+						</span>
+					</span>
+				</div>
+			{% endif %}
+			{% if (product.has_fields and product.has_options == 0) %}
+				<div class="list-group-item border-0 border-secondary border-opacity-10 py-0">
+					<span class="small badge text-warning-emphasis px-0 rounded-pill">
+						<i class="ti ti-triangle-square-circle align-middle" aria-hidden="true"></i>
+						<span>
+							{{ locals.product_has_fields }}
+						</span>
+					</span>
+				</div>
+			{% endif %}
+		
+
+				 {% if not product.is_taxable %}
+				<div class="list-group-item border-0 border-secondary border-opacity-10 py-0">
+					<span class="small badge text-danger-emphasis px-0 rounded-pill">
+						<i class="ti ti-rubber-stamp align-middle" aria-hidden="true"></i>
+						<span>
+							{{ locals.product_is_not_taxable }}
+						</span>
+					</span>
+				</div>
+                
+                {% endif %}
+		{% endif %}
+
+		{% if store.is_product_reviews_enabled %}
+			{% if product.rating %}
+				<div class="list-group-item border-0 border-secondary border-opacity-10 py-1 text-primary">
+					{% include 'product-rating.twig' with {'rating' : product.rating.average } %}
+				</div>
+			{% endif %}
+		{% endif %}
+
+
+
+					{% if product.low_stock_quantity %}
+					<div class="list-group-item border-0 border-secondary border-opacity-10 py-0">
+				<span class="badge bg-body text-danger-emphasis fw-light border border-danger-subtle small rounded-pill">
+					
+					<svg class="animated flash hinge" aria-hidden="true" width="13" height="13" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.49998 0.5C5.49998 0.223858 5.72383 0 5.99998 0H7.49998H8.99998C9.27612 0 9.49998 0.223858 9.49998 0.5C9.49998 0.776142 9.27612 1 8.99998 1H7.99998V2.11922C9.09832 2.20409 10.119 2.56622 10.992 3.13572C11.0116 3.10851 11.0336 3.08252 11.058 3.05806L12.058 2.05806C12.3021 1.81398 12.6978 1.81398 12.9419 2.05806C13.186 2.30214 13.186 2.69786 12.9419 2.94194L11.967 3.91682C13.1595 5.07925 13.9 6.70314 13.9 8.49998C13.9 12.0346 11.0346 14.9 7.49998 14.9C3.96535 14.9 1.09998 12.0346 1.09998 8.49998C1.09998 5.13361 3.69904 2.3743 6.99998 2.11922V1H5.99998C5.72383 1 5.49998 0.776142 5.49998 0.5ZM2.09998 8.49998C2.09998 5.51764 4.51764 3.09998 7.49998 3.09998C10.4823 3.09998 12.9 5.51764 12.9 8.49998C12.9 11.4823 10.4823 13.9 7.49998 13.9C4.51764 13.9 2.09998 11.4823 2.09998 8.49998ZM7.49998 8.49998V4.09998C5.06992 4.09998 3.09998 6.06992 3.09998 8.49998C3.09998 10.93 5.06992 12.9 7.49998 12.9C8.715 12.9 9.815 12.4075 10.6112 11.6112L7.49998 8.49998Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+					{{ locals.product_cart_quantity_low_stock_short | format(product.low_stock_quantity) }}
+				</span>
+					</div>
+			{% endif %}
+
+					{% if product.formatted_sale_price is not null %}
+			<div class="list-group-item border-0 border-secondary border-opacity-10 py-1 text-primary">
+				<span class="badge bg-primary bg-opacity-10 text-primary rounded-pill">
+					{{ locals.product_discount }}
+					{{ product.discount_percentage }}%
+				</span>
+			</div>
+			{% endif %}
+	</div>
+			<div class="border-0 border-secondary border-opacity-10 px-3 py-1 d-flex flex-wrap justify-content-start align-items-center gap-2">
+			<div class="text-start overflow-hidden d-inline-block small">
+				{% if product.formatted_sale_price is not null %}
+					<strong class="text-danger-emphasis float-start pe-1">{{ product.formatted_sale_price }}</strong>
+					<small>
+						<i class="text-decoration-line-through text-muted">{{ product.formatted_price }}</i>
+					</small>
+				{% else %}
+					<strong class="fw-bold text-body">{{ product.formatted_price }}</strong>
+				{% endif %}
+			</div>
+			{# {% if product.formatted_sale_price is not null %}
+				<span class="badge bg-primary bg-opacity-10 text-primary rounded-pill">
+					{{ locals.product_discount }}
+					{{ product.discount_percentage }}%
+				</span>
+			{% endif %} #}
+		</div>
+	<div class="card-footer bg-transparent border-0">
+		<div class="btn-group btn-group-sm d-grid gap-2">
+			{% if product.is_infinite == false and product.quantity <= 0 %}
+				<button type="button" class="btn btn-primary" disabled>
+					<i class="ti ti-basket-off align-middle fs-6" aria-hidden="true"></i>
+					<span class="px-1">{{ locals.lbl_error_product_out_of_stock }}</span>
+					<span class="visually-hidden">{{ locals.lbl_error_product_out_of_stock }}
+						{{ product.name }}</span>
+				</button>
+			{% elseif ( product.has_options or product.has_fields ) %}
+				<a type="button" class="btn btn-primary" href="/products/{{ product.slug }}">
+					<i class="ti ti-brand-appgallery align-middle fs-6" aria-hidden="true"></i>
+					<span class="px-1">{{ locals.product_card_item_browse }}</span>
+					<span class="visually-hidden">{{ locals.product_card_item_browse }}
+						{{ product.name }}</span>
+				</a>
+			{% else %}
+				<button type="button" class="btn btn-primary js-add-to-cart" onclick="productCartAddToCart(this,'{{ product.id }}')">
+					<i class="ti ti-circle-plus align-middle fs-6" aria-hidden="true"></i>
+					<span class="px-1">{{ locals.product_card_item_add }}</span>
+					<span class="visually-hidden">{{ locals.product_card_item_add }}
+						{{ product.name }}</span>
+				</button>
+			{% endif %}
+		</div>
+	</div>
+</div>
+

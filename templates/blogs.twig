@@ -1,0 +1,158 @@
+{% extends "layout.twig" %}
+
+{% block header %}
+	{{ include('header.twig') }}
+{% endblock %}
+
+{% block main_content %}
+	<section class="bg-primary text-center py-5">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="text-white">
+						<h1 class="h2">{{ locals.blogs_heading }}</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	{% if blogs is empty %}
+		<section class="py-3">
+				<div class="container">
+					<div class="row row-cols-1 g-4">
+						<div class="col">
+							<div class="card border-secondary border-opacity-10 shadow-sm">
+								<div class="card-body">
+									<p class="card-title mb-0 text-muted">
+										<i class="ti ti-alert-circle align-middle" aria-hidden="true"></i>
+										<span class="px-0 px-sm-1">
+											{{ locals.blogs_no_items}}
+										</span>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+		</section>
+		{% else %}
+		<section class="border-secondary border-top border-bottom border-opacity-10 py-2">
+				<div class="container">
+					<div class="d-flex justify-content-center justify-content-sm-between align-items-center animated slideIn">
+						<div class="d-flex align-items-center text-body-secondary">
+							<div class="hstack gap-2 gap-sm-0">
+								<i class="ti ti-news align-middle fs-5 d-none d-sm-block" aria-hidden="true"></i>
+								<span class="px-0 px-sm-1">
+									{{ locals.blogs_total }}
+								</span>
+								<span class="badge text-bg-primary rounded-pill ms-auto">{{ blogs|length }}</span>
+							</div>
+						</div>
+						<div class="btn-toolbar gap-2 d-none d-lg-block" role="toolbar" aria-label="{{ locals.accessibility.toolbar_buttons.label }}">
+							<div class="d-flex flex-wrap align-items-center align-items-center">
+								<input type="range" min="1" max="4" value="2" step="1" class="form-range" tabindex="0" onchange="changeGridCols(this.value)" id="grid-cols-range">
+							</div>
+						</div>
+					</div>
+				</div>
+		</section>
+		<section class="py-3">
+				<div class="container">
+					<div class="row row-cols-1 row-cols-sm-2 g-3 js-row-grid animate__animated animate__fadeIn" id="ordersFiltered">
+						{% for blog in blogs %}
+							<div class="col">
+								<div class="card card-product border-secondary border-opacity-10 shadow-sm h-100">
+									<div class="card-header border-secondary border-bottom border-opacity-10 py-0">
+										<h6 class="card-title fw-bold lh-base mb-0 py-3">
+											<a href="blogs/{{ blog.slug }}" title="{{ blog.title }}" class="link-secondary">
+												<i class="ti ti-file-stack align-middle fs-5 float-start d-none d-sm-block" aria-hidden="true"></i>
+												<span class="px-0 px-sm-1">{{ blog.title }}</span>
+											</a>
+										</h6>
+									</div>
+									<div class="card-body text-body-tertiary text-wrap lh-base py-2 d-none d-sm-block">
+										{{ blog.SEO_page_description | striptags }}
+										...
+									</div>
+									<div class="!card-footer hstack px-3 small border-top border-secondary border-opacity-10 rounded-bottom text-center">
+										<a href="blogs/{{ blog.slug }}" class="link-primary">
+											<span class="px-0">{{ locals.blogs_read_more}}</span>
+											<i class="ti ti-arrow-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %} align-middle fs-6" aria-hidden="true"></i>
+										</a>
+										<div class="dropdown ms-auto d-print-none">
+											<button class="btn btn-link px-0 link-secondary text-decoration-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+												<i class="ti ti-share align-middle" aria-hidden="true"></i>
+												<span class="visually-hidden">{{ locals.shareLabel }}</span>
+											</button>
+											<ul class="dropdown-menu dropdown-menu-lg-end shadow-lg border-0 rounded rounded-3 !p-3">
+												<li>
+													<a class="dropdown-item py-2 animated slideIn" target="_blank" href="http://api.whatsapp.com/send?text={{ blog.title }}%20{{ store.permalink }}blogs/{{ blog.slug }}">
+														<i class="ti ti-brand-whatsapp align-middle fs-6" aria-hidden="true"></i>
+														<span class="px-1">{{ locals.shareWhatsapp }}</span>
+													</a>
+												</li>
+												<li>
+													<a class="dropdown-item py-2 animated slideIn" target="_blank" href="http://t.me/share/url?url={{ store.permalink }}blogs/{{ blog.slug }}&amp;text={{ blog.title }}">
+														<i class="ti ti-brand-telegram align-middle fs-6" aria-hidden="true"></i>
+														<span class="px-1">{{ locals.shareTelegram }}</span>
+													</a>
+												</li>
+												<li>
+													<a class="dropdown-item py-2 animated slideIn" target="_blank" href="http://www.facebook.com/sharer/sharer.php?u={{ store.permalink }}blogs/{{ blog.slug }}">
+														<i class="ti ti-brand-facebook align-middle fs-6" aria-hidden="true"></i>
+														<span class="px-1">
+															{{ locals.shareFacebook }}</span>
+													</a>
+												</li>
+												<li>
+													<a class="dropdown-item py-2 animated slideIn" target="_blank" href="http://twitter.com/intent/tweet?text={{ blog.title }}&amp;url={{ store.permalink }}blogs/{{ blog.slug }}">
+														<i class="ti ti-brand-twitter align-middle fs-6" aria-hidden="true"></i>
+														<span class="px-1">{{ locals.shareTwitter }}</span>
+													</a>
+												</li>
+												<li>
+													<a class="dropdown-item py-2 animated slideIn" target="_blank" href="http://linkedin.com/sharing/share-offsite/?url={{ store.permalink }}blogs/{{ blog.slug }}">
+														<i class="ti ti-brand-linkedin align-middle fs-6" aria-hidden="true"></i>
+														<span class="px-1">{{ locals.shareLinkedIn }}</span>
+													</a>
+												</li>
+												<li>
+													<hr class="dropdown-divider border-secondary border-opacity-10">
+												</li>
+												<li>
+													<a class="dropdown-item py-2 animated slideIn" target="_blank" href="mailto:?subject={{ blog.title }}&amp;body={{ store.permalink }}blogs/{{ blog.slug }}">
+														<i class="ti ti-at align-middle fs-6" aria-hidden="true"></i>
+														<span class="px-1">{{ locals.shareMail }}</span>
+													</a>
+												</li>
+												<li hidden>
+													<button type="button" class="dropdown-item py-2 animated slideIn">
+														<i class="ti ti-grip-vertical align-middle fs-6" aria-hidden="true"></i>
+														<sapn class="px-1">{{ locals.shareCopyClipboard }}</sapn>
+														<span class="btn-clipboard grow" data-clipboard-text="{{ store.permalink }}blogs/{{ blog.slug }}">
+															<i class="ti ti-link align-middle" aria-hidden="true"></i>
+														</span>
+													</button>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+		</section>
+		{% include 'toast.twig'%}
+	{% endif %}
+{% endblock %}
+
+{% block footer %}
+	{{ include('footer.twig') }}
+{% endblock %}
+
+{% block footer_scripts %}
+	<script defer src="{{ asset_url ~ 'clipboard.min.js' }}"></script>
+	<script defer src="{{ asset_url ~ 'clipboardInit.js' }}"></script>
+{% endblock %}
+

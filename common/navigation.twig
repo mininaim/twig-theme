@@ -1,0 +1,77 @@
+{% if not   
+('hide_menu_categories' in navigation_settings.navigation_options) or not 
+('hide_menu_delivery_payment' in navigation_settings.navigation_options)
+%}
+	<section class="bg-secondary bg-opacity-10 d-none d-lg-block py-2" role="navigation" id="navigation-menu">
+		<div class="container d-flex justify-content-between align-items-center">
+			<ul class="nav flex-grow-1 text-capitalize">
+				
+				{% if not ('hide_menu_categories' in navigation_settings.navigation_options) %}
+
+					{% set menu_item_last = main_navigation_menu.items | last %}
+
+					{% for menu in main_navigation_menu.items | slice(0, 6) %}
+						{% if menu.slug != 'all_categories' %}
+							<li class="nav-item{% if menu.items | length > 0 %} dropdown js-menu-dropdown{% endif %}">
+								{% if menu.items | length <= 0 %}
+									<a class="nav-link text-dark-emphasis {% if (menu.url | escape('url')) == requestUri()  %}text-primary{% endif %}" href="{{ menu.url }}" title="{{ menu.name }}">
+										{{ menu.name }}
+									</a>
+								{% else %}
+									<a class="nav-link text-dark-emphasis {% if (menu.url | escape('url')) == requestUri()  %}text-primary{% endif %}" data-bs-toggle="dropdown" href="{{ menu.url }}" role="button" aria-expanded="false" title="{{ menu.name }}">
+										{{ menu.name }}
+										<i class="ti ti-chevron-down f-5 align-middle" aria-hidden="true"></i>
+									</a>
+									<ul class="dropdown-menu @dropdown-menu-lg-end shadow-lg dropdown-menu-minimal border-0 rounded rounded-3 !p-3 !animate !slideIn js-menu-dropdown-menu">
+										{% for menu_sub in menu.items | slice(0, 7) %}
+											<li>
+												{% if menu_sub.items | length <= 0 %}
+													<a class="dropdown-item py-2 !rounded" href="{{ menu_sub.url }}" title="{{ menu_sub.name }}">
+														{{ menu_sub.name }}
+													</a>
+												{% else %}
+													<a class="dropdown-item py-2 !rounded d-flex justify-content-between align-items-center" href="{{ menu_sub.url }}" title="{{ menu_sub.name }}">
+														{{ menu_sub.name }}
+														<i class="ti ti-chevron-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %}" aria-hidden="true"></i>
+													</a>
+													<ul class="submenu{% if session.lang.code == 'ar' %}{% else %} submenu-left{% endif %} dropdown-menu dropdown-menu-lg-end dropdown-menu-minimal shadow-lg border-0 rounded rounded-3 !p-3 animated slideIn">
+														{% for menu_sub_sub in menu_sub.items | slice(0, 7) %}
+															<li>
+																<a class="dropdown-item py-2 !rounded" href="{{ menu_sub_sub.url }}" title="{{ menu_sub_sub.name }}">{{ menu_sub_sub.name }}</a>
+															</li>
+														{% endfor %}
+													</ul>
+												{% endif %}
+											</li>
+										{% endfor %}
+									</ul>
+								{% endif %}
+							</li>
+						{% endif %}
+					{% endfor %}
+
+					{% if menu_item_last.slug == 'all_categories' %}
+						<li class="nav-item">
+							<a class="nav-link text-dark-emphasis {% if (menu_item_last.url | escape('url')) == requestUri()  %}text-primary{% endif %}" href="{{ menu_item_last.url }}" title="{{ menu_item_last.name }}">
+								<i class="ti ti-tags fs-5 align-middle grow" aria-hidden="true"></i>
+					
+					{{ menu_item_last.name }} 
+									
+							</a>
+						</li>
+					{% endif %}	
+					
+				{% endif %}
+				
+			</ul>
+			{% if not ('hide_menu_delivery_payment' in navigation_settings.navigation_options) %}
+				<a class="hstack gap-1 text-dark-emphasis{% if '/shipping-and-payment' == requestUri()  %} text-primary{% endif %}" href="/shipping-and-payment" title="{{ locals.mainNavigation.shipping_delivery }}">
+					<span class="px-0">{{ locals.mainNavigation.shipping_delivery }}</span>
+					<i class="ti ti-arrow-up-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %} fs-5 align-middle grow" aria-hidden="true"></i>
+					
+				</a>
+			{% endif %}
+		</div>
+	</section>
+	
+{% endif %}

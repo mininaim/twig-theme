@@ -1,0 +1,112 @@
+ {% if settings.testimonials %}
+ 
+ <section section-id="{{ sectionId }}" class="py-4 p-sm-5 border-top border-secondary border-opacity-10 css-testimonials">
+	<div class="container">
+		<div class="d-flex mb-2 mb-sm-0">
+			<div class="flex-grow-1">
+				<h2 class="h5 py-0 py-sm-2 fw-bold">
+					{{ settings.title }}
+				</h2>
+			</div>
+		</div>
+		<div class="position-relative mt-0 mt-sm-0 z-1">
+			<div class="swiper reviewsSwiper">
+				<div class="swiper-wrapper">
+					{% for key, testimonial in settings.testimonials %}
+						<div class="swiper-slide card shadow-sm border border-secondary border-opacity-10 d-grid align-items-center p-5 p-sm-3 my-3 my-sm-3 position-relative" data-tilt data-tilt-glare data-tilt-max-glare="0.8">
+							<div class="card-body">
+								<figure class="mt-0">
+									<blockquote class="blockquote">
+										<p class="fs-6 text-body-tertiary">{{ testimonial.text }}</p>
+									</blockquote>
+									<figcaption class="my-2 blockquote-footer text-dark-subtle">
+										<cite title="{{ testimonial.name }}" class="fw-bold">{{ testimonial.name }}</cite>
+									</figcaption>
+								</figure>
+								<svg class="badge bg-primary text-primary bg-opacity-10 w-h-2 position-absolute top-100 end-0 translate-middle"
+                aria-hidden="true" viewbox="0 0 64 64">
+									<polygon {% if session.lang.code == 'en' %}transform="scale(-1, 1)" transform-origin="center"{% endif %} fill="currentColor" points="2 36 17 2 26 2 15 36 26 36 26 62 2 62 2 36"></polygon>
+									<polygon {% if session.lang.code == 'en' %}transform="scale(-1, 1)" transform-origin="center"{% endif %} fill="currentColor" points="38 36 53 2 62 2 51 36 62 36 62 62 38 62 38 36"></polygon>
+								</svg>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+				<hr class="mt-3 mt-sm-5 border-0">
+				{% if settings.hide_dots == false %}
+					<div class="swiper-pagination"></div>
+				{% endif %}
+			</div>
+		</div>
+</section>
+
+
+{% endif %}
+
+{% schema %}
+{
+  "name": {
+    "ar": "أراء العملاء",
+    "en": "Testimonials"
+  },
+  "icon": "fal fa-user",
+  "display": true,
+  "settings": {
+    "title": {
+      "type": "text",
+      "label": {
+        "ar": "العنوان",
+        "en": "text"
+      }
+    },
+    "testimonials": {
+      "type": "list",
+      "noLabel": true,
+      "maxItems": 12,
+      "info": {
+        "ar": "",
+        "en": ""
+      },
+      "settings_label": {
+        "ar": "رأي العميل",
+        "en": "Testimonial"
+      },
+      "settings": {
+        "name": {
+          "type": "text",
+          "label": {
+            "ar": "الإسم",
+            "en": "name"
+          }
+        },
+        "date": {
+          "type": "text",
+          "label": {
+            "ar": "التاريخ",
+            "en": "date"
+          }
+        },
+        "text": {
+          "type": "textarea",
+          "label": {
+            "ar": "النص",
+            "en": "text"
+          }
+        }
+      }
+    },
+    "hide_dots": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إخفاء النقاط",
+        "en": "Hide dots"
+      },
+      "noLabel": true
+    }
+  }
+}
+{% endschema %}

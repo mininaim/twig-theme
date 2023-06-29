@@ -1,0 +1,379 @@
+<div class="position-fixed top-50 end-0 me-1 translate-middle-y rounded-3 bg-body-tertiary z-2 d-none d-lg-block d-print-none">
+	<div class="btn-toolbar btn-group-vertical border border-secondary border-opacity-10 rounded vstack gap-1" role="group" aria-label="{{locals.accessibility.radio_toggle.label}}">
+		{# <div class="btn-group btn-group-sm dropend" role="group">
+			<button type="button" class="btn btn-outline-primary rounded-top p-0" data-bs-toggle="dropdown" aria-expanded="false">
+				<i class="ti ti-shadow align-middle p-2" aria-hidden="true" data-bs-placement="right" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.toolbar_change_contrast }}</small>" data-bs-offset="0,5"></i>
+				<span class="visually-hidden">{{ locals.toolbar_change_contrast }}</span>
+			</button>
+			<div class="dropdown-menu dropdown-menu-lg-end shadow-lg border-0 rounded rounded-3 p-3 text-center animate slideIn">
+				<button type="button" class="btn btn-sm btn-outline-primary" id="contrast-toggle" data-bs-placement="bottom" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>Ctrl + C</small>" data-bs-offset="0,5">
+					<i class="ti ti-lamp-2 align-middle" aria-hidden="true"></i>
+					<span class="px-1">{{ locals.toolbar_change_contrast_toggle }}</span>
+				</button>
+				<hr class="dropdown-divider border-secondary border-opacity-10">
+				<div class="mb-2 text-start">
+					<label for="contrast-select" class="form-label small">{{ locals.toolbar_change_contrast_select }}</label>
+					<select class="form-select" aria-label="{{locals.accessibility.select.default}}" id="contrast-select">
+						<option value="low">{{ locals.toolbar_change_contrast_select_low }}</option>
+						<option value="high">{{ locals.toolbar_change_contrast_select_high }}</option>
+					</select>
+				</div>
+				<div class="mb-2 text-start">
+					<label for="background-color" class="form-label small">{{ locals.toolbar_change_contrast_background_color }}</label>
+					<input type="color" class="form-control form-control-sm" id="background-color" data-contrast-option="backgroundColor">
+				</div>
+				<div class="mb-2 text-start">
+					<label for="color" class="form-label small">{{ locals.toolbar_change_contrast_color }}</label>
+					<input type="color" class="form-control form-control-sm" id="color" data-contrast-option="color">
+				</div>
+			</div>
+		</div> #}
+		{# <div class="btn-group btn-group-sm dropend" role="group">
+			<button type="button" class="btn btn-outline-primary p-0" data-bs-toggle="dropdown" aria-expanded="false">
+				<i class="ti ti-typography align-middle p-2" aria-hidden="true" data-bs-placement="right" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.toolbar_change_font_family }}</small>" data-bs-offset="0,5"></i>
+				<span class="visually-hidden">{{ locals.toolbar_change_font_family }}</span>
+			</button>
+			<div class="dropdown-menu dropdown-menu-lg-end shadow-lg border-0 rounded rounded-3 !p-3 animate slideIn">
+				<div class="btn-group-vertical btn-group-sm d-flex flex-wrap" role="group" aria-label="{{locals.accessibility.radio_toggle.label}}">
+					{% if session.lang.code == 'ar' %}
+						<button class="dropdown-item" type="button" data-value="Baloo Bhaijaan 2">خط بيجان 2</button>
+						<button class="dropdown-item" type="button" data-value="Amiri">الأميري</button>
+						<button class="dropdown-item" type="button" data-value="Cairo">القاهرة</button>
+						<button class="dropdown-item" type="button" data-value="El Messiri">المسيري</button>
+						<button class="dropdown-item" type="button" data-value="Changa">شانغا</button>
+						<button class="dropdown-item" type="button" data-value="Alexandria">الأكسندرية</button>
+						<button class="dropdown-item" type="button" data-value="Marhey">مرحي</button>
+					{% else %}
+						<button class="dropdown-item" type="button" data-value="Inter">Default Font</button>
+						<button class="dropdown-item" type="button" data-value="Rubik">Rubik</button>
+						<button class="dropdown-item" type="button" data-value="Open Sans">Open Sans</button>
+						<button class="dropdown-item" type="button" data-value="Lato">Lato</button>
+						<button class="dropdown-item" type="button" data-value="Montserrat">Montserrat</button>
+						<button class="dropdown-item" type="button" data-value="Oswald">Oswald</button>
+						<button class="dropdown-item" type="button" data-value="Outfit">Outfit</button>
+					{% endif %}
+				</div>
+			</div>
+		</div> #}
+
+		<div class="btn-group btn-group-sm dropend" role="group">
+			<button class="btn btn-link link-secondary p-0 rounded-top js-toolbar-layout" type="button">
+				<span class="d-flex justify-content-center" data-bs-placement="right" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.toolbar_change_layout}}</small>" data-bs-offset="2,5">
+					<svg aria-hidden="true" width="13" height="13" viewbox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M8.00012 1.5C8.00012 1.22386 7.77626 1 7.50012 1C7.22398 1 7.00012 1.22386 7.00012 1.5V13.5C7.00012 13.7761 7.22398 14 7.50012 14C7.77626 14 8.00012 13.7761 8.00012 13.5V1.5ZM3.31812 5.818C3.49386 5.64227 3.49386 5.35734 3.31812 5.18161C3.14239 5.00587 2.85746 5.00587 2.68173 5.18161L0.681729 7.18161C0.505993 7.35734 0.505993 7.64227 0.681729 7.818L2.68173 9.818C2.85746 9.99374 3.14239 9.99374 3.31812 9.818C3.49386 9.64227 3.49386 9.35734 3.31812 9.18161L2.08632 7.9498H5.50017C5.7487 7.9498 5.95017 7.74833 5.95017 7.4998C5.95017 7.25128 5.7487 7.0498 5.50017 7.0498H2.08632L3.31812 5.818ZM12.3181 5.18161C12.1424 5.00587 11.8575 5.00587 11.6817 5.18161C11.506 5.35734 11.506 5.64227 11.6817 5.818L12.9135 7.0498H9.50017C9.25164 7.0498 9.05017 7.25128 9.05017 7.4998C9.05017 7.74833 9.25164 7.9498 9.50017 7.9498H12.9135L11.6817 9.18161C11.506 9.35734 11.506 9.64227 11.6817 9.818C11.8575 9.99374 12.1424 9.99374 12.3181 9.818L14.3181 7.818C14.4939 7.64227 14.4939 7.35734 14.3181 7.18161L12.3181 5.18161Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+					</svg>
+				</span>
+				<span class="visually-hidden">{{ locals.toolbar_change_layout}}</span>
+			</button>
+		</div>
+
+		<div class="btn-group btn-group-sm dropend" role="group">
+			<button type="button" class="btn btn-link link-secondary p-0 rounded-top js-toolbar-color" data-bs-toggle="dropdown" aria-expanded="false">
+				<span class="d-flex justify-content-center" data-bs-placement="right" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.toolbar_change_color}}</small>" data-bs-offset="2,5">
+				<svg aria-hidden="true" width="13" height="13" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 9C3 6.5 4.5 4.25 7.5 1.5C10.5 4.25 12 6.5 12 9C12 11.4853 9.98528 13.5 7.5 13.5C5.01472 13.5 3 11.4853 3 9ZM10.9524 8.30307C9.67347 7.82121 8.2879 8.46208 6.98956 9.06259C5.9327 9.55142 4.93365 10.0135 4.09695 9.82153C4.03357 9.55804 4 9.28294 4 9C4 7.11203 5.02686 5.27195 7.5 2.87357C9.66837 4.97639 10.725 6.65004 10.9524 8.30307Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+				</span>
+			
+				<span class="visually-hidden">{{ locals.toolbar_change_color}}</span>
+			</button>
+			<ul class="dropdown-menu dropdown-menu-lg-end shadow-lg border-0 rounded rounded-3 !p-3 z-3" id="js-colors">
+				<li class="bg-transparent">
+					<span class="dropdown-item-text d-flex flex-wrap justify-content-between">
+						<input data-color="#ef6061" type="radio" class="btn-check" name="themeColor" id="themeColorA" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColorA">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#ef6061"></rect>
+							</svg>
+						</label>
+						<input data-color="#e65da9" type="radio" class="btn-check" name="themeColor" id="themeColorB" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColorB">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#e65da9"></rect>
+							</svg>
+						</label>
+						<input data-color="#a27be7" type="radio" class="btn-check" name="themeColor" id="themeColorC" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColorC">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#a27be7"></rect>
+							</svg>
+						</label>
+						<input data-color="#0097fd" type="radio" class="btn-check" name="themeColor" id="themeColorD" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColorD">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#0097fd"></rect>
+							</svg>
+						</label>
+						<input data-color="#00a6df" type="radio" class="btn-check" name="themeColor" id="themeColorE" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColorE">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#00a6df"></rect>
+							</svg>
+						</label>
+						<input data-color="#00a99b" type="radio" class="btn-check" name="themeColor" id="themeColorF" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColorF">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#00a99b"></rect>
+							</svg>
+						</label>
+						<input data-color="#24a451" type="radio" class="btn-check" name="themeColor" id="themeColorI" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColorI">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#24a451"></rect>
+							</svg>
+						</label>
+						<input data-color="#8d9614" type="radio" class="btn-check" name="themeColor" id="themeColorG" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColorG">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#8d9614"></rect>
+							</svg>
+						</label>
+						<input data-color="#cc7d24" type="radio" class="btn-check" name="themeColor" id="themeColorH" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColorH">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#cc7d24"></rect>
+							</svg>
+						</label>
+						{# <input data-color="#FF9900" type="radio" class="btn-check" name="themeColor" id="themeColor0" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColor0">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#FF9900"></rect>
+							</svg>
+						</label> #}
+						<input data-color="#0d3b66" type="radio" class="btn-check" name="themeColor" id="themeColor1" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColor1">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#0d3b66"></rect>
+							</svg>
+						</label>
+						<input data-color="#5e503f" type="radio" class="btn-check" name="themeColor" id="themeColor2" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColor2">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#5e503f"></rect>
+							</svg>
+						</label>
+						<input data-color="#8661a3" type="radio" class="btn-check" name="themeColor" id="themeColor3" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColor3">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#8661a3"></rect>
+							</svg>
+						</label>
+						<input data-color="#588157" type="radio" class="btn-check" name="themeColor" id="themeColor5" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColor5">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#588157"></rect>
+							</svg>
+						</label>
+						<input data-color="#006d77" type="radio" class="btn-check" name="themeColor" id="themeColor6" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColor6">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#006d77"></rect>
+							</svg>
+						</label>
+						{# <input data-color="#ff7b00" type="radio" class="btn-check" name="themeColor" id="themeColor7" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColor7">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#ff7b00"></rect>
+							</svg>
+						</label> #}
+						<input data-color="#f72585" type="radio" class="btn-check" name="themeColor" id="themeColor8" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColor8">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#f72585"></rect>
+							</svg>
+						</label>
+						{# <input data-color="#000080" type="radio" class="btn-check" name="themeColor" id="themeColor9" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColor9">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#000080"></rect>
+							</svg>
+						</label> #}
+						<input data-color="#6f2dbd" type="radio" class="btn-check" name="themeColor" id="themeColor10" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColor10">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#6f2dbd"></rect>
+							</svg>
+						</label>
+						<input data-color="#832161" type="radio" class="btn-check" name="themeColor" id="themeColor11" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColor11">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#832161"></rect>
+							</svg>
+						</label>
+						{# <input data-color="#bc4749" type="radio" class="btn-check" name="themeColor" id="themeColor12" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColor12">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#bc4749"></rect>
+							</svg>
+						</label>
+						<input data-color="#335c67" type="radio" class="btn-check" name="themeColor" id="themeColor13" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColor13">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#335c67"></rect>
+							</svg>
+						</label> #}
+						<input data-color="#8ac926" type="radio" class="btn-check" name="themeColor" id="themeColor14" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColor14">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#8ac926"></rect>
+							</svg>
+						</label>
+						<input data-color="#815B5B" type="radio" class="btn-check" name="themeColor" id="themeColor15" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColor15">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#815B5B"></rect>
+							</svg>
+						</label>
+						{# <input data-color="#6F7070" type="radio" class="btn-check" name="themeColor" id="themeColor16" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColor16">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#6F7070"></rect>
+							</svg>
+						</label> #}
+						<input data-color="#CC33FF" type="radio" class="btn-check" name="themeColor" id="themeColor17" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColor17">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#CC33FF"></rect>
+							</svg>
+						</label>
+						{# <input data-color="#FF3366" type="radio" class="btn-check" name="themeColor" id="themeColor18" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColor18">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#FF3366"></rect>
+							</svg>
+						</label> #}
+						{# <input data-color="#781C68" type="radio" class="btn-check" name="themeColor" id="themeColor19" autocomplete="off">
+						<label class="btn btn-link btn-sm grow" for="themeColor19">
+							<svg class="rounded-pill" width="10" height="10" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="#781C68"></rect>
+							</svg>
+						</label> #}
+					</span>
+				</li>
+			</ul>
+		</div>
+		<div class="btn-group btn-group-sm dropend" role="group">
+			<button type="button" class="btn btn-link link-secondary p-0" data-bs-toggle="dropdown" aria-expanded="false">
+				
+				<span class="d-flex justify-content-center" data-bs-placement="right" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.toolbar_change_font_size }}</small>" data-bs-offset="2,5">
+				<svg aria-hidden="true" width="13" height="13" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.78233 2.21707C2.70732 2.14206 2.60557 2.09991 2.49949 2.09991C2.3934 2.09991 2.29166 2.14206 2.21664 2.21707L0.216645 4.21707C0.0604351 4.37328 0.0604351 4.62655 0.216645 4.78276C0.372855 4.93897 0.626121 4.93897 0.78233 4.78276L2.09949 3.4656L2.09949 11.5342L0.78233 10.2171C0.62612 10.0609 0.372854 10.0609 0.216645 10.2171C0.0604349 10.3733 0.0604349 10.6265 0.216645 10.7828L2.21664 12.7828C2.29166 12.8578 2.3934 12.8999 2.49949 12.8999C2.60557 12.8999 2.70731 12.8578 2.78233 12.7828L4.78233 10.7828C4.93854 10.6265 4.93854 10.3733 4.78233 10.2171C4.62612 10.0609 4.37285 10.0609 4.21664 10.2171L2.89949 11.5342L2.89949 3.4656L4.21664 4.78276C4.37285 4.93897 4.62612 4.93897 4.78233 4.78276C4.93854 4.62655 4.93854 4.37328 4.78233 4.21707L2.78233 2.21707ZM10.5 2.74997C10.7107 2.74997 10.8988 2.88211 10.9703 3.08036L13.9703 11.3999C14.064 11.6597 13.9293 11.9462 13.6696 12.0399C13.4098 12.1336 13.1233 11.9989 13.0296 11.7392L12.0477 9.016H8.95228L7.97033 11.7392C7.87666 11.9989 7.59013 12.1336 7.33036 12.0399C7.07059 11.9462 6.93595 11.6597 7.02962 11.3999L10.0296 3.08036C10.1011 2.88211 10.2892 2.74997 10.5 2.74997ZM10.5 4.72396L11.7412 8.166H9.25879L10.5 4.72396Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+				</span>
+				<span class="visually-hidden">{{ locals.toolbar_change_font_size }}</span>
+			</button>
+			<div class="dropdown-menu dropdown-menu-lg-end shadow-lg border-0 rounded rounded-3 p-3">
+				<label for="changeFontSize" class="form-label">{{ locals.toolbar_change_font_size }}</label>
+				<input type="range" min="12" max="18" value="16" class="form-range js-font-size-controls" id="changeFontSize" tabindex="0">
+				<button type="button" class="btn btn-outline-primary btn-sm w-100" id="js-font-size-reset">
+					<i class="ti ti-refresh align-middle" aria-hidden="true"></i>
+					<span class="px-1">{{ locals.toolbar_change_font_size_reset }}</span>
+				</button>
+			</div>
+		</div>
+		<div class="btn-group btn-group-sm dropend" role="group">
+			<button type="button" class="btn btn-link link-secondary p-0" data-bs-toggle="dropdown" aria-expanded="false">
+		
+				<span class="d-flex justify-content-center" data-bs-placement="right" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.toolbar_command }}</small>" data-bs-offset="2,5">
+				
+				<svg aria-hidden="true" width="13" height="13" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.877197 7.49984C0.877197 3.84216 3.84234 0.877014 7.50003 0.877014C11.1577 0.877014 14.1229 3.84216 14.1229 7.49984C14.1229 11.1575 11.1577 14.1227 7.50003 14.1227C3.84234 14.1227 0.877197 11.1575 0.877197 7.49984ZM7.50003 1.82701C4.36702 1.82701 1.8272 4.36683 1.8272 7.49984C1.8272 10.6328 4.36702 13.1727 7.50003 13.1727C10.633 13.1727 13.1729 10.6328 13.1729 7.49984C13.1729 4.36683 10.633 1.82701 7.50003 1.82701ZM7.12457 9.00001C7.06994 9.12735 6.33165 11.9592 6.33165 11.9592C6.26018 12.226 5.98601 12.3843 5.71928 12.3128C5.45255 12.2413 5.29425 11.9672 5.36573 11.7004C5.36573 11.7004 6.24661 8.87268 6.24661 8.27007V6.80099L4.28763 6.27608C4.0209 6.20461 3.86261 5.93045 3.93408 5.66371C4.00555 5.39698 4.27972 5.23869 4.54645 5.31016C4.54645 5.31016 6.20042 5.87268 6.84579 5.87268H8.15505C8.80042 5.87268 10.4534 5.31042 10.4534 5.31042C10.7202 5.23895 10.9943 5.39724 11.0658 5.66397C11.1373 5.93071 10.979 6.20487 10.7122 6.27635L8.74661 6.80303V8.27007C8.74661 8.87268 9.62663 11.6971 9.62663 11.6971C9.6981 11.9639 9.5398 12.238 9.27307 12.3095C9.00634 12.381 8.73217 12.2227 8.6607 11.956C8.6607 11.956 7.91994 9.12735 7.86866 9.00001C7.81994 8.87268 7.65006 8.87268 7.65006 8.87268H7.34317C7.34317 8.87268 7.16994 8.87268 7.12457 9.00001ZM7.50043 5.12007C8.12175 5.12007 8.62543 4.61639 8.62543 3.99507C8.62543 3.37375 8.12175 2.87007 7.50043 2.87007C6.87911 2.87007 6.37543 3.37375 6.37543 3.99507C6.37543 4.61639 6.87911 5.12007 7.50043 5.12007Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+				</span>
+				<span class="visually-hidden">{{ locals.toolbar_command }}</span>
+			</button>
+			<div class="dropdown-menu dropdown-menu-lg-end dropdown-menu-minimal shadow-lg border-0 rounded rounded-3 !p-3">
+				<div class="p-3 overflow-y-scroll small text-uppercase" data-simplebar data-simplebar-direction="{% if session.lang.code == 'ar' %}rtl{% else %}ltr{% endif %}" style="max-height: 200px">
+					<div class="border-bottom border-secondary-subtle p-1 d-flex justify-content-between">
+						<span class="text-capitalize">{{ locals.toolbar_commands.home }}</span>
+						<span>
+							<kbd>z</kbd>
+							<kbd>h</kbd>
+						</span>
+					</div>
+					<div class="border-bottom border-secondary-subtle p-1 d-flex justify-content-between">
+						<span class="text-capitalize">{{ locals.toolbar_commands.products }}</span>
+						<span>
+							<kbd>z</kbd>
+							<kbd>p</kbd>
+						</span>
+					</div>
+					<div class="border-bottom border-secondary-subtle p-1 d-flex justify-content-between">
+						<span class="text-capitalize">{{ locals.toolbar_commands.categories }}</span>
+						<span>
+							<kbd>z</kbd>
+							<kbd>t</kbd>
+						</span>
+					</div>
+					<div class="border-bottom border-secondary-subtle p-1 d-flex justify-content-between">
+						<span class="text-capitalize">{{ locals.toolbar_commands.blog }}</span>
+						<span>
+							<kbd>z</kbd>
+							<kbd>b</kbd>
+						</span>
+					</div>
+					<div class="border-bottom border-secondary-subtle p-1 d-flex justify-content-between">
+						<span class="text-capitalize">{{ locals.toolbar_commands.language }}</span>
+						<span>
+							<kbd>z</kbd>
+							<kbd>l</kbd>
+						</span>
+					</div>
+					<div class="border-bottom border-secondary-subtle p-1 d-flex justify-content-between">
+						<span class="text-capitalize">{{ locals.toolbar_commands.offcanvasCart }}</span>
+						<span>
+							<kbd>z</kbd>
+							<kbd>o</kbd>
+						</span>
+					</div>
+					<div class="border-bottom border-secondary-subtle p-1 d-flex justify-content-between">
+						<span class="text-capitalize">{{ locals.toolbar_commands.cart }}</span>
+						<span>
+							<kbd>z</kbd>
+							<kbd>c</kbd>
+						</span>
+					</div>
+					{% if customer == false %}
+						<div class="border-bottom border-secondary-subtle p-1 d-flex justify-content-between">
+							<span class="text-capitalize">{{ locals.toolbar_commands.login }}</span>
+							<span>
+								<kbd>z</kbd>
+								<kbd>a</kbd>
+							</span>
+						</div>
+					{% endif %}
+					<div class="border-bottom border-secondary-subtle p-1 d-flex justify-content-between">
+						<span class="text-capitalize">{{ locals.toolbar_commands.shipping }}</span>
+						<span>
+							<kbd>z</kbd>
+							<kbd>s</kbd>
+						</span>
+					</div>
+					<div class="border-bottom border-secondary-subtle p-1 d-flex justify-content-between">
+						<span class="text-capitalize">{{ locals.toolbar_commands.mode }}</span>
+						<span>
+							<kbd>z</kbd>
+							<kbd>d</kbd>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="btn-group btn-group-sm" role="group">
+			<button
+				type="button" class="btn btn-link link-secondary p-0 js-toolbar-clear-formatting">
+	
+				<span class="d-flex justify-content-center" data-bs-placement="right" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.toolbar_clear_to_default}}</small>" data-bs-offset="2,5">
+				
+				<svg aria-hidden="true" width="13" height="13" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4.85355 2.14645C5.04882 2.34171 5.04882 2.65829 4.85355 2.85355L3.70711 4H9C11.4853 4 13.5 6.01472 13.5 8.5C13.5 10.9853 11.4853 13 9 13H5C4.72386 13 4.5 12.7761 4.5 12.5C4.5 12.2239 4.72386 12 5 12H9C10.933 12 12.5 10.433 12.5 8.5C12.5 6.567 10.933 5 9 5H3.70711L4.85355 6.14645C5.04882 6.34171 5.04882 6.65829 4.85355 6.85355C4.65829 7.04882 4.34171 7.04882 4.14645 6.85355L2.14645 4.85355C1.95118 4.65829 1.95118 4.34171 2.14645 4.14645L4.14645 2.14645C4.34171 1.95118 4.65829 1.95118 4.85355 2.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+				</span>
+				
+				<span class="visually-hidden">{{ locals.toolbar_clear_to_default}}</span>
+			</button>
+		</div>
+	</div>
+</div>
+
+{% block footer_scripts %}
+	{# <script defer src="{{ assetUrl('toolbarContrastMode.js') }}"></script> #}
+	{# <script defer src="{{ assetUrl('toolbarFontFamily.js') }}"></script> #}
+	<script defer src="{{ assetUrl('toolbarFontSize.js') }}"></script>
+	<script defer src="{{ assetUrl('toolbarColorTheme.js') }}"></script>
+	{# <script defer src="{{ assetUrl('handleColorHover.js') }}"></script> #}
+	<script defer src="{{ assetUrl('toolbarClearLocalStorage.js') }}"></script>
+	<script defer src="{{ assetUrl('toggleLayout.js') }}"></script>
+{% endblock %}

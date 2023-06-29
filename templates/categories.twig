@@ -1,0 +1,190 @@
+{% extends "layout.twig" %}
+
+{% block header %}
+	{{ include('header.twig') }}  
+{% endblock %}
+
+{% block main_content %}
+	<section class="bg-primary text-center py-5">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<h1 class="h2 text-white">
+						{{ locals.categories_hero_heading }}
+					</h1>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	{% if categories|length > 0 %}
+	<section class="border-secondary border-top border-bottom border-opacity-10 py-2">
+		<div class="container">
+			<div class="d-flex justify-content-center justify-content-sm-end align-items-center animated slideIn">
+				<div class="btn-group btn-group-sm" role="group" aria-label="{{ locals.accessibility.group_buttons.label }}">
+					<button type="button" class="btn btn-outline-secondary active js-button-grid">
+						<i class="ti ti-text-caption fs-6 align-middle" aria-hidden="true"></i>
+						<span class="px-1">{{ locals.cetegories_grid_picture }}</span>
+					</button>
+					<button type="button" class="btn btn-outline-secondary js-button-manosry">
+						<i class="ti ti-sitemap fs-6 align-middle" aria-hidden="true"></i>
+						<span class="px-1">{{ locals.cetegories_grid_index }}</span>
+					</button>
+				</div>
+			</div>
+		</div>
+	</section>
+	{#
+	<section class="py-3" hidden>
+		<div class="container">
+			<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+				{% for key, category in categories %}
+					<div class="col">
+						<a href="/categories/{{ category.id }}/{{ category.slug }}" title="{{category.name}}">
+							<div class="card card-product border-0 rounded shadow-sm h-100 text-bg-dark ratio ratio-21x9">
+								{% if category.cover_image %}
+									<img src="{{ imageUrl(category.cover_image) }}" alt="{{category.img_alt_text}}" class="card-img animate__animated animate__fadeIn">
+								{% else %}
+									<svg class="placeholder-img img-fluid mx-auto card-img rounded text-primary" width="235" height="235" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="{{locals.category_placeholder_image}}" preserveaspectratio="xMidYMid slice" focusable="false">
+										<title>{{locals.category_placeholder_image}}</title>
+										<rect width="100%" height="100%" fill="currentColor"></rect>
+										<text x="50%" y="50%" fill="#fff" dy=".3em">
+											{{locals.category_placeholder_image}}
+										</text>
+									</svg>
+								{% endif %}
+								<div class="card-img-overlay">
+									<div class="card-title mb-0 hstack gap-2 lh-base text-muted">
+										{{category.name}}
+										<span class="badge bg-primary text-white rounded-pill ms-auto" hidden>{{category.products_count}}</span>
+									</div>
+									
+								</div>
+							</div>
+							
+						</a>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+	#}
+	<section class="py-3 js-categories-manosry">
+		<div class="container">
+			<div class="row row-cols-1 row-cols-md-3 row-cols-lg-6 g-3 animate__animated animate__fadeIn js-row-manosry" data-masonry='{"percentPosition": true }'>
+				{% for key, category in categories %}
+					<div class="col">
+						<ul class="list-group list-group-flush border border-secondary border-opacity-10 shadow-sm rounded">
+							<li class="list-group-item border-0 py-2">
+								<a href="{{ category.url }}" class="link-secondary">
+									<span class="px-1">{{category.name}}</span>
+									<sup hidden>
+										<span class="text-secondary">({{category.products_count}})</span>
+									</sup>
+									{% if category.sub_categories | length > 0 %}
+										<ul class="list-group list-group-flush py-0">
+											{% for sub_key, sub_category in category.sub_categories %}
+												<li class="list-group-item border-0 py-0">
+													<a href="categories/{{ sub_category.id }}/{{ sub_category.slug }}" class="link-secondary">
+														<i class="ti ti-radius-bottom-{% if session.lang.code == 'ar' %}right{% else %}left{% endif %}" aria-hidden="true"></i>
+														<span class="px-1">{{ sub_category.name }}</span>
+													</a>
+													{% if sub_category.sub_categories | length > 0 %}
+														<ul class="list-group list-group-flush py-0">
+															{% for subTwo_category in sub_category.sub_categories %}
+																<li class="list-group-item border-0 py-0">
+																	<a href="categories/{{ subTwo_category.id }}/{{ subTwo_category.slug }}" class="link-secondary">
+																		<i class="ti ti-radius-bottom-{% if session.lang.code == 'ar' %}right{% else %}left{% endif %}" aria-hidden="true"></i>
+																		<span class="px-1">{{ subTwo_category.name }}</span>
+																	</a>
+																</li>
+															{% endfor %}
+														</ul>
+													{% endif %}
+												</li>
+											{% endfor %}
+										</ul>
+									{% endif %}
+								</a>
+							</li>
+						</ul>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+	<section class="py-3 d-none js-categories-grid">
+		<div class="container">
+			<div class="row row-cols-2 row-cols-md-4 row-cols-lg-6 g-3">
+				{% for key, category in categories %}
+					<div class="col">
+						<a href="/categories/{{ category.id }}/{{ category.slug }}" title="{{category.name}}">
+							<div class="card card-product border-secondary border-opacity-10 shadow-sm h-100 !translateY js-card-item">
+								<div class="js-card-top h-100">
+									<div class="d-flex justify-content-center py-4 js-loaded-spinner">
+										<div class="spinner-border text-primary" role="status">
+											<span class="visually-hidden">{{ locals.accessibility.spinner.label }}</span>
+										</div>
+									</div>
+									<div class="d-none overflow-hidden rounded-top zooming js-loaded-image">
+										{% if category.image %}
+											<img src="{{ imageUrl(category.image, { w: 235, q: 100, f:'auto' }) }}" alt="{{category.img_alt_text}}" class="card-img-top animate__animated animate__fadeIn">
+										{% else %}
+											<svg class="placeholder-img img-fluid mx-auto card-img-top rounded-0 text-primary" width="235" height="235" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="{{locals.category_placeholder_image}}" preserveaspectratio="xMidYMid slice" focusable="false">
+												<title>{{locals.category_placeholder_image}}</title>
+												<rect width="100%" height="100%" fill="currentColor"></rect>
+												<text x="50%" y="50%" fill="#fff" dy=".3em">
+													{{locals.category_placeholder_image}}
+												</text>
+											</svg>
+										{% endif %}
+									</div>
+								</div>
+								<div class="card-body" hidden>
+									{% if category.SEO_category_description %}
+										<p class="card-text text-muted">
+											{{category.SEO_category_description|length > 100 ? category.SEO_category_description|slice(0, 100) ~ '...' : category.SEO_category_description}}
+										{% else %}
+											{{locals.category_placeholder_desc}}
+											{{category.name}}
+										</p>
+									{% endif %}
+								</div>
+								<div class="card-footer bg-transparent border-0">
+									<h6 class="card-title mb-0 hstack gap-2 lh-base text-dark-emphasis small">
+										{{category.name}}
+										<span class="badge bg-primary text-white rounded-pill ms-auto" hidden>{{category.products_count}}</span>
+									</h6>
+								</div>
+							</div>
+						</a>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</section>
+	{% else %}
+	<section class="border-secondary border-top border-bottom border-opacity-10 py-3 animated slideIn">
+		<div class="container">
+			<div class="row">
+				<div class="card p-3 border-secondary border-opacity-10 shadow-sm">
+					<div class="text-muted">
+						<i class="ti ti-urgent align-middle fs-5" aria-hidden="true"></i>
+						<span class="px-1">
+							{{ locals.categories_no_results }}
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	{% endif %}
+{% endblock %}
+
+{% block footer %}
+	{{ include('footer.twig') }}
+{% endblock %}
+
+{% block footer_scripts %}
+	<script defer src="{{ assetUrl('categories.js') }}"></script>
+{% endblock %}

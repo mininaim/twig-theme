@@ -1,0 +1,226 @@
+
+ {% if settings.slider %}
+
+<section section-id="{{ sectionId }}" class="container-fluid g-0 css-slider {% if store.editing_mode == false %} reveal-fx reveal-fx--clip-y{% endif %}" {% if store.editing_mode == false %}data-reveal-fx-delay="100"{% endif %}>
+	<div id="hero-slider-{{ sectionId }}" class="carousel slide carousel-fade" data-bs-config="{'interval':5000}, 'touch': true" data-bs-ride="true">
+		{% if settings.hide_dots == false %}
+			<div class="carousel-indicators d-none d-sm-flex">
+				{% for key, slide in settings.slider %}
+					<button type="button" data-bs-target="#hero-slider-{{ sectionId }}" data-bs-slide-to="{{ key }}" {% if key == 0 %} class="active" aria-current="true" {% endif %} aria-label="{{locals.accessibility.navigation.paginate}}"></button>
+				{% endfor %}
+			</div>
+		{% endif %}
+		<div class="carousel-inner">
+			{% for key, slide in settings.slider %}
+				<div class="carousel-item !ratio !ratio-16x9{% if key == 0 %} active{% endif %}">
+					<div {% if settings.show_overlay == true %} class="overlay" {% endif %} {% if settings.background_color %} style="background-color: {{ settings.background_color }} !important" {% endif %}></div>
+
+          <img src="{{ imageUrl(slide.image,{ q: 100, f:'auto' }) }}" class="img-fluid object-fit-cover desktop-tablet-image" style="width: 100%; height: 100%;" alt="{{ slide.title }}">
+          <img src="{{ imageUrl(slide.mobile_image,{ q: 100, f:'auto' }) }}" class="img-fluid object-fit-cover mobile-image" style="width: 100%; height: 100%; display: none;" alt="{{ slide.title }}">
+
+          <div class="container">
+						<div class="col-8 col-md-8 col-lg-4 me-auto carousel-caption text-start" {% if settings.text_color %} style="color: {{ settings.text_color }} !important" {% endif %}>
+							{% if slide.title %}
+								<h2 class="h3 fw-bold text-light-subtle animate__animated animate__delay-0s animate__fadeInUp">{{ slide.title }}</h2>
+							{% endif %}
+							{% if slide.des %}
+								{% if slide.des|length > 120 %}
+									<p class="text-light animate__animated animate__delay-1s animate__fadeInUp">{{ slide.des|slice(0,120) }}...</p>
+								{% else %}
+									<p class="text-light animate__animated animate__delay-1.5s animate__slideInUp">{{ slide.des }}</p>
+								{% endif %}
+							{% endif %}
+							{% if slide.url %}
+								<p class="animate__animated animate__delay-1s animate__fadeInUp">
+									<a href="{{ slide.url }}" class="btn btn-primary">
+										<span class="px-1">{{ locals.moduleSlider.know_more }}
+										</span>
+										<span class="visually-hidden">{{ locals.moduleSlider.know_more }}
+											{{ sectionId }}
+										</span>
+										<i class="ti ti-arrow-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %} align-middle" aria-hidden="true"></i>
+									</a>
+								</p>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+		{% if settings.slider | length > 1 %}
+			<button class="carousel-control-prev" type="button" data-bs-target="#hero-slider-{{ sectionId }}" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">{{ locals.prev }}</span>
+			</button>
+			<button class="carousel-control-next" type="button" data-bs-target="#hero-slider-{{ sectionId }}" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">{{ locals.next }}</span>
+			</button>
+		{% endif %}
+	</div>
+</section>
+
+
+<script>
+{# 
+function fixMirage2MobileImages() {
+  var imageElements = document.querySelectorAll('.mobile-image[data-cfsrc]');
+
+  for (var i = 0; i < imageElements.length; i++) {
+    var imageElement = imageElements[i];
+    var originalImageUrl = imageElement.getAttribute('data-cfsrc');
+
+    if (originalImageUrl && imageElement.src !== originalImageUrl) {
+      imageElement.src = originalImageUrl;
+      imageElement.removeAttribute('data-cfsrc');
+    }
+  }
+}
+
+window.addEventListener('load', function() {
+  fixMirage2MobileImages();
+}); #}
+
+
+  function updateImageVisibility() {
+      const viewportWidth = window.innerWidth;
+      const desktopTabletImages = document.querySelectorAll('.desktop-tablet-image');
+      const mobileImages = document.querySelectorAll('.mobile-image');
+
+      if (viewportWidth <= 767) {
+          desktopTabletImages.forEach((img) => {
+              img.style.display = 'none';
+          });
+          mobileImages.forEach((img) => {
+              if (img.getAttribute('src')) {
+                  img.style.display = 'block';
+                  img.style.backgroundSize = 'cover';
+                  img.style.backgroundPosition = 'center';
+              } else {
+                  img.parentElement.querySelector('.desktop-tablet-image').style.display = 'block';
+              }
+          });
+      } else {
+          desktopTabletImages.forEach((img) => {
+              img.style.display = 'block';
+          });
+          mobileImages.forEach((img) => {
+              img.style.display = 'none';
+          });
+      }
+  }
+
+  window.addEventListener('resize', updateImageVisibility);
+  document.addEventListener('DOMContentLoaded', updateImageVisibility);
+
+</script>
+
+{% endif %}
+{% schema %}
+{
+  "name": {
+    "ar": "شرائح الصور",
+    "en": "Slider"
+  },
+  "icon": "fal fa-presentation",
+  "display": true,
+  "settings": {
+    "slider": {
+      "type": "list",
+      "noLabel": true,
+      "maxItems": 4,
+      "settings_label": {
+        "ar": "الصورة",
+        "en": "Picture"
+      },
+      "settings": {
+        "title": {
+          "type": "text",
+          "label": {
+            "ar": "العنوان",
+            "en": "text"
+          }
+        },
+        "des": {
+          "type": "text",
+          "label": {
+            "ar": "النص",
+            "en": "text"
+          }
+        },
+        "image": {
+          "type": "image",
+          "label": {
+            "ar": "الصورة",
+            "en": "Image"
+          },
+          "info": {
+            "ar": "ارفع صورة بحجم 1400 * 600",
+            "en": "This is an info text sample here"
+          }
+        },
+       "mobile_image": {
+          "type": "image",
+          "label": {
+            "ar": "صورة الجوال",
+            "en": "Mobile Image"
+          },
+          "info": {
+            "ar": "ارفع صورة بحجم 767 * 767",
+            "en": "This is an info text sample here"
+          }
+        },
+        "url": {
+          "type": "url",
+          "label": {
+            "ar": "الرابط",
+            "en": "Link"
+          },
+          "info": {
+            "ar": "اذا كنت تريد اضافة رابط",
+            "en": "This is an info text sample here"
+          }
+        }
+      }
+    },
+    "hide_dots": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إخفاء النقاط",
+        "en": "Hide dots"
+      },
+      "noLabel": true
+    },
+    "background_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون الخلفية",
+        "en": "Text color"
+      }
+    },
+    "text_color": {
+      "type": "color",
+      "label": {
+        "ar": "لون النص",
+        "en": "Text color"
+      }
+    },
+    "show_overlay": {
+      "type": "checkbox",
+      "label": {
+        "ar": " ",
+        "en": " "
+      },
+      "option": {
+        "ar": "إظهار Overlay",
+        "en": "Show Overlay"
+      },
+      "noLabel": true
+    }
+  }
+}
+{% endschema %}

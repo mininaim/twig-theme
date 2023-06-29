@@ -1,0 +1,27 @@
+<div class="card border-0 p-0 d-flex flex-row justify-content-between">
+	<span class="text-muted">
+		{{ locals.reviews.modaltitle }}
+		<sup class="fw-bold text-danger js-live-rating" hidden></sup>
+	</span>
+	<span class="d-flex align-items-center gap-2">
+		<span id="js-product-rater"></span>
+	</span>
+</div>
+<div class="card border-0 p-0 my-3">
+	<textarea class="form-control js-input-review-comment" id="floatingTextarea" maxlength="200"></textarea>
+	<span class="hstack gap-3 d-inline-block mt-2 text-warning-emphasis small text-end">
+		<span class="js-review-remaining-count">200</span>
+		<span class="px-0">{{ locals.reviews.remaining }}</span>
+	</span>
+</div>
+<div class="card p-2 border-secondary-subtle">
+	<div class="form-check form-switch d-flex flex-row-reverse justify-content-between align-items-center ps-0">
+		<input class="form-check-input" name="is_anonymous" type="checkbox" role="switch" id="is_review_customer_anonymous">
+		<label class="form-check-label text-body-tertiary small" for="is_review_customer_anonymous">
+			<i class="ti ti-spy align-middle" aria-hidden="true"></i>
+			<span class="px-0">
+				{{ locals.product_reviews_is_anonymous_label }}
+			</span>
+		</label>
+	</div>
+</div>

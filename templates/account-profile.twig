@@ -1,0 +1,235 @@
+{% extends "layout.twig" %}
+
+{% block header %}
+	{{ include('header.twig') }}
+{% endblock %}
+
+{% block main_content %}
+	{% if customer %}
+    <section class="bg-primary text-center py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="text-white">
+              <h1 class="h2">{{ locals.profile.title}}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="border-secondary border-top border-bottom border-opacity-10 py-2">
+      <div class="container">
+        <div class="d-flex justify-content-center justify-content-sm-end align-items-center animated slideIn">
+          <div class="btn-toolbar" role="toolbar" aria-label="{{ locals.accessibility.toolbar_buttons.label }}">
+            <a href="#" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#removeAccountModal">
+              <i class="ti ti-user-x align-middle" aria-hidden="true"></i>
+              <span class="px-1">
+                {{ locals.account_delete_account }}
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="border-secondary !border-top border-bottom border-opacity-10 py-2 pb-0">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <ul class="nav nav-pills mb-0">
+              <li class="nav-item">
+                <a class="nav-link active bg-transparent text-primary border-bottom border-primary rounded-0 hstack gap-2" href="/account-profile">{{ locals.profile.title }}</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-secondary" href="/account-addresses">
+                  {{ locals.profile.addresses }}
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link text-secondary" aria-current="page" href="/account-orders">
+                  {{ locals.profile.orders }}
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="tab-content" id="accountTabContent">
+              <div class="tab-pane fade show active" id="account-tab-pane" role="tabpanel" aria-labelledby="account-tab" tabindex="0">
+                <div class="card border-0">
+                  <form action="/account-profile" method="post">
+                    <input type="hidden" name="_token" value="{{ csrf_token }}">
+                    <div class="form-floating mb-2">
+                      <input type="text" name="name" class="form-control" id="floatingInputName" placeholder="{{customer['name']}}" value="{{customer['name']}}">
+                      <label for="floatingInputName" class="text-body-emphasis">
+                        {{ locals.account_profile_name }}
+                      </label>
+                    </div>
+                    <div class="form-floating mb-2">
+                      <input type="email" name="email" class="form-control text-start" id="floatingInputEmail" placeholder="{{customer['email']}}" value="{{customer['email']}}">
+                      <label for="floatingInputEmail" class="text-body-emphasis">
+                        {{ locals.account_profile_email }}
+                      </label>
+                    </div>
+                    <div class="form-floating mb-2">
+                      <input type="number" name="mobile" class="form-control text-start{% if session.lang.code == 'ar' %} ps-0{% endif %}" id="floatingInputPhone" placeholder="{{customer['mobile']}}" value="{{customer['mobile']}}" disabled readonly>
+                      <label for="floatingInputPhone" class="text-body-emphasis">
+                        {{ locals.account_profile_phone }}
+                      </label>
+                    </div>
+                    <div class="mb-3 border rounded p-3 d-flex flex-wrap justify-content-start justify-content-sm-between align-items-center">
+                      <div class="form-check">
+                        <input name="is_newsletter_subscriber" class="form-check-input" type="checkbox" value="1" id="flexSwitchCheckDefaultMail" {% if (customer['is_newsletter_subscriber']) == 1 %} checked {% endif %}>
+                        <label class="form-check-label text-body-emphasis" for="flexSwitchCheckDefaultMail">
+                          {{ locals.account_form_newsletter}}
+                        </label>
+                        {# <sup class="d-none d-sm-inline-flex" data-bs-placement="top" data-bs-html="true" data-bs-toggle="popover" data-bs-title="<span class='text-secondary-emphasis'>{{locals.account_delete_account_info}}</span>" data-bs-content="{{locals.account_delete_account_info_text }}">
+                          <i class="ti ti-info-circle text-primary align-middle small" aria-hidden="true"></i>
+                          <span class="visually-hidden">
+                            {{ locals.account_delete_account_info }}
+                          </span>
+                        </sup> #}
+                      </div>
+                      <button type="submit" class="btn btn-primary mt-3 mt-sm-0">
+                        <i class="ti ti-circle-check align-middle fs-5" aria-hidden="true"></i>
+                        <span class="px-1">
+                          {{ locals.account_form_save}}
+                        </span>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+                 {# {% include 'template_for_mazeed_badge' %} #}
+                <div class="card shadow-sm border-primary border-opacity-25 text-dark shadow-sm mt-2 reveal-fx reveal-fx--clip-y" data-reveal-fx-delay="100">
+                  <h5 class="card-header py-0 bg-transparent border-bottom border-1 border-primary border-opacity-25">
+                    <img src="{{ asset_url ~ 'mazeed-logo.svg'}}" alt="{{ locals.mazeed_alt }}" class="img-fluid css-mode-toggle translateY">
+                  </h5>
+                  <div class="card-body bg-primary bg-opacity-10">
+                    <p class="card-text text-secondary-emphasis">
+                      {{ locals.mazeed_text }}
+                    </p>
+                    <div class="hstack gap-2">
+                      <a target="_blank" href="https://mazeed.zid.sa/" class="btn btn-sm btn-outline-primary">
+                        <i class="ti ti-world align-middle fs-5" aria-hidden="true"></i>
+                        <span class="px-1">
+                          {{ locals.mazeed_website }}
+                        </span>
+                      </a>
+                      <a target="_blank" href="https://onelink.to/customer_profile" class="btn btn-sm btn-outline-primary">
+                        <i class="ti ti-arrow-bar-to-down align-middle fs-5" aria-hidden="true"></i>
+                        <span class="px-1">
+                          {{ locals.mazeed_download }}
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="modal fade" id="removeAccountModal" tabindex="-1" aria-labelledby="removeAccountModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0">
+          <div class="modal-header text-secondary fw-bold border-secondary border-opacity-10">
+            <h5 class="modal-title" id="removeAccountModalLabel">
+              <span class="px-0">
+                {{ locals.account_modal_warning_title }}
+              </span>
+            </h5>
+            <button type="button" class="btn-none p-0 text-body-emphasis grow" data-bs-dismiss="modal" aria-label="{{locals.accessibility.close.label}}">
+              <i class="ti ti-x align-middle fs-5"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="card p-0 border-0 text-danger-emphasis">
+              <span class="px-1">
+                {{ locals.account_modal_warning_text }}
+              </h6>
+            </div>
+            <div class="js-faqs-container d-none" data-faqs="false">
+              <hr class="border border-secondary-subtle my-3">
+              <h6 class="text-secondary-subtle">
+                <i class="ti ti-question-circle align-middle fs-5" aria-hidden="true"></i>
+                <span class="px-1">{{ locals.account_modal_warning_list_title }}</span>
+              </h6>
+              <div class="card shadow-sm border-secondary-subtle my-3 small h-auto">
+                <div class="list-group list-group-sm list-group-flush text-start overflow-auto js-faqs-list" style="max-height: 150px"></div>
+              </div>
+            </div>
+          </div>
+          <form action="/delete-account" method="post">
+            <input type="hidden" name="_token" value="{{ csrf_token }}">
+            <div class="modal-footer flex-nowrap p-0 bg-light-subtle border-top border-secondary-subtle">
+              <button type="submit" class="btn btn-sm btn-link link-danger text-decoration-none col-6 m-0 rounded-0 border-end py-3">
+                <i class="ti ti-x align-middle" aria-hidden="true"></i>
+                <span class="px-1 small">
+                  {{ locals.account_modal_warning_delete }}
+                </span>
+              </button>
+              <button type="button" class="btn btn-link link-secondary text-decoration-none col-6 m-0 rounded-0 py-3 js-icon-confetti" data-bs-dismiss="modal">
+                <i class="ti ti-user-check align-middle" aria-hidden="true"></i>
+                <span class="px-1">
+                  {{ locals.account_modal_warning_cancel }}
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  {% else %}
+	  <section class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-4 mx-auto">
+            <div class="d-grid justify-content-center align-content-center text-center">
+              <p class="mb-0 text-secondary">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="80" height="80" viewbox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <rect x="5" y="11" width="14" height="10" rx="2"></rect>
+                  <circle cx="12" cy="16" r="1"></circle>
+                  <path d="M8 11v-4a4 4 0 0 1 8 0v4"></path>
+                </svg>
+              </p>
+
+              <h6 class="mb-3 mt-3 mt-sm-3 mb-sm-4 animate__animated animate__delay-0s animate__fadeInDown">
+
+                {{ locals.system.locked }}
+
+              </h6>
+
+              <p class="animate__animated animate__delay-1s animate__fadeInUp">
+                <a href="/auth/login" class="btn btn-primary grow">
+                  <span class="px-1">
+                    {{ locals.login }}
+                  </span>
+
+                  <i class="ti ti-arrow-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %} align-middle" aria-hidden="true"></i>
+
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+	  </section>
+  {% endif %}
+{% endblock %}
+
+{% block footer %}
+  {{ include('footer.twig') }}
+{% endblock %}
+
+{% block footer_scripts %}
+  <script defer src="{{ assetUrl('tsparticles.preset.confetti.bundle.min.js') }}"></script>
+  <script defer src="{{ assetUrl('accountFaqs.js') }}"></script>
+  <script defer src="{{ assetUrl('confettiAccount.js') }}"></script>
+{% endblock %}
+

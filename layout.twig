@@ -1,0 +1,292 @@
+
+{% set direction = (session.lang.code == 'ar') ? 'rtl' : 'ltr' %}
+
+<!doctype html>
+<html lang="{{ session.lang.code }}" dir="{{ direction }}" data-bs-theme="light">
+	<head>
+
+		<!-- Required Meta Tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		{# <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"> #}
+
+		<!-- This will be hosted on CDN/Local -->
+		{# <link rel="preload" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/fonts/tabler-icons.woff2" as="font" type="font/woff2" crossorigin>
+		<link rel="preload" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/iconfont/tabler-icons.min.css" as="style" onload="this.rel = 'stylesheet'"> #}
+				<link rel="preload" href="{{ asset_url ~ 'tabler-icons.woff2' }}" as="font" type="font/woff2" crossorigin>
+				<link rel="preload" href="{{ asset_url ~ 'tabler-icons.min.css' }}" as="style" onload="this.rel = 'stylesheet'">
+
+
+		<!-- Dark Mode -->
+		{# <script src="{{ assetUrl('darkmode.js') }}"></script> #}
+
+		<!-- Generate Color Palette for the Theme -->
+		<script>
+			var storeColorTextPrimaryBg =  '{{ store.colors.text_of_primary_bg }}';
+			var storeColorTextPrimaryText = '{{ store.colors.primary }}';
+		</script>
+		<script src="{{ assetUrl('changeColor.js') }}"></script>
+
+		<!-- Open Graph Meta Tags -->
+		{{ header_meta_tags | raw }}
+
+		<!-- Le Favicon -->
+		<link rel="apple-touch-icon" sizes="180x180" href="{{ store.icon }}">
+		<link rel="icon" type="image/png" sizes="32x32" href="{{ store.icon }}">
+		<link rel="icon" type="image/png" sizes="16x16" href="{{ store.icon }}">
+		<link rel="shortcut icon" type="image/jpg" href="{{ store.icon }}">
+		<meta name="msapplication-TileColor" content="{{ store.colors.primary }}">
+		<meta name="theme-color" content="{{ store.colors.primary }}">
+
+		<!-- Google Fonts -->
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+		{% if settings.font_family is empty or settings.font_family == 'DEFAULT' %}
+			<link rel="preload" href="https://fonts.googleapis.com/css?family={{ direction == 'rtl' ? 'IBM+Plex+Sans+Arabic' : 'Inter' }}:wght@400;700&display=swap" as="style" onload="this.rel = 'stylesheet'">
+		{% elseif settings.font_family %}
+			<link rel="preload" href="https://fonts.googleapis.com/css?family={{ settings.font_family }}:wght@400;700&display=swap" as="style" onload="this.rel = 'stylesheet'">
+		{% endif %}
+	
+
+		<!-- Include Bootstrap Framework 5.3.x -->
+		{% if session.lang.code == 'ar' %}
+		<link rel="stylesheet" href="{{ asset_url ~ 'bootstrap.rtl.min.css' }}">
+		{% else %}
+		<link rel="stylesheet" href="{{ asset_url ~ 'bootstrap.min.css' }}">
+		{% endif %}
+		
+		<!-- JS Should be in Head -->
+		<script defer src="{{ asset_url ~ 'scrollreveal.min.js' }}"></script>
+		<script defer src="{{ asset_url ~ 'removeConsoleLog.js' }}"></script>
+
+		<!-- le CSS -->
+		<link rel="stylesheet" href="{{ assetUrl('bundle.min.css') }}">
+		<link rel="stylesheet" href="{{ assetUrl('index.css') }}">
+
+		<!-- File dedicated to the Store functionalities -->
+		<link rel="stylesheet" href="{{ assetUrl('store.css') }}">
+
+		<!-- Hotjar for Testing and Feedback / Dev Mode Only -->
+		{% if store.editing_mode == false %} 
+		<!-- <script>
+		!function(t,h,j,s,e,n){t.hj=t.hj||function(){(t.hj.q=t.hj.q||[]).push(arguments)},t._hjSettings={hjid:3199021,hjsv:6},e=h.getElementsByTagName("head")[0],(n=h.createElement("script")).async=1,n.src=j+t._hjSettings.hjid+s+t._hjSettings.hjsv,e.appendChild(n)}(window,document,"https://static.hotjar.com/c/hotjar-",".js?sv=");
+		</script> -->
+		{% endif %}
+
+		<!-- CSS & JS files Injected in inner Pages -->
+		{% block js_files_inner %} {% endblock %}
+		{% block css_files_inner %}{% endblock %}
+
+		<!-- Overwrite default CSS By `user_custom_css` if any -->
+		{% if user_custom_css %}
+		<link rel="stylesheet" href="{{ user_custom_css }}">
+		{% endif %}
+
+		<!-- Noscript Code goes here -->
+		{% if store.editing_mode == false %}
+		<noscript>
+			<style>
+				[data-simplebar] {
+					overflow: auto;
+				}
+			</style>
+		</noscript>
+		{% endif %}
+
+
+		<script type="text/javascript">
+			(function(c,l,a,r,i,t,y){
+				c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+				t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+				y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+			})(window, document, "clarity", "script", "hpuyabnra9");
+		</script>
+	</head>
+	<body>
+
+		{% if store.editing_mode == true %}
+		
+		{# Inject Fonts for Fitrina  #}
+		<link href="https://fonts.googleapis.com/css2?family={% if settings.font_family %}{{ settings.font_family }}{% elseif direction == 'rtl'  %}IBM+Plex+Sans+Arabic{% else %}Inter{% endif %}:wght@400;700&display=swap" rel="stylesheet">
+
+		{# Message to allow cookies when `Private browsing` mode is on #}
+		<div class="alert alert-warning alert-dismissible fade show mb-0 pb-0 text-center small fw-bold d-none" role="alert" id="alertCookies">
+			<p>{{ locals.allow_cookies }}</p>
+			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+		{% endif %}
+		
+		<noscript>
+			<div class="alert alert-warning text-center" role="alert">
+				{{ locals.noscript }}
+			</div>
+		</noscript>
+
+		<!-- Main -->
+		<main role="main" id="main" class="full-width">
+			{% block header %} {% endblock %}
+			<!-- Wrapper for Search Backdrop -->
+			<div class="js-wrapper">
+				{% block main_content %} {% endblock %}
+				{% block footer %} {% endblock %}
+			</div>
+		</main>
+
+		<!-- JS files from ZidAPI -->
+		{{ zidapi_script|raw }}
+
+		<!-- Vendors JS -->
+		<!-- To be grouped in the production process -->
+		
+		<script defer src="{{ asset_url ~ 'bootstrap.bundle.min.js' }}"></script>
+		{# <script defer src="{{ asset_url ~ 'jquery-3.6.1.min.js' }}"></script> #}
+		<script defer src="{{ asset_url ~ 'jquery-3.6.3.slim.min.js' }}"></script> 
+		<script defer src="{{ asset_url ~ 'smooth-scroll.min.js' }}"></script>
+		<script defer src="{{ asset_url ~ 'progressbar.min.js' }}"></script>
+		<script defer src="{{ asset_url ~ 'swiper-bundle.min.js' }}"></script>
+		<script defer src="{{ asset_url ~ 'vanilla-tilt.min.js' }}"></script>
+		<script defer src="{{ asset_url ~ 'masonry.pkgd.min.js' }}"></script>
+		<script defer src="{{ asset_url ~ 'imagesloaded.pkgd.js' }}"></script>
+		<script defer src="{{ asset_url ~ 'simplebar.min.js' }}"></script>
+		<script defer src="{{ asset_url ~ 'keyboard.min.js' }}"></script>
+
+		<!-- Theme JS -->
+		<!-- To be grouped in the production process -->
+		<script defer src="{{ assetUrl('simplebarInit.js') }}"></script>
+		<script defer src="{{ assetUrl('progressbarInit.js') }}"></script>
+		<script defer src="{{ assetUrl('revealInit.js') }}"></script>
+		<script defer src="{{ assetUrl('swiperInit.js') }}"></script>
+		<script defer src="{{ assetUrl('bindShortcutsinit.js') }}"></script>
+		<script defer src="{{ assetUrl('changeGrid.js') }}"></script>
+		<script defer src="{{ assetUrl('footer.js') }}"></script>
+		<script defer src="{{ assetUrl('index.js') }}"></script>
+
+		<!-- This file is dedicated to the Store functionalities -->
+		<script defer src="{{ assetUrl('store.js') }}"></script>
+
+		
+		{% if store.editing_mode == true %}
+		<script defer>
+			const showCookieAlert = (message) => {
+				if (navigator.cookieEnabled === false || typeof Storage === "undefined" || localStorage.length === 0) {
+					const cookieAlert = document.getElementById("alertCookies");
+					cookieAlert.classList.remove("d-none");
+				}
+			};
+			showCookieAlert();
+		</script>
+		{% endif %}
+
+		<!-- Injected JS files in inner Pages -->
+		{% block footer_scripts %} {% endblock %}
+		 
+	</body>
+</html>
+
+{% schema %}
+{
+  "font": {
+    "name": {
+      "ar": "تغيير الخط",
+      "en": "Change font"
+    },
+    "icon": "fa fa-font",
+    "display": true,
+    "settings": {
+      "family": {
+        "type": "select",
+        "label": {
+          "ar": "اختر الخط المناسب  لمتجرك",
+          "en": "Choose the font that suits your store"
+        },
+        "options": [
+		  {
+			"value": "DEFAULT",
+			"label": {
+			  "ar": "الافتراضي",
+			  "en": "Default"
+			}
+		  },
+          {
+            "value": "Amiri",
+            "label": {
+              "ar": "الأميري",
+              "en": "Amiri"
+            }
+          },
+          {
+            "value": "Cairo",
+            "label": {
+              "ar": "القاهرة",
+              "en": "Cairo"
+            }
+          },
+          {
+            "value": "Alexandria",
+            "label": {
+              "ar": "الأكسندرية",
+              "en": "Alexandria"
+            }
+          },
+          {
+            "value": "Marhey",
+            "label": {
+              "ar": "مرحي",
+              "en": "Marhey"
+            }
+          },
+          {
+            "value": "Tajawal",
+            "label": {
+              "ar": "تجول",
+              "en": "Tajawal"
+            }
+          },
+          {
+            "value": "Inter",
+            "label": {
+              "ar": "Inter",
+              "en": "Inter"
+            }
+          },
+          {
+            "value": "Rubik",
+            "label": {
+              "ar": "Rubik",
+              "en": "Rubik"
+            }
+          },
+          {
+            "value": "Lato",
+            "label": {
+              "ar": "Lato",
+              "en": "Lato"
+            }
+          },
+          {
+            "value": "Montserrat",
+            "label": {
+              "ar": "Montserrat",
+              "en": "Montserrat"
+            }
+          },
+          {
+            "value": "Oswald",
+            "label": {
+              "ar": "Oswald",
+              "en": "Oswald"
+            }
+          },
+          {
+            "value": "Outfit",
+            "label": {
+              "ar": "Outfit",
+              "en": "Outfit"
+            }
+          }
+        ]
+      }
+    }
+  }
+}
+{% endschema %}

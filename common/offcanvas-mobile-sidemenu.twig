@@ -1,0 +1,324 @@
+<div class="offcanvas offcanvas-start d-inline-flex border-0 shadow-sm" tabindex="-1" data-bs-scroll="true" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
+	<div class="offcanvas-header bg-light-subtle">
+		<h6 class="offcanvas-title fw-bold" id="offcanvasMenuLabel">
+			{{ locals.mobile.menu.title.heading }}
+		</h6>
+		<button type="button" class="btn-none p-0 text-body-emphasis grow" data-bs-dismiss="offcanvas" aria-label="{{ locals.accessibility.close.label }}">
+			<i class="ti ti-x align-middle fs-5" aria-hidden="true"></i>
+		</button>
+	</div>
+	<div class="offcanvas-body p-0">
+		<div class="p-3">
+			{% if not ('hide_account' in navbar_settings.navbar_options) %}
+			<div class="flex-shrink-0 mb-3">
+				<div class="border bg-secondary bg-opacity-10 border-secondary border-opacity-10 shadow-sm rounded px-3 py-2">
+					{% if customer %}
+						<div class="d-flex justify-content-between align-items-center">
+							<div class="flex-grow-1">
+								<h6 class="dropdown-header py-0 text-secondary fs-6 fw-light">
+									<span class="js-user-greeting lh-base"></span> 
+									<span class="px-1 text-primary">{{ customer.name }}</span>
+								</h6>
+								
+							</div>
+							<div class="flex-shrink-0">
+								<form action="/auth/logout" method="POST">
+									<input type="hidden" name="_token" value="{{ csrf_token }}">
+									<input type="hidden" name="redirect_to" value="{{ requestUri() }}">
+									<input type="hidden" name="form_type" value="customer_logout">
+									<button type="submit" class="btn btn-sm btn-primary" data-bs-placement="left" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.mobile.menu.title.logout}}</small>">
+										<i class="ti ti-power align-middle" aria-hidden="true"></i>
+										<span class="visually-hidden">{{ locals.mobile.menu.title.logout }}</span>
+									</button>
+								</form>
+							</div>
+						</div>
+						<hr class="my-2 border-secondary border-opacity-50">
+						<div class="hstack gap-3 fw-lighter small">
+							<a href="/account-profile" class="link-secondary">
+								<i class="ti ti-id align-middle" aria-hidden="true"></i> {{ locals.mobile.menu.title.account }}</a>
+								<span class="text-muted">&middot;</span>
+							<a href="/account-addresses" class="link-secondary">
+								<i class="ti ti-live-view align-middle" aria-hidden="true"></i> {{ locals.mobile.menu.title.addresses }}</a>
+								<span class="text-muted">&middot;</span>
+							<a href="/account-orders" class="link-secondary">
+								<i class="ti ti-basket align-middle" aria-hidden="true"></i> {{ locals.mobile.menu.title.orders }}</a>
+						</div>
+
+					{% else %}
+						<div class="d-flex justify-content-between align-items-center">
+							{# <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-building-store" width="40" height="40" viewbox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+								<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+								<line x1="3" y1="21" x2="21" y2="21"></line>
+								<path d="M3 7v1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1m0 1a3 3 0 0 0 6 0v-1h-18l2 -4h14l2 4"></path>
+								<line x1="5" y1="21" x2="5" y2="10.85"></line>
+								<line x1="19" y1="21" x2="19" y2="10.85"></line>
+								<path d="M9 21v-4a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v4"></path>
+							</svg> #}
+							<h6 class="mb-0 fw-light text-secondary">
+								{{ locals.mobile.menu.greeting_user }} 
+							</h6>
+							<div class="vr"></div>
+							<a href="/auth/login" class="btn btn-sm btn-primary">
+								{# <i class="ti ti-user align-middle" aria-hidden="true"></i> #}
+								<span class="px-1">{{ locals.mobile.menu.title.login }}</span>
+								<span class="ti ti-arrow-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %} align-middle" aria-hidden="true"></span>
+							</a>
+						</div>
+						<hr class="my-2 border-secondary border-opacity-50" hidden>
+						<div class="hstack gap-2 small">
+							{# <a href="/auth/login" class="text-secondary-emphasis">
+								<i class="ti ti-user align-middle" aria-hidden="true"></i>
+								<span class="px-1">{{ locals.mobile.menu.title.login }}</span>
+								<span class="ti ti-arrow-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %} align-middle" aria-hidden="true"></span>
+							</a> #}
+							{# <span class="text-muted">&middot;</span>
+							<a href="/auth/register" class="text-secondary-emphasis">
+								<i class="ti ti-fingerprint align-middle" aria-hidden="true"></i>
+								<span class="px-1">{{ locals.mobile.menu.title.register }}</span>
+							</a> #}
+						</div>
+					{% endif %}
+				</div>
+			</div>
+			{% endif %}
+			{# {% if not ('hide_search_bar' in navbar_settings.navbar_options) %}
+				<div class="flex-shrink-0 mb-3">
+					<form class="d-flex mx-auto border border-secondary border-opacity-10 shadow-sm rounded" action="/products?search=" method="get" role="search">
+						<input class="form-control form-control-no-focus ms-2 rounded-0 border-0" type="search" type="search" name="search" data-category-id="{{ category.id }}" placeholder="{% if navbar_settings.search_placeholder %}{{ navbar_settings.search_placeholder }}{% else %}{{ locals.navbar.search_placeholder }}{% endif %}" aria-label="{{ locals.accessibility.search.label }}">
+						<button class="btn btn-sm btn-outline-secondary border-0 rounded-0 rounded-end" type="submit">
+							<i class="ti ti-search align-middle fs-6" aria-hidden="true"></i>
+							<span class="visually-hidden">{{ locals.accessibility.search.label }}</span>
+						</button>
+					</form>
+				</div>
+			{% endif %} #}
+
+				{% if not 
+				('hide_menu_categories' in navigation_settings.navigation_options) or not 
+				('hide_menu_delivery_payment' in navigation_settings.navigation_options)
+				%}
+			<div class="flex-shrink-0 mb-3 animated slideIn">
+		<div class="list-group shadow-sm">
+			{% for menu in main_navigation_menu.items %}
+				{% if menu.slug == 'home' %}
+					<a class="list-group-item list-group-item-action list-group-item-light" aria-current="page" href="/" title="{{ locals.home_title }}">
+						<i class="ti ti-home-dot align-middle fs-6" aria-hidden="true"></i>
+						{{ menu.name }}
+					</a>
+				{% endif %}
+				{% if menu.slug == 'all_products' %}
+					<a class="list-group-item list-group-item-action list-group-item-light" href="/products" title="{{ locals.mainNavigation.all_products }}">
+						<i class="ti ti-trolley align-middle fs-6" aria-hidden="true"></i>
+						{{ locals.mainNavigation.all_products }}
+					</a>
+				{% endif %}
+				{% if  menu.slug == 'all_categories' %}
+					<a class="list-group-item list-group-item-action list-group-item-light" href="/categories" title="{{ locals.header_all_categories }}">
+						<i class="ti ti-layout-collage align-middle fs-6" aria-hidden="true"></i>
+						{{ locals.header_all_categories }}
+					</a>
+				{% endif %}
+			{% endfor %}
+			{% if not ('hide_menu_delivery_payment' in navigation_settings.navigation_options) %}
+				<a class="list-group-item list-group-item-action list-group-item-light" href="/shipping-and-payment" title="{{ locals.header_delivery_and_payment_options }}">
+					<i class="ti ti-truck-delivery fs-6 align-middle" aria-hidden="true"></i>
+					{{ locals.header_delivery_and_payment_options }}
+				</a>
+			{% endif %}
+		</div>
+		{% if not ('hide_menu_categories' in navigation_settings.navigation_options) %}
+			<div class="my-3 card shadow-sm border border-secondary border-opacity-10 overflow-auto js-scrollable-element" data-simplebar-direction="{% if session.lang.code == 'ar' %}rtl{% else %}ltr{% endif %}" style="max-height: 200px">
+				<ul class="list-group list-group-flush" id="js-offcanvas-menu">
+
+					{% for menu in main_navigation_menu.items | slice(0, 20) %}
+						{% if menu.slug != 'all_categories' and menu.url != '/products' and menu.url != '/' %}
+							<li class="list-group-item nav-item">
+								<div class="d-flex justify-content-between align-items-center">
+									<a class="nav-link text-dark-emphasis {% if (menu.url | escape('url')) == requestUri()  %}text-primary{% endif %}" href="{{ menu.url }}" title="{{ menu.name }}">
+										{{ menu.name }}
+									</a>
+									{% if menu.items | length > 0 %}
+										<a href="#menu{{ loop.index }}" data-bs-toggle="collapse" aria-expanded="{% if (menu.url | escape('url')) == requestUri() %}true{% else %}false{% endif %}" role="button">
+											<i class="ti ti-circle-plus text-primary"></i>  
+											
+										</a>
+									{% endif %}
+								</div>
+								{% if menu.items | length > 0 %}
+									<ul class="list-group list-group-flush sub-menu collapse animated slideIn" id="menu{{ loop.index }}">
+										{% for menu_sub in menu.items | slice(0, 15) %}
+											<li class="list-group-item">
+												<div class="d-flex justify-content-between align-items-center">
+													<a class="nav-link text-dark-emphasis" href="{{ menu_sub.url }}" title="{{ menu_sub.name }}">
+														{{ menu_sub.name }}
+													</a>
+													{% if menu_sub.items | length > 0 %}
+														<a href="#menu{{ loop.parent.loop.index }}_{{ loop.index }}" data-bs-toggle="collapse" aria-expanded="false" role="button">
+															<i class="ti ti-circle-plus text-primary"></i>
+														</a>
+													{% endif %}
+												</div>
+												{% if menu_sub.items | length > 0 %}
+													<ul class="list-group list-group-flush sub-menu collapse animated slideIn" id="menu{{ loop.parent.loop.index }}_{{ loop.index }}">
+														{% for menu_sub_sub in menu_sub.items | slice(0, 15) %}
+															<li class="list-group-item !border-0">
+																<a class="nav-link text-dark-emphasis" href="{{ menu_sub_sub.url }}" title="{{ menu_sub_sub.name }}">{{ menu_sub_sub.name }}</a>
+															</li>
+														{% endfor %}
+													</ul>
+												{% endif %}
+											</li>
+										{% endfor %}
+									</ul>
+								{% endif %}
+							</li>
+						{% endif %}
+					{% endfor %}
+
+				</ul>
+			</div>
+		{% endif %}
+	</div>
+
+			{% endif %}
+
+			{% if not ('hide_language_shipping' in navbar_settings.navbar_options) %}
+			<div class="flex-shrink-0 mb-3">
+				<form action="/customer/lang-shipping-country" class="row gx-1 me-auto" method="POST" id="!changeLanguageCountryMobile">
+					<input type="hidden" name="_token" value="{{ csrf_token }}">
+					<input type="hidden" name="permalink" value="{{ store.permalink }}">
+					<input type="hidden" id="redirect-to-mobile" name="redirect_to" value="{{ requestUri() }}">
+
+					{% if store.is_filter_products_based_on_city %}
+						<input type="hidden" class="js-input-change-session-delivery-country" name="deliveryCountry" value="{{ session.country.id }}">
+					{% endif %}
+					
+		
+					{% if not ('hide_language' in settings.header_options) %}
+						<div class="col-12">
+							<select name="language" class="form-select form-select-sm" id="floatingSelectLanguagemobile" aria-label="{{ locals.accessibility.select.language }}">
+								{% for storeLang in store.languages %}
+									<option value="{{ storeLang.code }}" {% if session.lang.code == storeLang.code %} selected {% endif %}>{{ storeLang.name }}</option>
+								{% endfor %}
+							</select>
+						</div>
+					{% endif %}
+
+					{% if not store.is_filter_products_based_on_city  %}
+						
+						{% if not ('hide_country' in settings.header_options) %}
+							<div class="col-12 mt-2">
+								<select name="country" class="form-select form-select-sm" id="floatingSelectCountrymobile" aria-label="{{ locals.accessibility.select.country }}">
+									{% for storeCurrency in store.currencies %}
+										<option data-currency="{{ storeCurrency.code }}" data-currency-symbol="{{ storeCurrency.symbol }}" value="{{ storeCurrency.country.code }}" {% if session.currency.country.code == storeCurrency.country.code %} selected {% endif %}>
+											{{ storeCurrency.country.name }}
+										</option>
+									{% endfor %}
+								</select>
+							</div>
+						{% endif %}		
+					
+					{% else %}
+
+						{% if not ('hide_country' in settings.header_options) %}
+							<div class="col-12 mt-2">
+								<select name="currency" class="form-select form-select-sm" id="floatingSelectCountrymobile" aria-label="{{ locals.accessibility.select.country }}">
+									{% for storeCurrency in store.currencies %}
+										<option data-currency="{{ storeCurrency.code }}" data-currency-symbol="{{ storeCurrency.symbol }}" value="{{ storeCurrency.code }}" {% if storeCurrency.code==session.currency.code %} selected {% endif %}>
+											{{ storeCurrency.symbol }}
+										</option>
+									{% endfor %}
+								</select>
+							</div>
+						{% endif %}	
+
+						{% if not ('hide_country' in settings.header_options) %}
+							<div class="col-12 mt-2">
+								<select name="country" class="form-select form-select-sm" id="floatingSelectCountrymobile" aria-label="{{ locals.accessibility.select.country }}" onchange="toggleDistinationCountryCities(event)">
+									{% for country in store.countries %}
+										<option data-country="{{ country.code }}" data-country-id="{{ country.id }}" value="{{ country.code }}" {% if session.country.code == country.code %} selected {% endif %}>
+											{{ country.name }}
+										</option>
+									{% endfor %}
+								</select>
+							</div>
+						{% endif %}	
+
+						{% if not ('hide_country' in settings.header_options) %}
+							
+							<div class="col-12 mt-2">
+							{% for country in store.countries %}
+								<select name="city" {% if country.id != session.country.id %} disabled="true" {% endif %} class="form-select form-select-sm js-city-country js-city-country-id-{{ country.code }} {% if country.id != session.country.id %} d-none {% endif %}" id="floatingSelectCity" aria-label="{{ locals.accessibility.select.city }}">
+									{% for city in country.cities %}
+									<option value="{{ city.id }}" {% if city.id==session.country.city.id %} selected {% endif %}>{{city.name }}</option>
+									{% endfor %}
+								</select>
+							{% endfor %}
+							</div>
+							
+						{% endif %}
+
+
+					{% endif %}
+
+				 <div class="col-12 mt-2">
+					<div class="d-grid gap-2">
+						<button type="submit" class="btn btn-primary">{{ locals.offcanvasCountries.footer.save }}</button>
+					</div>
+				 </div>
+
+				</form>
+			</div>
+			{% endif %}
+			{# {% if not ('hide_dark_mode' in navbar_settings.navbar_options) %} #}
+			{% if false %}
+			<div class="flex-shrink-0 mb-3">
+				<div class="d-flex justify-content-center gap-1">
+					<div class="btn-group btn-group-sm" role="group" aria-label="{{ locals.accessibility.group_buttons.label }}">
+						<button type="button" class="btn btn-outline-secondary" data-bs-theme-value="light">
+							<i class="ti ti-sun-high fs-6 align-middle theme-icon" aria-hidden="true"></i>
+							<span class="visually-hidden">{{locals.navbar.mode.light}}</span>
+						</button>
+						<button type="button" class="btn btn-outline-secondary" data-bs-theme-value="dark">
+							<i class="ti ti-moon fs-6 align-middle theme-icon" aria-hidden="true"></i>
+							<span class="visually-hidden">{{locals.navbar.mode.dark}}</span>
+						</button>
+						<button type="button" class="btn btn-outline-secondary" data-bs-theme-value="auto">
+							<i class="ti ti-devices fs-6 align-middle theme-icon" aria-hidden="true"></i>
+							<span class="visually-hidden">{{locals.navbar.mode.auto}}</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			{% endif %}
+		</div>
+	</div>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const menuItems = document.querySelectorAll('#js-offcanvas-menu .collapse');
+
+    menuItems.forEach(item => {
+        const link = item.previousElementSibling;
+        const icon = link.querySelector('.ti');
+
+        item.addEventListener('show.bs.collapse', () => {
+            if (icon) {
+                icon.classList.remove('ti-circle-plus');
+                icon.classList.add('ti-circle-minus');
+            }
+        });
+
+        item.addEventListener('hide.bs.collapse', (e) => {
+            if (e.target === item && icon) { 
+                icon.classList.remove('ti-circle-minus');
+                icon.classList.add('ti-circle-plus');
+            }
+        });
+    });
+});
+</script>
+

@@ -1,0 +1,251 @@
+{% extends "layout.twig" %}
+
+{% block header %}
+	{{ include('header.twig') }}
+{% endblock %}
+
+{% block js_files_inner %}
+  <script src="{{ assetUrl('moment.min.js') }}"></script>
+  <script src="{{ assetUrl('moment.ar.min.js') }}"></script>
+  <script>
+    function datetimeFormat(date, format) {
+      return moment.utc(date).format(format);
+    }
+  </script>
+{% endblock %}
+
+{% block main_content %}
+	<section class="bg-primary text-center py-5">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="text-white">
+						<h1 class="h2">
+							{{ locals.profile.orders }}
+						</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+  
+	{% if customer %}
+		<section class="border-secondary border-bottom border-opacity-10 py-2">
+			<div class="container">
+				{% if orders|length > 0 %}
+					<div class="d-flex justify-content-center justify-content-sm-end align-items-center animated slideIn">
+						<div class="btn-toolbar gap-2" role="toolbar" aria-label="{{ locals.accessibility.toolbar_buttons.label }}">
+							<div class="d-flex flex-wrap align-items-center align-items-center d-none d-lg-inline-flex">
+								<input type="range" min="1" max="6" value="3" step="1" class="form-range" tabindex="0" onchange="changeGridCols(this.value)" id="grid-cols-range">
+							</div>
+							<div class="input-group">
+								<span class="input-group-text text-body-secondary" for="InputGroupSearchFilter">
+									<i class="ti ti-list-search align-middle fs-5" aria-hidden="true"></i>
+								</span>
+								<input type="search" class="form-control form-control-sm border-secondary border-opacity-25 form-control-no-focus form-control-variant" aria-label="{{ locals.accessibility.input_search.label }}" aria-describedby="InputGroupSearchFilter" placeholder="{{ locals.orders_search_placeholder }}" id="InputGroupSearchFilter" onkeyup="GroupSearchFilter('InputGroupSearchFilter', 'ordersFiltered');">
+							</div>
+						</div>
+					</div>
+				{% endif %}
+			</div>
+		</section>
+		<section class="border-secondary border-bottom border-opacity-10 py-2 pb-0">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<ul class="nav nav-pills mb-0">
+							<li class="nav-item">
+								<a class="nav-link text-secondary" href="/account-profile">{{ locals.profile.title }}</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-secondary" href="/account-addresses">{{ locals.profile.addresses }}</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link active bg-transparent text-primary border-bottom border-primary rounded-0 hstack gap-2" aria-current="page" href="/account-orders">
+									<span>{{ locals.profile.orders }}</span>
+									<span class="badge text-bg-primary rounded-pill ms-auto">{{orders|length }}</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+    <section class="py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="tab-content" id="accountTabContent">
+              <div class="tab-pane fade show active" id="orders-tab-pane" role="tabpanel" aria-labelledby="orders-tab" tabindex="0">
+
+                {% if orders|length > 0 %}
+                  <div id="noResults" class="row row-cols-1 g-4 mb-3 animated slideIn" style="display: none;">
+                    <div class="col">
+                      <div class="card border-secondary border-opacity-10 shadow-sm">
+                        <div class="card-body">
+                          <p class="card-title mb-0 text-muted">
+                            <i class="ti ti-receipt-off align-middle" aria-hidden="true"></i>
+                            <span class="px-1">
+                              {{ locals.orders_search_no_results }}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row row-cols-1 row-cols-sm-3  row-cols-lg-4 g-3 js-row-grid" id="ordersFiltered">
+                    {% for order in orders %}
+                   
+                      <div class="col animated slideIn" data-status="{{ order.order_status.code }}">
+                        <div class="card card-product border-secondary border-opacity-10 shadow-sm h-100 position-relative !tools">
+                          <div class="card-header border-secondary border-opacity-10 hstack gap-4 bg-primary bg-opacity-25">
+                            <span class="text-secondary">
+                              {{ locals.order_id }}
+                            </span>
+                            <span class="badge bg-body-tertiary text-secondary rounded-pill fs-6 ms-auto !user-select-all">
+                              {{ order.id }}
+                              <span class="btn-clipboard" data-clipboard-text="{{ order.id }}" title="{{ locals.shareCopyClipboard }}">
+                                <i class="ti ti-link align-middle" aria-hidden="true"></i>
+                                <span class="visually-hidden">{{ locals.shareCopyClipboard }}</span>
+                              </span>
+                            </span>
+                          </div>
+                          <div class="card-body">
+                            <h4 class="card-title text-primary">
+                              {{ order.order_total_string }}
+                              <sup class="small" hidden>{{ session.currency.code }}</sup>
+                            </h4>
+                            <p class="card-text small text-secondary">
+                              <span>
+                                <i class="ti ti-clock align-middle" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-custom-class="custom-tooltip" data-bs-title="{{ datetimeFormat(order.created_at, 'd-m-Y g:i:s A', session.lang.code) }}"></i>
+                                <script>
+                                  moment.locale(document.documentElement.lang);
+                                  var date = moment.utc(datetimeFormat('{{ order.created_at }}', 'YYYY-MM-DD HH:mm:ss'), "YYYY-MM-DD HH:mm:ss").local();
+                                  var humanReadableDate = date.fromNow();
+                                  document.write(humanReadableDate);
+                                </script>
+                              </span>
+                            </p>
+                          </div>
+                          <div class="card-footer border-secondary border-opacity-10 bg-transparent hstack">
+
+                              <!-- Define the status variable -->
+                              {% if order.order_status.code == 'new' %}
+                                  {% set status_class = 'text-muted' %}
+                                  {% set status_icon = 'ti ti-clock-pause align-middle fs-6' %}
+                              {% elseif order.order_status.code == 'preparing' %}
+                                  {% set status_class = 'text-muted' %}
+                                  {% set status_icon = 'ti ti-soup align-middle fs-6' %}
+                              {% elseif order.order_status.code == 'ready' %}
+                                  {% set status_class = 'text-muted' %}
+                                  {% set status_icon = 'ti ti-package align-middle fs-6' %}
+                              {% elseif order.order_status.code == 'delivered' %}
+                                  {% set status_class = 'text-muted' %}
+                                  {% set status_icon = 'ti ti-confetti align-middle fs-6 grow js-icon-confetti' %}
+                              {% elseif order.order_status.code == 'indelivery' %}
+                                  {% set status_class = 'text-muted' %}
+                                  {% set status_icon = 'ti ti-ship align-middle fs-6' %}
+                              {% elseif order.order_status.code == 'reversed' %}
+                                  {% set status_class = 'text-muted' %}
+                                  {% set status_icon = 'ti ti-packge-export align-middle fs-6' %}
+                              {% elseif order.order_status.code == 'reverse_in_progress' %}
+                                  {% set status_class = 'text-muted' %}
+                                  {% set status_icon = 'ti ti-truck-return align-middle fs-6' %}
+                              {% elseif order.order_status.code == 'canceled' %}
+                                  {% set status_class = 'text-muted' %}
+                                  {% set status_icon = 'ti ti-rotate-dot align-middle fs-6' %}
+                              {% endif %}
+
+                              <!-- Use the status variable -->
+                              <span class="{{ status_class }}">
+                                  <i class="{{ status_icon }}" aria-hidden="true"></i>
+                                  {% if session.lang.code == 'ar' %}
+                                      <span class="px-1">{{ order.order_status.name }}</span>
+                                  {% else %}
+                                      <span class="px-1 text-capitalize">{{ order.order_status.code }}</span>
+                                  {% endif %}
+                              </span>
+
+                            <a target="_blank" href="/orders/{{ order.code }}/invoice" title="{{category.name}}" class="link-primary grow ms-auto" data-bs-placement="left" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.orders_item_browse }}</small>">
+                              <i class="ti ti-external-link align-middle" aria-hidden="true"></i>
+                              <span class="visually-hidden">
+                                {{ locals.orders_item_browse }}
+                              </span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                  
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  <div class="row row-cols-1 g-4 mb-3 animated slideIn">
+                    <div class="col">
+                      <div class="card border-secondary border-opacity-10 shadow-sm">
+                        <div class="card-body">
+                          <p class="card-title mb-0 text-muted">
+                            <i class="ti ti-mood-sad align-middle" aria-hidden="true"></i>
+                            <span class="px-1">
+                              {{ locals.orders_no_items }}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% else %}
+    <section class="py-3">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <div class="d-grid justify-content-center align-content-center text-center">
+              <p class="mb-0">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-lock" width="80" height="80" viewbox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                  <rect x="5" y="11" width="14" height="10" rx="2"></rect>
+                  <circle cx="12" cy="16" r="1"></circle>
+                  <path d="M8 11v-4a4 4 0 0 1 8 0v4"></path>
+                </svg>
+              </p>
+              <h6 class="mb-3 mt-3 mt-sm-3 mb-sm-4 animate__animated animate__delay-0s animate__fadeInDown">
+                {{ locals.system.locked }}
+              </h6>
+              <p class="animate__animated animate__delay-1s animate__fadeInUp">
+                <a href="/auth/login" class="btn btn-primary grow">
+                  <span class="px-1">
+                    {{ locals.login }}
+                  </span>
+                  <i class="ti ti-arrow-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %} align-middle" aria-hidden="true"></i>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endif %}
+
+  {% include 'toast.twig'%}
+
+{% endblock %}
+
+{% block footer %}
+  {{ include('footer.twig') }}
+{% endblock %}
+
+{% block footer_scripts %}
+  <script defer src="{{ assetUrl('clipboard.min.js') }}"></script>
+  <script defer src="{{ assetUrl('tsparticles.preset.confetti.bundle.min.js') }}"></script>
+  <script defer src="{{ assetUrl('instantSearch.js') }}"></script>
+  {# <script defer src="{{ assetUrl('orderStatusFilter.js') }}"></script> #}
+  <script defer src="{{ assetUrl('clipboardInit.js') }}"></script>
+  <script defer src="{{ assetUrl('confettiOrders.js') }}"></script>
+{% endblock %}

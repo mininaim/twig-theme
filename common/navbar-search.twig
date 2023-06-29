@@ -1,0 +1,18 @@
+<form class="d-flex flex-column mx-auto w-50" action="/products?search=" method="get" role="search">
+	<div class="d-flex flex-grow-1 input-group">
+		<span class="input-group-text bg-secondary bg-opacity-10 border-0 pe-0" data-target="#js-search-input-text">
+			{# <span class="small badge bg-secondary bg-opacity-25 text-secondary p-1" aria-hidden="true">/</span> #}
+			<i class="ti ti-microphone" aria-hidden="true" id="js-microphone-icon"></i>
+		</span>
+		<input name="search" class="form-control form-control-no-focus ms-0 border-0 bg-secondary bg-opacity-10 rounded-0 js-search-input-text" type="search" id="js-search-focus" data-category-id="{{ category.id }}" placeholder="{% if search_placeholder %}{{ search_placeholder }}{% else %}{{ locals.navbar.search_placeholder }}{% endif %}" aria-label="{{ locals.accessibility.search.label }}">
+		<button class="btn btn-primary border-0 border-start-0 rounded-0 rounded-end js-search-submit disabled" type="button">
+			<i class="ti ti-search align-middle fs-5" aria-hidden="true"></i>
+			<span class="visually-hidden">{{ locals.accessibility.search.label }}</span>
+		</button>
+	</div>
+	<div class="position-relative d-none z-3 js-search-results">
+		<div class="js-autocomplete-items"></div>
+	</div>
+</form>
+
+<script defer src="{{ assetUrl('navbar-search.js') }}"></script>

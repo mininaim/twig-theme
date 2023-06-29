@@ -1,0 +1,322 @@
+ .bundle-offer-product-tag {
+   display: inline-block !important;
+ }
+
+ /* cart free shipping ciecle */
+ .cart-discount-rule-wrapper {
+   /* border: 1px solid #cccccc; */
+   margin-top: 10px;
+   border-radius: 3px;
+   padding: 10px;
+ }
+
+ .cart-discount-rule-wrapper .message {
+   /* font-size: 1rem; */
+   color: var(--primary-color);
+ }
+
+ .discount-progress-linear {
+   background: rgba(var(--bs-light-rgb)) !important;
+   /* border-radius: 44px; */
+   overflow: hidden;
+   /* margin-top: 7px; */
+   width: 100%;
+ }
+
+ /* .discount-progress-linear .progress-bar {
+   background-color: var(--color-primary);
+   padding: 2px 3px;
+   border-radius: 44px;
+ } */
+
+ /* .discount-progress-linear .progress-bar {
+   background-color: var(--color-primary);
+   padding: 2px 3px;
+   border-radius: 44px;
+ } */
+
+ .js-free-shipping-rule-progress {
+   transition: .3s;
+ }
+
+ /* .js-free-shipping-rule-progress span {
+   color: var(--bs-white);
+ } */
+
+ .js-free-shipping-rule-section {
+   max-width: 100%;
+ }
+
+ .carousel .overlay {
+   position: absolute !important;
+   width: 100% !important;
+   height: 100% !important;
+   z-index: 2 !important;
+   background-color: rgba(0, 0, 0, .3) !important;
+   opacity: .7 !important;
+ }
+
+ /* Path: assets/store.css */
+ .noUi-tooltip {
+   padding: 0 !important;
+   border: none !important;
+ }
+
+ .noUi-tooltip {
+   background: inherit !important;
+ }
+
+ /* Path: assets/store.css */
+
+ /* Styles for the microphone icon on hover */
+ #js-microphone-icon:hover {
+   transform: scale(1.2);
+   opacity: 0.8;
+   transition: transform 0.3s ease, opacity 0.3s ease;
+ }
+
+ /* Styles for elements with transform-on-hover class */
+ .card.transform-on-hover {
+   transition: all 0.3s ease-in-out;
+ }
+
+ /* Styles for elements with transform-on-hover class on hover */
+ .card.transform-on-hover:hover {
+   transform: scale(1.05);
+   box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.15);
+ }
+
+ /* Styles for payment icons */
+ .css-payment-icon {
+   width: 50px;
+   height: 50px;
+   object-fit: scale-down;
+ }
+
+ /* Styles for elements with animated-gift class */
+ .css-animated-gift {
+   animation: growAnimation 6s ease-in-out infinite;
+ }
+
+ /* Keyframes for the growAnimation animation */
+ @keyframes growAnimation {
+   0% {
+     opacity: 1;
+     transform: scale(1);
+   }
+
+   50% {
+     opacity: 1;
+     transform: scale(1.3);
+   }
+
+   100% {
+     opacity: 1;
+     transform: scale(1);
+   }
+ }
+
+
+ /* Styles for envelope */
+
+ .css-envelope {
+   position: relative;
+   overflow: hidden;
+ }
+
+ @keyframes envelopeFlapAnimation {
+   0% {
+     background-position: 0% 50%;
+   }
+
+   50% {
+     background-position: 100% 50%;
+   }
+
+   100% {
+     background-position: 0% 50%;
+   }
+ }
+
+ .css-envelope-flap {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 50px;
+   background: linear-gradient(45deg, #ff758c, #ff7eb3, #a445b2, #7866d6, #81c2f7, #74ebd5);
+   background-size: 300% 300%;
+   animation: envelopeFlapAnimation 15s ease-in-out infinite;
+ }
+
+
+ /* .css-envelope-content {
+   position: relative;
+   padding: 20px;
+ } */
+
+ .css-envelope-image {
+   width: 100%;
+   max-height: 320px;
+   object-fit: cover;
+   /* transform: rotate(-1deg); */
+
+ }
+
+
+ /* .css-envelope-image:hover {
+   transform: rotate(0deg);
+   transition: transform 0.3s ease, opacity 0.3s ease;
+ } */
+
+ /* .css-envelope-message {
+   margin-top: 10px;
+ } */
+ /* .css-envelope-title {
+   font-size: 18px;
+   font-weight: bold;
+ } */
+
+ /* .css-envelope-sender,
+ .css-envelope-receiver,
+ .css-envelope-media,
+ .css-envelope-gift {
+   margin-top: 5px;
+   font-size: 14px;
+ } */
+
+ /* css-btn-shine */
+
+ .css-btn-shine {
+   position: relative;
+   overflow: hidden;
+
+ }
+
+ .css-btn-shine::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   width: 100%;
+   height: 100%;
+   background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+ }
+
+ .css-btn-shine::before {
+   left: -100%;
+   transition: all 0.65s ease-in-out;
+ }
+
+
+
+
+ .css-btn-shine::before {
+   animation: shine 5s ease-in-out infinite;
+ }
+
+ @keyframes shine {
+   0% {
+     left: -100%;
+     animation-timing-function: left;
+   }
+
+   11.5044247788%,
+   100% {
+     left: 100%;
+     animation-timing-function: left;
+   }
+ }
+
+
+ .css-inverse-btn-shine {
+   position: relative;
+   overflow: hidden;
+ }
+
+ .css-inverse-btn-shine::before {
+   content: "";
+   position: absolute;
+   top: 0;
+   width: 100%;
+   height: 100%;
+   background: linear-gradient(120deg, transparent, rgba(51, 51, 51, 0.1), transparent);
+
+ }
+
+ .css-inverse-btn-shine::before {
+   right: -100%;
+   transition: all 0.65s ease-in-out;
+ }
+
+ .css-inverse-btn-shine::before {
+   animation: css-inverse-shine 5s ease-in-out infinite reverse;
+ }
+
+ @keyframes css-inverse-shine {
+   0% {
+     right: -100%;
+     animation-timing-function: right;
+   }
+
+   11.5044247788%,
+   100% {
+     right: 100%;
+     animation-timing-function: right;
+   }
+ }
+
+ .js-card-preview img.emoji {
+   max-height: 1em;
+   max-width: 1em;
+ }
+
+ @media (max-width: 575.98px) {
+   .w-50.js-card-preview {
+     width: initial !important;
+   }
+ }
+
+
+ .css-typing-effect span {
+   overflow: hidden;
+   /* border-right: .15em solid var(--primary-color); */
+
+
+   white-space: nowrap;
+   margin: 0 auto;
+   letter-spacing: 0em;
+
+   animation: typing 1s steps(20, end), blink-caret .75s step-end infinite;
+ }
+
+ @keyframes typing {
+   from {
+     width: 0;
+   }
+
+   to {
+     width: 100%;
+   }
+ }
+
+ @keyframes blink-caret {
+
+   from,
+   to {
+     border-color: transparent;
+   }
+
+   50% {
+     border-color: var(--primary-color);
+   }
+
+
+ }
+
+
+ /* Styles for css-logo */
+ .css-logo {
+   object-fit: contain !important;
+   height: 100% !important;
+   width: 100% !important;
+ }

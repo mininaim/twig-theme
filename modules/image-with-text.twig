@@ -1,0 +1,137 @@
+{% if settings.title or settings.desc or settings.button or settings.url or settings.image or settings.mobile_image %}
+
+<section section-id="{{ sectionId }}" 
+    {% if settings.image %}
+    class="d-flex align-items-center bg-overlay css-image-with-text" 
+    style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{{ settings.image }}');"
+    data-mobile-bg="{% if settings.mobile_image %}{{ settings.mobile_image }}{% endif %}"
+    {% else %}
+    class="py-3 p-sm-5 text-center border-top border-secondary border-opacity-10 css-image-with-text"
+    {% endif %}
+    >
+    <div 
+    {% if settings.image %}
+    
+    class="container py-5 text-center col-10 col-sm-6 mx-auto"
+    {% else %}
+    class="container d-flex flex-column align-content-center col-10 col-sm-6 mx-auto"
+    {% endif %}
+    >
+		<figure class="mb-4">
+			{% if settings.title %}
+				<h2 class="h3 my-2 fw-bold text-capitalize">
+					{{ settings.title }}
+				</h2>
+			{% endif %}
+			{% if settings.desc %}
+				<p class="mb-3 text-body-subtle">
+					{{ settings.desc }}
+				</p>
+			{% endif %}
+			{% if settings.button %}
+				<div class="d-flex justify-content-center mb-4 gap-2">
+					<a class="btn btn-primary d-inline-block" href="{{ settings.url }}" title="{{ settings.button }}">
+						<span class="px-1">{{ settings.button }}</span>
+						<i class="ti ti-arrow-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %} align-middle" aria-hidden="true"></i>
+					</a>
+				</div>
+			{% endif %}
+		</figure>
+	</div>
+</section>
+
+  {% if settings.mobile_image %}
+  <style>
+    @media only screen and (max-width: 767px) {
+      .mobile-bg-{{ sectionId }} {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('{{ settings.mobile_image }}') !important;
+        background-size: cover;
+        background-position: center; 
+      }
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var section = document.querySelector('[section-id="{{ sectionId }}"]');
+      var mobileBg = section.getAttribute('data-mobile-bg');
+      var mobileBgClass = 'mobile-bg-{{ sectionId }}';
+
+      function updateBgImage() {
+        if (window.innerWidth <= 767 && mobileBg) {
+          section.classList.add(mobileBgClass);
+        } else {
+          section.classList.remove(mobileBgClass);
+        }
+      }
+
+      updateBgImage();
+      window.addEventListener('resize', updateBgImage);
+    });
+  </script>
+
+  {% endif %}
+{% endif %}
+
+{% schema %}
+{
+  "name": {
+    "ar": "صورة مع نص",
+    "en": "Image with text"
+  },
+  "icon": "fal fa-box",
+  "display": true,
+  "settings": {
+    "title": {
+      "type": "text",
+      "label": {
+        "ar": "العنوان",
+        "en": "Title"
+      }
+    },
+    "desc": {
+      "type": "text",
+      "label": {
+        "ar": "النص",
+        "en": "Description"
+      }
+    },
+    "button": {
+      "type": "text",
+      "label": {
+        "ar": "الزر",
+        "en": "Button"
+      }
+    },
+    "url": {
+      "type": "url",
+      "label": {
+        "ar": "الرابط",
+        "en": "Link"
+      }
+    },
+    "image": {
+      "type": "image",
+      "label": {
+        "ar": "صورة الخلفية",
+        "en": "Background image"
+      },
+      "info": {
+        "ar": "ارفع صورة بحجم 1400 * 600",
+        "en": "Upload image with size 1400 * 600"
+      }
+    },
+    "mobile_image": {
+      "type": "image",
+      "label": {
+        "ar": "صورة الخلفية للجوال",
+        "en": "Mobile background image"
+      },
+      "info": {
+        "ar": "ارفع صورة بحجم مناسب للجوال",
+        "en": "Upload an image with a suitable size for mobile devices"
+      }
+    }
+  }
+}
+{% endschema %}

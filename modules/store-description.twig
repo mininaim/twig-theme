@@ -1,0 +1,127 @@
+{% if settings.title or settings.desc or settings.display_social_media %}
+
+
+<section section-id="{{ sectionId }}" class="py-4 p-sm-5 text-center css-store">
+		<div class="container py-5 d-flex flex-column align-content-center col-10 col-sm-6 mx-auto">
+		<figure class="mb-4">
+			{% if settings.title %}
+				<h2 class="h3 my-2 fw-bold text-capitalize">
+					{{ settings.title }}
+				</h2>
+			{% endif %}
+			{% if settings.title %}
+				<p class="mb-0 text-secondary-emphasis">
+					{{ settings.desc }}
+				</p>
+			{% endif %}
+			{% if settings.display_social_media %}
+				<ul class="nav d-flex align-content-center justify-content-center gap-2 gap-md-3 mt-3">
+					{% if store.social_media.items.twitter %}
+						<li>
+							<a class="link-primary grow" href="https://twitter.com/{{ store.social_media.items.twitter }}" target="_blank">
+								<i class="ti ti-brand-twitter fs-3" aria-hidden="true"></i>
+								<span class="visually-hidden">{{ locals.footer.content.follow.twitter }}</span>
+							</a>
+						</li>
+					{% endif %}
+					{% if store.social_media.items.facebook %}
+						<li>
+							<a class="link-primary grow" href="https://www.facebook.com/{{ store.social_media.items.facebook }}" target="_blank" title="">
+								<i class="ti ti-brand-facebook fs-3" aria-hidden="true"></i>
+								<span class="visually-hidden">{{ locals.footer.content.follow.facebook }}</span>
+							</a>
+						</li>
+					{% endif %}
+					{% if store.social_media.items.instagram %}
+						<li>
+							<a class="link-primary grow" href="https://www.instagram.com/{{ store.social_media.items.instagram }}" target="_blank">
+								<i class="ti ti-brand-instagram fs-3" aria-hidden="true"></i>
+								<span class="visually-hidden">{{ locals.footer.content.follow.instagram }}</span>
+							</a>
+						</li>
+					{% endif %}
+					{% if store.social_media.items.snapchat %}
+						<li class="d-flex align-items-center">
+							<a class="link-primary grow" href="https://www.snapchat.com/add/{{ store.social_media.items.snapchat }}" target="_blank">
+								<i class="ti ti-brand-snapchat fs-3" aria-hidden="true"></i>
+								<span class="visually-hidden">{{ locals.footer.content.follow.snapchat }}</span>
+							</a>
+						</li>
+					{% endif %}
+					{% if store.social_media.items.tiktok %}
+						<li>
+							<a class="link-primary grow" href="https://www.tiktok.com/@{{ store.social_media.items.tiktok }}" target="_blank" title="">
+								<i class="ti ti-brand-tiktok fs-3" aria-hidden="true"></i>
+								<span class="visually-hidden">{{ locals.footer.content.follow.tiktok }}</span>
+							</a>
+						</li>
+					{% endif %}
+					{% if store.social_media.items.phone %}
+						<li>
+							<a class="link-primary grow" href="tel:{{ store.social_media.items.phone }}" target="_blank">
+								<i class="ti ti-phone fs-3" aria-hidden="true"></i>
+								<span class="visually-hidden">{{ locals.footer.content.follow.mobile }}</span>
+							</a>
+						</li>
+					{% endif %}
+					{% if store.social_media.items.email %}
+						<li>
+							<a class="link-primary grow" href="mailto:{{ store.social_media.items.email }}" target="_blank" title="">
+								<i class="ti ti-mail-opened fs-3" aria-hidden="true"></i>
+								<span class="visually-hidden">{{ locals.footer.content.follow.email }}</span>
+							</a>
+						</li>
+					{% endif %}
+					{% if store.social_media.items.website %}
+						<li>
+							<a class="link-primary grow" href="{{ store.social_media.items.website }}" target="_blank" title="">
+								<i class="ti ti-world-www fs-3" aria-hidden="true"></i>
+								<span class="visually-hidden">{{ locals.footer.content.follow.url }}</span>
+							</a>
+						</li>
+					{% endif %}
+				</ul>
+			{% endif %}
+		</figure>
+	</div>
+</section>
+
+{% endif %}
+{% schema %}
+{
+  "name": {
+    "ar": "وصف المتجر",
+    "en": "Store description"
+  },
+  "icon": "fal fa-box",
+  "display": true,
+  "settings": {
+    "title": {
+      "type": "text",
+      "label": {
+        "ar": "النص",
+        "en": "Text"
+      }
+    },
+    "desc": {
+      "type": "text",
+      "label": {
+        "ar": "وصف",
+        "en": "description"
+      }
+    },
+    "display_social_media": {
+      "type": "checkbox",
+      "label": {
+        "ar": "",
+        "en": ""
+      },
+      "noLabel": true,
+      "option": {
+        "ar": "عرض الشبكات الاجتماعية",
+        "en": "Display social media"
+      }
+    }
+  }
+}
+{% endschema %}

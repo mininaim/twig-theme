@@ -1,0 +1,94 @@
+{% extends "layout.twig" %}
+{% block main_content %}
+
+
+
+			{% if product.reviews.data %}
+				<div class="row">
+					<div class="col">
+
+						<div class="list-group mb-3">
+							{% for review in product.reviews.data %}
+
+								<div class="list-group-item list-group-item-action border-secondary-subtle">
+									<div class="d-flex w-100 justify-content-between align-items-center border-secondary-subtle border-bottom">
+										<h5 class="mb-1">
+											<div class="text-warning my-2 fs-6">
+												{% include 'product-rating.twig' with {'rating' : review.rating } %}
+											</div>
+										</h5>
+										<span class="text-muted hstack gap-2 d-none d-sm-flex">
+											{% if review.status == 'approved' %}
+												<i class="ti ti-circle-check text-success-emphasis align-middle" aria-hidden="true" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" data-bs-title="<small>{{ locals.reviews.message.verified }}</small>"></i>
+											{% endif %}
+											{% if review.bought_this_item %}
+												<i class="ti ti-basket align-middle" aria-hidden="true" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" data-bs-title="<small>{{ locals.reviews.message.boughtyes }}</small>"></i>
+											{% else %}
+												<i class="ti ti-basket-off align-middle" aria-hidden="true" aria-hidden="true" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-html="true" data-bs-title="<small>{{ locals.reviews.message.boughtno }}</small>"></i>
+											{% endif %}
+											<small>{{ datetimeFormat(review.created_at, 'd-m-Y g:i:s A', session.lang.code) }}</small>
+										</span>
+									</span>
+
+								</div>
+								<p class="my-2 text-body-tertiary">
+									{{ review.comment | raw }}
+								</p>
+								<small class="overflow-hidden d-inline-block">
+									<span>
+										{% if review.is_anonymous %}
+											<i class="ti ti-spy align-baseline fs-5 float-start text-danger-emphasis" aria-hidden="true"></i>
+										{% else %}
+											<i class="ti ti-user align-baseline fs-5 float-start" aria-hidden="true"></i>
+										{% endif %}
+										<span class="visually-hidden">{{ locals.product_review_comment_by }}</span>
+									</span>
+									{% if review.is_anonymous %}
+										<span class="fw-bold px-1 text-danger-emphasis">{{ locals.reviews.message.anonymous}}</span>
+									{% else %}
+										<span class="fw-bold px-1">
+											{{ review.customer.name }}
+										</span>
+									{% endif %}
+
+								</small>
+							</div>
+						{% endfor %}
+					</div>
+
+					<div
+						class="d-flex justify-content-between gap-2">
+
+
+						{# <a href="/products/{{ product.slug }}" class="btn btn-outline-secondary btn-sm">
+												                          <i class="ti ti-arrow-{% if session.lang.code == 'ar' %}right{% else %}left{% endif %} align-middle" aria-hidden="true"></i>
+												                           <span class="px-1">{{ locals.reviews.message.back }}</span>
+												                        </a> #}
+
+						<div class="css-pagination-modal" hidden>
+							{% include 'pagination.twig' with { 'totalPages' : product.reviews.last_page , 'currentPage' : product.reviews.current_page } %}
+						</div>
+					</div>
+
+
+				</div>
+			</div>
+		{% else %}
+			<div class="row row-cols-1 g-4 mb-3 animated slideIn">
+				<div class="col">
+					<div class="card border-secondary border-opacity-10 shadow-sm">
+						<div class="card-body">
+							<p class="card-title mb-0 text-muted">
+								<i class="ti ti-message-chatbot align-middle" aria-hidden="true"></i>
+								<span class="px-1">
+									{{ locals.reviews.message.empty }}
+								</span>
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endif %}
+
+{% endblock %}
+

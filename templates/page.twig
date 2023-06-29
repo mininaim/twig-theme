@@ -1,0 +1,120 @@
+{% extends "layout.twig" %}
+
+{% block header %}
+  {{ include('header.twig') }}
+{% endblock %}
+
+{% block main_content %}
+	<section class="bg-primary text-center py-5">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="text-white">
+						<h1 class="h2 js-header-title">
+							{% if page.title is defined %}
+								{{ page.title }}
+							{% else %}
+								{{ locals.page_title_not_found }}
+							{% endif %}
+						</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	{% if page.title is defined %}
+		<section class="!shadow-sm border-secondary border-top border-bottom border-opacity-10 py-2 d-print-none">
+			<div class="container">
+				<div class="d-flex justify-content-center justify-content-sm-end align-items-center animated slideIn">
+					<div class="btn-group btn-group-sm" role="group" aria-label="{{ locals.accessibility.group_buttons.label }}">
+											<button type="button" class="btn btn-outline-secondary" id="js-page-fullscreen" data-bs-toggle="modal" data-bs-target="#fullscreenModal" title="{{ locals.page_tools_fullscreen }}">
+							<i class="ti ti-arrows-maximize align-middle fs-6" aria-hidden="true"></i>
+										<span class="visually-hidden">
+										{{ locals.page_tools_fullscreen }}
+									</span>
+									
+									{# <span class="px-1">
+								{{ locals.page_tools_fullscreen }}
+							</span> #}
+						</button>
+						
+						<button type="button" class="btn btn-outline-secondary !d-none !d-sm-inline-flex" onclick="printThisPage()" title="{{ locals.sharePrint }}">
+							<i class="ti ti-printer align-middle fs-6" aria-hidden="true"></i>
+									<span class="visually-hidden">
+										{{ locals.sharePrint }}
+									</span>
+							{# <span class="px-1">{{ locals.sharePrint }}</span> #}
+						</button>
+	
+						<button type="button" class="btn btn-outline-secondary btn-clipboard" data-clipboard-text="{{ store.permalink }}pages/{{ page.slug }}" title="{{ locals.sharePrint }}">
+							<i class="ti ti-link align-middle fs-6" aria-hidden="true"></i>
+							<span class="visually-hidden">{{ locals.shareCopyClipboard }}</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</section>
+	{% endif %}
+	<section class="py-3 d-print-block">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					{% if page.content is defined %}
+						<article class="card p-3 text-danger text-opacity-100 lh-base border-secondary border-opacity-10 shadow-sm js-article">
+							{{ page.content | raw }}
+						</article>
+					{% else %}
+						<article class="card p-3 text-muted lh-base border-secondary border-opacity-10 shadow-sm">
+							<p class="card-title mb-0 text-muted">
+								<i class="ti ti-refresh-alert align-middle" aria-hidden="true"></i>
+								<span class="px-1">
+									{{ locals.page_text_not_found }}
+								</span>
+							</p>
+						</article>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+	</section>
+	{% if page.title is defined %}
+		<div class="modal fade d-print-none" id="fullscreenModal" tabindex="-1" aria-labelledby="fullscreenModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-fullscreen">
+				<div class="modal-content">
+					<div class="modal-header bg-light-subtle border-secondary-subtle">
+						<h5 class="modal-title js-fullscreenModalTitle" id="fullscreenModalLabel"></h5>
+						<button type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal" data-bs-placement="right" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.page_tools_fullscreen_exit }}</small>">
+							<i class="ti ti-arrows-minimize align-middle" aria-hidden="true"></i>
+							<span class="visually-hidden">
+								{{ locals.page_tools_fullscreen_exit }}
+							</span>
+						</button>
+					</div>
+					<div class="modal-body my-2 p-3 text-secondary-emphasis js-fullscreenModalBody"></div>
+					<div class="modal-footer bg-light-subtle border-secondary-subtle">
+						<button hidden type="button" class="btn btn-sm btn-outline-secondary" data-bs-dismiss="modal" data-bs-placement="right" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.page_tools_fullscreen_exit }}</small>">
+							<i class="ti ti-arrows-minimize align-middle" aria-hidden="true"></i>
+							<span class="visually-hidden">
+								{{ locals.page_tools_fullscreen_exit }}
+							</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% include 'toast.twig'%}
+	{% endif %}
+{% endblock %}
+
+{% block footer %}
+  {{ include('footer.twig') }}
+{% endblock %}
+
+{% block footer_scripts %}
+  {% if page.title is defined %}
+	<script defer src="{{ assetUrl('clipboard.min.js') }}"></script>
+	<script defer src="{{ assetUrl('clipboardInit.js') }}"></script>
+	<script defer src="{{ assetUrl('printPage.js') }}"></script>
+	<script defer src="{{ assetUrl('page.js') }}"></script>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,222 @@
+{% if products.total > 0 %}
+	<div class="d-flex justify-content-between justify-content-sm-between align-items-center flex-row-reverse">
+		<div class="col-5 col-lg-3 animated slideIn" id="filterAttirbutesContainer" hidden>
+			<div class="input-group input-group-sm">
+				<span class="input-group-text text-body-secondary" for="InputGroupSearchFilter">
+					<i class="ti ti-list-search align-middle fs-6" aria-hidden="true"></i>
+				</span>
+				<span class="input-group-text text-body-secondary px-1 rounded-start d-none"></span>
+				<input type="search" class="form-control form-control-sm form-control-no-focus form-control-variant border-secondary border-opacity-25" aria-label="{{locals.accessibility.input_search.label}}" aria-describedby="InputGroupSearchFilter" placeholder="{{ locals.products_search_placeholder }}" id="InputGroupSearchFilter" onkeyup="GroupSearchFilter('InputGroupSearchFilter', 'productsFiltered');">
+			</div>
+		</div>
+
+		{% if products.filters|length > 0 %}
+		<div class="animated slideIn" id="filterAttirbutesOptionsContainer" hidden>
+			<div class="hastack gap-3">
+				<div class="btn-group btn-group-sm" role="group" aria-label="{{locals.accessibility.radio_group.label}}">
+					<input type="radio" class="btn-check" name="btnradio" id="filterNone" autocomplete="off" data-reset onclick="resetFilters()" checked>
+					<label class="btn btn-sm btn-outline-secondary" for="filterNone" data-bs-placement="top" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.products_list_filter_show_all }}</small>">
+						<i class="ti ti-adjustments align-middle" aria-hidden="true"></i>
+						<span class="px-1">{{ locals.products_list_filter_show_all }}</span>
+						<span class="visually-hidden">{{ locals.products_list_filter_show_all }}</span>
+					</label>
+					{# <input type="radio" class="btn-check" name="btnradio" id="filterAvailability" autocomplete="off" data-filter="availability" onclick="filterByDataAttribute(this)">
+					<label class="btn btn-sm btn-outline-secondary" for="filterAvailability" data-bs-placement="top" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.products_list_filter_unavailable }}</small>">
+						<i class="ti ti-basket-off align-middle" aria-hidden="true"></i>
+						<span class="visually-hidden">{{ locals.products_list_filter_unavailable }}</span>
+					</label>
+					<input type="radio" class="btn-check" name="btnradio" id="filterOnSale" autocomplete="off" data-filter="onsale" onclick="filterByDataAttribute(this)">
+					<label class="btn btn-sm btn-outline-secondary" for="filterOnSale" data-bs-placement="top" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.products_list_filter_has_sale_price }}</small>">
+						<i class="ti ti-discount-2 align-middle" aria-hidden="true"></i>
+						<span class="visually-hidden">{{ locals.products_list_filter_has_sale_price }}</span>
+					</label>
+					<input type="radio" class="btn-check" name="btnradio" id="filterHasOptions" autocomplete="off" data-filter="hasoptions" onclick="filterByDataAttribute(this)">
+					<label class="btn btn-sm btn-outline-secondary" for="filterHasOptions" data-bs-placement="top" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.products_list_filter_has_options }}</small>">
+						<i class="ti ti-comet align-middle" aria-hidden="true"></i>
+						<span class="visually-hidden">{{ locals.products_list_filter_has_options }}</span>
+					</label>
+					<input type="radio" class="btn-check" name="btnradio" id="filterHasFields" autocomplete="off" data-filter="hasfields" onclick="filterByDataAttribute(this)">
+					<label class="btn btn-sm btn-outline-secondary" for="filterHasFields" data-bs-placement="top" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.products_list_filter_has_fields }}</small>">
+						<i class="ti ti-hand-click align-middle" aria-hidden="true"></i>
+						<span class="visually-hidden">{{ locals.products_list_filter_has_fields }}</span>
+					</label>
+					<input type="radio" class="btn-check" name="btnradio" id="filterIsInfinite" autocomplete="off" data-filter="isinfinite" onclick="filterByDataAttribute(this)">
+					<label class="btn btn-sm btn-outline-secondary" for="filterIsInfinite" data-bs-placement="top" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.products_list_filter_is_infinite }}</small>">
+						<i class="ti ti-infinity align-middle" aria-hidden="true"></i>
+						<span class="visually-hidden">{{ locals.products_list_filter_is_infinite }}</span>
+					</label>
+					<input type="radio" class="btn-check" name="btnradio" id="filterHasVariants" autocomplete="off" data-filter="hasvariants" onclick="filterByDataAttribute(this)">
+					<label class="btn btn-sm btn-outline-secondary" for="filterHasVariants" data-bs-placement="top" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.products_list_filter_has_variants }}</small>">
+						<i class="ti ti-versions align-middle" aria-hidden="true"></i>
+						<span class="visually-hidden">{{ locals.products_list_filter_has_variants }}</span>
+					</label>
+					<input type="radio" class="btn-check" name="btnradio" id="filterLowStockQuantity" autocomplete="off" data-filter="lowstockquantity" onclick="filterByDataAttribute(this)">
+					<label class="btn btn-sm btn-outline-secondary" for="filterLowStockQuantity" data-bs-placement="top" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.products_list_filter_low_stock_quantity }}</small>">
+						<i class="ti ti-paper-bag align-middle" aria-hidden="true"></i>
+						<span class="visually-hidden">{{ locals.products_list_filter_low_stock_quantity }}</span>
+					</label> #}
+				</div>
+			</div>
+		</div>
+		{% endif %}
+
+		<div class="hstack gap-lg-2 animated slideIn" id="sortAttirbutesContainer">
+
+			<form method="GET" action="{{ requestUri() }}" class="col-auto">
+				{% for key, input in requestInputs() %}
+					<input type="hidden" name="{{ key }}" value="{{ input }}">
+				{% endfor %}
+				<div class="input-group input-group-sm">
+					<label class="input-group-text text-body-secondary" for="floatingSelect">
+						<i class="ti ti-menu-order align-middle fs-6 d-sm-none" aria-hidden="true"></i>
+						<span class="px-0 d-none d-sm-block">{{ locals.products_list_filter_label }}</span>
+					</label>
+					<select class="form-select form-control-no-focus border-secondary border-opacity-25" id="floatingSelect" aria-label="{{locals.accessibility.select.floating.label}}" onchange="sortProductsResult(event)">
+						<option value="default" {% if requestGet('sort_by') == '0' or requestGet('sort_by') is empty %} selected {% endif %}>{{ locals.products_list_filter_default_order }}</option>
+						<option value="oldest" {% if requestGet('sort_by') == 'created_at' and requestGet('order') == 'asc' %} selected {% endif %}>{{ locals.products_list_filter_oldest }}</option>
+						<option value="latest" {% if requestGet('sort_by') == 'created_at' and requestGet('order') == 'desc' %} selected {% endif %}>{{ locals.products_list_filter_latest }}</option>
+						<option value="popularity_low" {% if requestGet('sort_by') == 'popularity_order' and requestGet('order') == 'asc' %} selected {% endif %}>{{ locals.products_list_filter_least_popular }}</option>
+						<option value="popularity_high" {% if requestGet('sort_by') == 'popularity_order' and requestGet('order') == 'desc' %} selected {% endif %}>{{ locals.products_list_filter_popularity }}</option>
+						<option value="price_low" {% if requestGet('sort_by') == 'price' and requestGet('order') == 'asc' %} selected {% endif %}>{{ locals.products_list_filter_price_low }}</option>
+						<option value="price_high" {% if requestGet('sort_by') == 'price' and requestGet('order') == 'desc' %} selected {% endif %}>{{ locals.products_list_filter_price_high }}</option>
+					</select>
+				</div>
+			</form>
+						<div class="col-auto">
+				<div class="input-group input-group-sm d-none d-lg-flex">
+					<label class="input-group-text text-body-secondary" for="redirectToSelectedPage">
+						<span class="px-0">{{ locals.products_list_page_label }}</span>
+					</label>
+					<select class="form-select form-control-no-focus border-secondary border-opacity-25" aria-label="{{locals.accessibility.select.default.label}}" id="redirectToSelectedPage" onchange="redirectToSelectedPage()">
+						{% for i in rangeN(1, products.last_page) %}
+							<option value="{{ i }}" {% if i == products.current_page %} selected {% endif %}>
+								{{ i }}</option>
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+		</div>
+
+		
+			
+		<div class="btn-toolbar gap-sm-3" role="toolbar" aria-label="{{ locals.accessibility.toolbar_buttons.label }}">
+
+			<div class="btn-group btn-group-sm" role="group" aria-label="{{ locals.accessibility.toolbar_buttons.label }}">
+				<button type="button" class="btn btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasProductsFilter" aria-controls="offcanvasProductsFilter">
+					<span class="position-relative d-inline-block">
+						<span class="position-absolute top-0 start-100 translate-middle d-none js-filter-status">
+							<svg class="rounded-pill mt-1 text-danger" width="6" height="6" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+								<rect width="100%" height="100%" fill="currentColor"></rect>
+							</svg>
+						</span>
+						<i class="ti ti-filter align-middle fs-6" aria-hidden="true"></i>
+						<span class="px-1">{{ locals.products_list_filter_price_label }}</span>
+					</span>
+				</button>
+				<button type="button" class="btn btn-outline-secondary js-toggleButton" onclick="toggleDivs()">
+					<i class="ti ti-search align-middle fs-6" aria-hidden="true"></i>
+					<span class="px-1 d-none d-sm-inline-block">{{ locals.products_list_filter_search }}</span>
+				</button>
+			</div>
+
+			<div class="d-flex flex-wrap align-items-center align-items-center d-none d-lg-flex">
+				<input class="form-range" type="range" id="grid-cols-range" min="2" max="6" value="6" tabindex="0">
+			</div>
+
+
+
+		</div>
+	</div>
+{% else %}
+	<div class="d-flex justify-content-center justify-content-sm-end align-items-center animated slideIn">
+		<div class="d-flex align-items-center">
+			<button type="button" class="btn btn-sm btn-outline-secondary" data-bs-toggle="offcanvas" data-bs-target="#offcanvasProductsFilter" aria-controls="offcanvasProductsFilter">
+				<span class="position-relative d-inline-block">
+					<i class="ti ti-filter fs-5 align-middle" aria-hidden="true"></i>
+					<span class="px-0">{{ locals.products_list_filter_edit }}</span>
+				</span>
+			</button>
+		</div>
+	</div>
+{% endif %}
+<script defer>
+	const hmtlEntitiesDecode = (encodedStr) => $("<div/>").html(encodedStr).text();
+	{# const sortProductsResult = (event) => {
+		try {
+			event.preventDefault();
+
+			const sort = event.target.value;
+
+			const urlMap = {
+			oldest: hmtlEntitiesDecode(
+				"{{ requestAdd({sort_by: 'created_at', order: 'asc'}) }}"
+			),
+			latest: hmtlEntitiesDecode(
+				"{{ requestAdd({sort_by: 'created_at', order: 'desc'}) }}"
+			),
+			popularity_low: hmtlEntitiesDecode(
+				"{{ requestAdd({sort_by: 'popularity_order', order: 'asc'}) }}"
+			),
+			popularity_high: hmtlEntitiesDecode(
+				"{{ requestAdd({sort_by: 'popularity_order', order: 'desc'}) }}"
+			),
+			price_low: hmtlEntitiesDecode(
+				"{{ requestAdd({sort_by: 'price', order: 'asc'}) }}"
+			),
+			price_high: hmtlEntitiesDecode(
+				"{{ requestAdd({sort_by: 'price', order: 'desc'}) }}"
+			),
+			};
+
+			if (sort === "default") {
+			url = window.location.origin + window.location.pathname;
+			} else {
+			url =
+				urlMap[sort] ||
+				hmtlEntitiesDecode(
+				"{{ requestAdd({sort_by: 'created_at', order: 'desc'}) }}"
+				);
+			}
+			history.pushState({}, "", url);
+
+			location.reload();
+		} catch (err) {
+			console.error(err);
+		}
+	}; #}
+	const sortProductsResult = (event) => {
+		try {
+			event.preventDefault();
+			const sort = event.target.value;
+			const urlMap = {
+				oldest: window.location.origin + "/products?sort_by=created_at&order=asc",
+				latest: window.location.origin + "/products?sort_by=created_at&order=desc",
+				popularity_low: window.location.origin + "/products?sort_by=popularity_order&order=asc",
+				popularity_high: window.location.origin + "/products?sort_by=popularity_order&order=desc",
+				price_low: window.location.origin + "/products?sort_by=price&order=asc",
+				price_high: window.location.origin + "/products?sort_by=price&order=desc",
+			};
+
+			let url = "";
+			if (sort === "default") {
+				url = window.location.origin + window.location.pathname;
+			} else {
+				url = urlMap[sort];
+			}
+			const searchParams = new URLSearchParams(window.location.search);
+			for (const key of searchParams.keys()) {
+				if (key !== "sort_by" && key !== "order") {
+					url += `&${key}=${searchParams.get(key)}`;
+				}
+			}
+
+			history.pushState({}, "", url);
+			location.reload();
+		} catch (err) {
+			console.error(err);
+		}
+	};
+</script>
+
+<script defer src="{{ assetUrl('instantSearch.js') }}"></script>
+<script defer src="{{ assetUrl('productsFilters.js') }}"></script>

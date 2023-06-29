@@ -1,0 +1,720 @@
+{% extends "layout.twig" %}
+
+{% block header %}
+	{{ include('header.twig') }}
+{% endblock %}
+
+{% block main_content %}
+
+{# {{ store.storefront_theme.name }} #}
+	<section class="py-3 js-cart-empty-section {% if cart.products_count > 0 %}d-none{% endif %}">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="d-grid justify-content-center align-content-center text-center">
+						<div class="vstack gap-2 svg-animated">
+							<svg class="text-primary text-opacity-75 col-7 col-sm-6 mx-auto" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 784 820" preserveaspectratio="xMidYMid meet" width="784" height="100%">
+								<defs>
+									<clipPath id="__lottie_element_1439">
+										<rect width="784" height="820" x="0" y="0" class="cart-empty-1"></rect>
+									</clipPath>
+									<filter id="__lottie_element_1459" filterunits="objectBoundingBox" x="0%" y="0%" width="100%" height="100%">
+										<feComponentTransfer in="SourceGraphic">
+											<feFuncA type="table" tablevalues="1.0 0.0"></feFuncA>
+										</feComponentTransfer>
+									</filter>
+									<mask id="__lottie_element_1455" mask-type="alpha">
+										<g filter="url(#__lottie_element_1459)">
+											<rect width="784" height="820" x="0" y="0" fill="#ffffff" opacity="0" class="cart-empty-2"></rect>
+											<g transform="matrix(1,0,0,1,392,444.6077575683594)" opacity="1" style="display: block;">
+												<g opacity="1" transform="matrix(1,0,0,1,-14,84)">
+													<path fill="currentColor" fill-opacity="1" d=" M358.00079345703125,-279.9931640625 C358.0048522949219,-279.9914245605469 358.0002746582031,180.00315856933594 358.0002746582031,180.00315856933594 C358.0002746582031,180.00315856933594 -357.9997253417969,180.00315856933594 -357.9997253417969,180.00315856933594 C-357.9997253417969,180.00315856933594 -358.0040588378906,-281.9912414550781 -358.0000305175781,-281.99310302734375 C-357.99249267578125,-281.9965515136719 357.993408203125,-279.9963684082031 358.00079345703125,-279.9931640625z" class="cart-empty-3"></path>
+													<path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="4" stroke="currentColor" stroke-opacity="1" stroke-width="5.4" d=" M358.00079345703125,-279.9931640625 C358.0048522949219,-279.9914245605469 358.0002746582031,180.00315856933594 358.0002746582031,180.00315856933594 C358.0002746582031,180.00315856933594 -357.9997253417969,180.00315856933594 -357.9997253417969,180.00315856933594 C-357.9997253417969,180.00315856933594 -358.0040588378906,-281.9912414550781 -358.0000305175781,-281.99310302734375 C-357.99249267578125,-281.9965515136719 357.993408203125,-279.9963684082031 358.00079345703125,-279.9931640625z" class="cart-empty-4"></path>
+												</g>
+											</g>
+										</g>
+									</mask>
+								</defs>
+								<g clip-path="url(#__lottie_element_1439)">
+									<g mask="url(#__lottie_element_1455)" style="display: none;">
+										<g transform="matrix(1,0,0,1,392,432.2142333984375)" opacity="1">
+											<g opacity="1" transform="matrix(1,0,0,1,0,0)">
+												<path stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" stroke="currentColor" stroke-opacity="1" stroke-width="40" d=" M222.54031372070312,-196.8846435546875 C222.54031372070312,-196.8846435546875 -220.53768920898438,-196.8846435546875 -220.53768920898438,-196.8846435546875 C-220.53768920898438,-196.8846435546875 -258.53900146484375,252.98699951171875 -258.53900146484375,252.98699951171875 C-258.53900146484375,296.98699951171875 -222.53900146484375,332.98699951171875 -178.53900146484375,332.98699951171875 C-178.53900146484375,332.98699951171875 178.53900146484375,332.98699951171875 178.53900146484375,332.98699951171875 C222.53900146484375,332.98699951171875 258.53900146484375,296.98699951171875 258.53900146484375,252.98699951171875 C258.53900146484375,252.98699951171875 222.54031372070312,-196.8846435546875 222.54031372070312,-196.8846435546875z" class="cart-empty-5"></path>
+											</g>
+										</g>
+									</g>
+									<g transform="matrix(1,0,0,1,392,444.6077575683594)" opacity="1" style="display: block;">
+										<g opacity="1" transform="matrix(1,0,0,1,0,0)">
+											<path stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" stroke="currentColor" stroke-opacity="1" stroke-width="40" d=" M222.54417419433594,-196.9800262451172 C222.54417419433594,-196.9800262451172 -220.5442657470703,-196.9800262451172 -220.5442657470703,-196.9800262451172 C-220.5442657470703,-196.9800262451172 -258.54010009765625,252.98699951171875 -258.54010009765625,252.98699951171875 C-258.5394592285156,296.9867858886719 -222.54031372070312,332.98699951171875 -178.5398406982422,332.98699951171875 C-178.5398406982422,332.98699951171875 178.5398406982422,332.98699951171875 178.5398406982422,332.98699951171875 C222.54031372070312,332.98699951171875 258.5394287109375,296.9869079589844 258.54010009765625,252.98699951171875 C258.54010009765625,252.98699951171875 222.54417419433594,-196.9800262451172 222.54417419433594,-196.9800262451172z" class="cart-empty-6"></path>
+										</g>
+									</g>
+									<g transform="matrix(1,0,0,1,392,444.6077575683594)" opacity="1" style="display: block;">
+										<g opacity="1" transform="matrix(1,0,0,1,0,0)">
+											<path stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" stroke="currentColor" stroke-opacity="1" stroke-width="40" d=" M222.6721954345703,-195.80909729003906 C222.6721954345703,-195.80909729003906 -220.59326171875,-195.80909729003906 -220.59326171875,-195.80909729003906 C-220.59326171875,-195.80909729003906 -143.73165893554688,-195.3986053466797 -143.73165893554688,-195.3986053466797 C-143.73165893554688,-195.3986053466797 -220.68194580078125,-194.98538208007812 -220.68194580078125,-194.98538208007812 C-220.68194580078125,-194.98538208007812 223.4110565185547,-194.98538208007812 223.4110565185547,-194.98538208007812 C223.4110565185547,-194.98538208007812 145.77157592773438,-195.3986053466797 145.77157592773438,-195.3986053466797 C145.77157592773438,-195.3986053466797 222.6721954345703,-195.80909729003906 222.6721954345703,-195.80909729003906z" class="cart-empty-7"></path>
+										</g>
+									</g>
+									<g transform="matrix(1,0,0,1,392,436)" opacity="1" style="display: block;">
+										<g opacity="1" transform="matrix(1,0,0,1,0,0)">
+											<path stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" stroke="currentColor" stroke-opacity="1" stroke-width="40" d=" M-120.96610260009766,-114.24781799316406 C-121.19070434570312,-117.33003997802734 -121.3511734008789,-195.46878051757812 -121.30615997314453,-198.56314086914062 C-121.27742004394531,-267.3310241699219 -64.748046875,-323.0779113769531 5.0201592445373535,-323.0779113769531 C74.78836822509766,-323.0779113769531 131.37522888183594,-267.3310241699219 131.34616088867188,-198.56314086914062 C131.301025390625,-195.46087646484375 131.2310028076172,-117.31399536132812 131.00440979003906,-114.22374725341797" class="cart-empty-8"></path>
+										</g>
+									</g>
+									<g style="display: none;" transform="matrix(1,0,0,1,392,436)" opacity="1">
+										<g opacity="1" transform="matrix(1,0,0,1,0,0)">
+											<path stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" stroke="currentColor" stroke-opacity="1" stroke-width="40" d=" M-120.6500015258789,-115.69100189208984 C-120.8740005493164,-118.76499938964844 -120.98899841308594,-197.86900329589844 -120.98899841308594,-201 C-120.98899841308594,-270.5820007324219 -64.58200073242188,-326.989013671875 5,-326.989013671875 C74.58200073242188,-326.989013671875 130.98899841308594,-270.5820007324219 130.98899841308594,-201 C130.98899841308594,-197.86099243164062 130.87399291992188,-118.7490005493164 130.6479949951172,-115.66699981689453" class="cart-empty-9"></path>
+										</g>
+									</g>
+									<g transform="matrix(1,0,0,1,392,436)" opacity="1" style="display: none;">
+										<g opacity="1" transform="matrix(1,0,0,1,0,0)">
+											<path stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" stroke="currentColor" stroke-opacity="1" stroke-width="40" d=" M-0.006975629832595587,-37.11494827270508 C-0.006975629832595587,-37.11494827270508 0,-36.20192337036133 0,-36.20192337036133" class="cart-empty-10"></path>
+										</g>
+										<g opacity="1" transform="matrix(1,0,0,1,0,0)">
+											<path stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" stroke="currentColor" stroke-opacity="1" stroke-width="40" d=" M0.1157449409365654,-36.290122985839844 C0.1157449409365654,-36.290122985839844 0,-36.20192337036133 0,-36.20192337036133 C0,-36.20192337036133 -0.20019671320915222,-36.207801818847656 -0.20019671320915222,-36.207801818847656" class="cart-empty-11"></path>
+										</g>
+									</g>
+								</g>
+							</svg>
+						</div>
+						<h6 class="mb-3 mt-3 mt-sm-3 mb-sm-4 animate__animated animate__delay-1s animate__fadeInDown">
+							{{ locals.cart_list_empty }}
+						</h6>
+						<p class="animate__animated animate__delay-2s animate__fadeInUp">
+							<a href="/" class="btn btn-lg btn-primary">
+								<span class="px-1">
+									{{ locals.cart_back_to_store }}
+								</span>
+								<i class="ti ti-arrow-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %} align-middle" aria-hidden="true"></i>
+							</a>
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="bg-primary text-center py-5 js-hero js-section-cart-products {% if cart.products_count <= 0 %}d-none{% endif %}">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="text-white">
+						<h1 class="h2">{{ locals.cart_view_title }}</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="py-3 js-section-cart-products {% if cart.products_count <= 0 %}d-none{% endif %}">
+		<div class="container">
+
+
+
+
+			<div class="row">
+				<div class="order-0 order-sm-0 col-sm-6 col-lg-8">
+					<div class="list-group list-group-flush pe-1 pe-sm-0 js-cart-items template_for_cart_products_list">
+						<div class="spinner-border spinner-border-sm text-primary js-cart-products-list-spinner" role="status">
+							<span class="visually-hidden">
+								{{ locals.accessibility.spinner.label }}
+							</span>
+						</div>
+						<div class="js-cart-products-list-template" hidden>
+  {% if cart.gift_card_details | length > 0 %}
+							<div class="accordion mb-3 animate__animated animate__fadeIn" id="giftCardAccordion">
+
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="giftCardHeader">
+        <button class="accordion-button collapsed fw-bold bg-light css-inverse-btn-shine" type="button" data-bs-toggle="collapse" data-bs-target="#giftCardBody" aria-expanded="false" aria-controls="giftCardBody">
+            <div class="css-typing-effect">
+			<span class="d-inline-block">
+			{{ locals.cart_send_as_gift_info }}
+			</span>
+			</div>
+        </button>
+      </h2>
+      <div id="giftCardBody" class="accordion-collapse collapse" aria-labelledby="giftCardHeader" data-bs-parent="#giftCardAccordion">
+        <div class="accordion-body">
+          <div class="row g-0">
+            <div class="d-none d-sm-flex col-md-2 d-flex justify-content-center">
+              <lottie-player src="https://assets9.lottiefiles.com/packages/lf20_AVCnQLkai4.json" background="transparent" speed="1" style="width: 80px;" loop autoplay></lottie-player>
+            </div>
+            <div class="col-md-10 d-flex flex-column justify-content-center">
+             
+				<ul class="list-group">
+					<li class="list-group-item d-flex justify-content-start align-items-start gap-3">
+						<span>
+							<span class="badge bg-primary text-primary bg-opacity-10 rounded-pill">
+								<i class="ti ti-user-down align-middle" aria-hidden="true"></i>
+								{{ locals.gift.preview.from }}
+							</span>
+							<span>
+								{{ cart.gift_card_details.sender_name }}
+							</span>
+						</span>
+						<span>
+							<span class="badge bg-primary text-primary bg-opacity-10 rounded-pill">
+								<i class="ti ti-user-pin align-middle" aria-hidden="true"></i>
+								{{ locals.gift.preview.to }}
+							</span>
+							<span>
+								{{ cart.gift_card_details.receiver_name }}
+							</span>
+						</span>
+					</li>
+				</li>
+
+				{% if cart.gift_card_details.gift_message | length > 0 %}
+					<li
+						class="list-group-item d-flex justify-content-start align-items-start gap-2 small">
+						{# <span class="badge bg-primary bg-opacity-10 text-secondary rounded-pill">
+							<i class="ti ti-message-dots align-middle" aria-hidden="true"></i>
+							<span class="px-1">{{ locals.gift.preview.message }}</span>
+						</span> #}
+						{{ cart.gift_card_details.gift_message | escape }}
+					</li>
+				{% endif %}
+
+				{# {% if cart.gift_card_details.media_link | length > 0 %}
+					<li class="list-group-item d-flex justify-content-start align-items-center gap-2">
+
+					<a class="link-secondary rounded-pill bg-secondary bg-opacity-10 px-2 !py-1 text-start text-truncate" href="{{ cart.gift_card_details.media_link }}" target="_blank" rel="noopener noreferrer">
+					<i class="ti ti-link align-middle" aria-hidden="true"></i> {{ cart.gift_card_details.media_link | escape }}
+					</a>
+					{{ locals.gift.preview.url }}
+					</li>
+				{% endif %}  #}</ul>
+
+
+
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+</div>  {% endif %}
+
+							{{ template_for_cart_products_list }}
+						</div>
+					</div>
+					<button type="button" class="btn btn-primary btn btn-sm btn-primary d-flex flex-wrap align-items-center mx-auto d-none" id="js-load-more-button">
+						<i class="ti ti-rotate-clockwise-2 align-middle fs-6" aria-hidden="true"></i>
+						<span class="px-1">{{ locals.cart_load_more }}</span>
+					</button>
+				</div>
+				<div class="order-1 order-sm-1 col-12 col-sm-6 col-lg-4 mt-3 mt-sm-0">
+					<div class="card border-secondary-subtle shadow-sm p-0 !sticky-sm-top !sticky-offset d-none js-cart-sidebar">
+						<div class="card-body p-3">
+							<h5 class="ps-3">{{locals.order_total}}</h5>
+							<hr class="border-2 border-top border-secondary border-opacity-25">
+							<div class="mb-3">
+								<ul class="list-group list-group-flush js-section-cart-totals">
+									{% for cartTotal in cart.totals %}
+										<li class="list-group-item d-flex justify-content-between align-items-start text-body-secondary">
+											<div class="me-auto">
+												<span>{{ cartTotal.title }}</span>
+											</div>
+											<span class="{% if cartTotal.code == 'total' %}fw-bold text-primary{% endif %}">{{ cartTotal.value_string }}</span>
+										</li>
+									{% endfor %}
+								</ul>
+								<hr class="border-2 border-top border-secondary border-opacity-25">
+								<div class="card !bg-primary !bg-opacity-10 border-secondary border-opacity-10 text-primary shadow-sm my-2 p-2 flex-column justify-content-start align-items-start gap-2 animated slideIn !css-card-border js-free-shipping-rule-section{% if cart.fee_shipping_discount_rules %} d-flex{% else %} d-none{% endif %}">
+
+									<span class="fw-light">
+										<svg class="rounded-pill me-1 text-warning pulse-grouped" width="8" height="8" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveaspectratio="xMidYMid slice" focusable="false">
+											<rect width="100%" height="100%" fill="currentColor"></rect>
+										</svg>
+										<span class="small fw-bold text-body-secondary js-free-shipping-rule-section-message">
+											{{ cart.fee_shipping_discount_rules.conditions_subtotal.status.message }}
+										</span>
+
+									</span>
+{% set progressWidth = cart.fee_shipping_discount_rules.conditions_subtotal.products_subtotal_percentage_from_min %}
+{% set showProgressBar = cart.fee_shipping_discount_rules.conditions_subtotal.status.code == 'min_not_reached' or progressWidth < 100 %}
+
+{% set ariaValuenow = progressWidth %}
+{% set ariaValuemin = 0 %}
+{% set ariaValuemax = 100 %}
+
+<div class="progress discount-progress-linear{% if showProgressBar %} d-flex{% else %} d-none{% endif %}" role="progressbar" style="height: 20px">
+  <div id="free-shipping-progress" class="progress-bar progress-bar-striped progress-bar-animated js-free-shipping-rule-progress" style="width: {{ progressWidth }}%" aria-valuenow="{{ ariaValuenow }}" aria-valuemin="{{ ariaValuemin }}" aria-valuemax="{{ ariaValuemax }}">
+    {% if cart.fee_shipping_discount_rules.conditions_subtotal.status.code == 'applied' %}
+      <span>{{ locals.coupon_discount_free_shipping }}</span>
+    {% else %}
+      <span>{{ progressWidth }}%</span>
+    {% endif %}
+  </div>
+</div>
+
+
+									<!-- <span class="discount-progress js-discount-progress-applied-icon">
+									                                        <span class="free-shipping-rule-done {% if cart.fee_shipping_discount_rules.conditions_subtotal.status.code == 'applied' %}d-inline{% else %}d-none{% endif %}">
+									
+									                                            {# <svg class="grow animated flash hinge" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" style="width: 20px;" aria-hidden="true">
+									                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 3.75v16.5M2.25 12h19.5M6.375 17.25a4.875 4.875 0 004.875-4.875V12m6.375 5.25a4.875 4.875 0 01-4.875-4.875V12m-9 8.25h16.5a1.5 1.5 0 001.5-1.5V5.25a1.5 1.5 0 00-1.5-1.5H3.75a1.5 1.5 0 00-1.5 1.5v13.5a1.5 1.5 0 001.5 1.5zm12.621-9.44c-1.409 1.41-4.242 1.061-4.242 1.061s-.349-2.833 1.06-4.242a2.25 2.25 0 013.182 3.182zM10.773 7.63c1.409 1.409 1.06 4.242 1.06 4.242S9 12.22 7.592 10.811a2.25 2.25 0 113.182-3.182z" />
+									                                            </svg> #}
+									                                            <svg aria-hidden="true" class="grow animated flash hinge" style="width:20px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 511.982 511.982" xml:space="preserve">
+									                                            <path style="fill:#ED5564;" d="M393.144,42.982C377.895,14.46,359.646,0,338.833,0c-23.905,0-48.748,19.562-73.857,58.131
+									                                                c-3.219,4.945-6.219,9.875-8.999,14.64c-2.766-4.765-5.766-9.694-8.984-14.64C221.9,19.562,197.057,0,173.136,0
+									                                                c-20.796,0-39.061,14.46-54.295,42.982c-11.406,21.336-7.297,36.663-1.844,45.765c9.828,16.39,31.796,27.429,67.17,33.749
+									                                                c27.14,4.852,55.873,5.57,70.592,5.57c0.422,0,0.828,0,1.234,0c0.391,0,0.797,0,1.218,0c0,0,0,0,0.016,0
+									                                                c14.703,0,43.453-0.719,70.576-5.57c35.375-6.32,57.343-17.359,67.186-33.749C400.426,79.645,404.551,64.318,393.144,42.982z"></path>
+									                                            <rect x="21.328" y="158.722" style="fill:#FFCE54;" width="469.31" height="353.26"></rect>
+									                                            <polygon style="fill:#F6BB42;" points="21.328,234.72 490.642,277.397 490.642,213.321 21.328,213.321 "></polygon>
+									                                            <rect x="0.001" y="96.012" style="fill:#FFCE54;" width="511.98" height="117.31"></rect>
+									                                            <g>
+									                                                <path style="fill:#ED5564;" d="M202.65,362.66c29.453,0,53.343-23.873,53.343-53.326c0-29.468-23.89-53.334-53.343-53.334
+									                                                    c-29.452,0-53.326,23.866-53.326,53.334C149.324,338.787,173.198,362.66,202.65,362.66z M202.65,277.335
+									                                                    c17.641,0,32,14.344,32,31.999c0,17.641-14.359,31.999-32,31.999c-17.64,0-31.999-14.358-31.999-31.999
+									                                                    C170.651,291.679,185.011,277.335,202.65,277.335z"></path>
+									                                                <path style="fill:#ED5564;" d="M309.335,362.66c-29.468,0-53.342,23.875-53.342,53.327c0,29.468,23.874,53.343,53.342,53.343
+									                                                    c29.437,0,53.312-23.875,53.312-53.343C362.646,386.535,338.771,362.66,309.335,362.66z M309.335,447.986
+									                                                    c-17.655,0-31.999-14.344-31.999-31.999c0-17.64,14.344-31.999,31.999-31.999c17.624,0,31.999,14.359,31.999,31.999
+									                                                    C341.334,433.642,326.959,447.986,309.335,447.986z"></path>
+									                                                <path style="fill:#ED5564;" d="M359.521,274.21c1.938-1.938,3.125-4.601,3.125-7.546c0-5.891-4.781-10.664-10.656-10.664
+									                                                    c-2.938,0-5.625,1.195-7.531,3.125l-192.01,191.986c-1.938,1.938-3.125,4.594-3.125,7.547c0,5.891,4.781,10.672,10.672,10.672
+									                                                    c2.938,0,5.609-1.203,7.531-3.125L359.521,274.21z"></path>
+									                                            </g>
+									                                            </svg>
+									                                            <span class="visually-hidden">{{ cart.fee_shipping_discount_rules.conditions_subtotal.status.message  }}</span>
+									                                        </span>
+									                                    </span> -->
+								</div>
+							</div>
+							<div class="card border-0 z-1">
+								<div class="input-group">
+									<input type="text" class="form-control form-control-sm border-secondary border-opacity-25 form-control-no-focus form-control-variant" placeholder="{{ locals.coupon_discount_enter }}" aria-label="{{ locals.accessibility.email.label }}" aria-describedby="applyCoupon" id="couponCode">
+									<button class="btn btn-primary" disabled type="button" id="applyCoupon" onclick="sendCoupon()">
+										<span class="spinner-border spinner-border-sm align-middle d-none js-apply-coupon-progress" role="status" aria-hidden="true">
+											<span class="visually-hidden">{{ locals.accessibility.spinner.label }}</span>
+										</span>
+										<span class="js-apply-coupon-icon">
+											<i class="ti ti-receipt-tax align-middle" aria-hidden="true"></i>
+										</span>
+										<span class="px-1">{{ locals.coupon_discount_submit }}</span>
+									</button>
+								</div>
+							</div>
+							{% if cart.coupon.message %}
+								<div class="bg-secondary-subtle text-dark-emphasis shadow-sm pe-0 px-2 py-2 mt-3 d-flex justify-content-start align-items-center gap-2 rounded border border-secondary-subtle">
+									<a
+										onclick="deleteCoupon()" style="cursor: pointer;" class="pe-auto link-secondary grow" aria-label="{{ locals.accessibility.delete.label }}" data-bs-placement="left" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.coupon_delete }}</small>">
+										{# <i class="ti ti-ticket-off align-middle js-delete-coupon-icon" aria-hidden="true"></i> #}
+										<svg class="js-delete-coupon-icon" aria-hidden="true" width="15" height="15" viewbox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+											<path d="M5.5 1C5.22386 1 5 1.22386 5 1.5C5 1.77614 5.22386 2 5.5 2H9.5C9.77614 2 10 1.77614 10 1.5C10 1.22386 9.77614 1 9.5 1H5.5ZM3 3.5C3 3.22386 3.22386 3 3.5 3H5H10H11.5C11.7761 3 12 3.22386 12 3.5C12 3.77614 11.7761 4 11.5 4H11V12C11 12.5523 10.5523 13 10 13H5C4.44772 13 4 12.5523 4 12V4L3.5 4C3.22386 4 3 3.77614 3 3.5ZM5 4H10V12H5V4Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path>
+										</svg>
+										<span class="spinner-border spinner-border-sm text-primary d-none align-middle js-delete-coupon-progress" role="status" aria-hidden="true">
+											<span class="visually-hidden">{{ locals.accessibility.spinner.label }}</span>
+										</span>
+									</a>
+									<span class="vr"></span>
+									<span class="small px-1">{{ cart.coupon.message }}</span>
+								</div>
+							{% endif %}
+
+							<!-- 
+							<div
+								class="cart-discount-rule-wrapper free-shipping-rule-section mt-5 {% if cart.fee_shipping_discount_rules %}d-block{% else %}d-none{% endif %}">
+								<div class="d-flex align-items-center">
+									<div class="message flex-grow-1 free-shipping-rule-message">
+										{{ cart.fee_shipping_discount_rules.conditions_subtotal.status.message }}
+									</div>
+									<div class="text-muted mr-1 flex-shrink-0 free-shipping-rule-read-more"
+										class="{% if cart.fee_shipping_discount_rules.conditions_subtotal.status.code == 'min_not_reached' %}d-inline-block{% else %}d-none{% endif %}">
+										<a data-toggle="modal" data-target="#searchCitiesModal" href="#">
+											<small>
+												{{ locals.read_more }}
+											</small>
+										</a>
+									</div>
+									<div class="discount-progress flex-shrink-0">
+										<span
+											class="free-shipping-rule-done {% if cart.fee_shipping_discount_rules.conditions_subtotal.status.code == 'applied' %}d-inline-block{% else %}d-none{% endif %}">
+											<span style="font-size: 28px" class="icon-done text-color-primary"></span>
+										</span>
+									</div>
+								</div>
+								<div class="discount-progress-linear"
+									class="{% if cart.fee_shipping_discount_rules.conditions_subtotal.status.code == 'min_not_reached' %}d-block{% else %}d-none{% endif %}">
+									<div class="progress-bar free-shipping-rule-progress"
+										style="width: {{ cart.fee_shipping_discount_rules.conditions_subtotal.products_subtotal_percentage_from_min }}%">
+										{% if cart.fee_shipping_discount_rules.conditions_subtotal.status.code == 'applied' %}
+										<span>{{ locals.coupon_discount_free_shipping }}</span>
+										{% else %}
+										<span>{{ cart.fee_shipping_discount_rules.conditions_subtotal.products_subtotal_percentage_from_min
+											}}%</span>
+										{% endif %}
+									</div>
+								</div>
+
+							</div>
+							 -->
+
+							<div class="card border-0 mt-3 text-body animate__animated animate__flipInX">
+								{{ template_for_cart_payments_widget }}
+							</div>
+
+							<!-- Gift Products to Someone -->
+							{% set has_media_link = store.gift_order_settings.is_gift_order_card_sender_custom_media_link_enabled ? '1' : '0' %}
+							{% set has_gift_message = store.gift_order_settings.is_gift_order_card_sender_custom_message_enabled ? '1' : '0' %}
+							{% set has_card_design = store.gift_order_settings.is_gift_order_card_custom_template_enabled ? '1' : '0' %}
+							{% set gift_card_details_length = cart.gift_card_details | length %}
+
+							<script>
+								var hasCardDesign = {{ has_card_design }};
+							</script>
+							<!-- !Todo: Check Gift Order Settings -->
+							{% if store.gift_order_settings.is_gift_order_enabled == 1 %}
+								<!-- the button should be visible here -->
+								<div class="card border-0 mt-3 text-body d-flex flex-row justify-content-between gap-2 animate__animated animate__flipInX">
+									<button class="btn btn-primary d-flex justify-content-between align-items-center w-100 js-offcanvas-gift-card css-btn-shine" type="button"
+										data-bs-toggle="offcanvas" data-bs-target="#offcanvasGiftCard" aria-controls="offcanvasGiftCard">
+								
+										{% if gift_card_details_length > 0 %}
+												<span class="px-0">
+										{{ locals.cart_send_as_gift_saved }}
+												</span>
+					
+										<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-writing" width="24" height="24" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+   <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+   <path d="M20 17v-12c0 -1.121 -.879 -2 -2 -2s-2 .879 -2 2v12l2 2l2 -2z"></path>
+   <path d="M16 7h4"></path>
+   <path d="M18 19h-13a2 2 0 1 1 0 -4h4a2 2 0 1 0 0 -4h-3"></path>
+</svg>
+
+								
+							
+
+									{% else %}
+
+												<span class="px-0">
+										{{ locals.cart_send_as_gift }}
+												</span>
+													<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+										class="icon icon-tabler icon-tabler-cube-send css-animated-gift" width="24" height="24" viewBox="0 0 24 24"
+										stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+										<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+										<path d="M16 12.5l-5 -3l5 -3l5 3v5.5l-5 3z"></path>
+										<path d="M11 9.5v5.5l5 3"></path>
+										<path d="M16 12.545l5 -3.03"></path>
+										<path d="M7 9h-5"></path>
+										<path d="M7 12h-3"></path>
+										<path d="M7 15h-1"></path>
+										</svg>
+										{% endif %}
+
+
+									</button>
+
+													 {% if gift_card_details_length > 0 %}
+											<button type="reset" id="deleteCardDesign" class="btn btn-outline-secondary d-flex justify-content-between align-items-center !css-btn-shine" 
+											aria-label="{{ locals.accessibility.delete.label }}" data-bs-placement="top" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.gift.form.delete }}</small>">
+											<span class="d-flex d-sm-flex">
+												<i class="ti ti-gift-off align-middle fs-5" aria-hidden="true"></i>
+											</span>
+											{# <span class="px-1">{{ locals.gift.form.delete }}</span> #}
+											</button>
+										{% endif %} 
+
+								</div>
+							
+									{% endif %}
+
+
+
+							<!-- ! Gift Products to Someone -->
+
+							<hr class="border-2 border-top border-secondary border-opacity-25">
+							<div class="d-grid gap-2 mt-3">
+								<a href="/products" class="btn btn-primary d-flex justify-content-between align-items-center">
+									{{ locals.cart_back_to_store }}
+									<span class="fw-bold">
+										<i class="ti ti-arrow-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %} align-middle" aria-hidden="true"></i>
+									</span>
+								</a>
+
+								{% if store.availability.closed_now %}
+								  <a href="#" class="btn btn-primary btn-lg d-flex justify-content-between align-items-center disabled" role="button" aria-disabled="true">
+									
+									{{ locals.store.status.closed }} 
+									<span class="fw-bold">
+										<i class="ti ti-building-store align-middle" aria-hidden="true"></i>
+									</span>
+								 </a>
+								{% else %}
+								  <a href="{% if customer %}/checkout/choose-address-and-shipping{% else %}/auth/login?redirect_to=/checkout/choose-address-and-shipping{% endif %}" class="btn btn-primary btn-lg d-flex justify-content-between align-items-center js-checkout-button">
+									{{ locals.cart_continue_to_purchase }} 
+									<span class="fw-bold animate__animated animate__flipInX js-cart-total-price-stirng"></span>
+								</a>
+								{% endif %}
+								<div class="z-3 alert alert-dismissible fade show hstack align-items-center my-0 fixed-bottom border-0 rounded-0 py-0  bg-secondary-subtle text-secondary shadow-lg d-none js-checkout-button-hidden" role="alert">
+									<button type="button" class="btn-none p-0 text-body-emphasis grow" data-bs-dismiss="alert" aria-label="{{locals.accessibility.close.label}}" data-bs-placement="right" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{locals.accessibility.close.label}}</small>">
+										<i class="ti ti-x align-middle fs-5 bg-secondary-subtle p-1 rounded-pill" aria-hidden="true"></i>
+									</button>
+									<div class="ms-auto pt-3">
+										<a href="{% if customer %}/checkout/choose-address-and-shipping{% else %}/auth/login?redirect_to=/checkout/choose-address-and-shipping{% endif %}" class="vstack link-secondary animate__animated animate__fadeInUp animate__slower">
+											<span class="fw-light small my-0">
+												<span class="d-inline-block">{{ locals.cart_continue_to_purchase }}</span>
+												<i class="ti ti-arrow-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %} align-middle ms-2" aria-hidden="true"></i>
+											</span>
+										</a>
+										<span class="fs-3 fw-light js-cart-total-price-stirng"></span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+<!-- OffCanvas Gift Card Design -->
+						{% if store.gift_order_settings.is_gift_order_enabled == 1 %}
+
+							<form
+									action="" method="POST" class="needs-validation" novalidate>
+							<div class="offcanvas offcanvas-bottom h-100 border-0 shadow-sm" data-bs-scroll="false" tabindex="-1" id="offcanvasGiftCard" aria-labelledby="offcanvasBottomLabel">
+
+
+								<div class="offcanvas-header bg-secondary-subtle">
+									<h6 class="offcanvas-title fw-bold" id="offcanvasBottomLabel">
+
+										{% if gift_card_details_length > 0 %}
+											{{ locals.cart_send_as_gift_saved }}
+										{% else %}
+											{{ locals.cart_send_as_gift }}
+										{% endif %}
+									</h6>
+									<button type="button" class="btn-none p-0 text-body-emphasis grow" data-bs-dismiss="offcanvas" aria-label="{{ locals.accessibility.close.label }}">
+										<i class="ti ti-x align-middle fs-5" aria-hidden="true"></i>
+									</button>
+								</div>
+
+								<!-- Card Form -->
+							
+									{# overflow-auto js-scrollable-element" data-simplebar-direction="{% if session.lang.code == 'ar' %}rtl{% else %}ltr{% endif %}" data-simplebar data-simplebar-auto-hide="false" #}
+									<div class="offcanvas-body p-0">
+
+										<div class="m-3 spinner-border spinner-border-sm text-center text-primary js-cart-gift-card-spinner" role="status">
+											<span class="visually-hidden">
+												{{ locals.accessibility.spinner.label }}
+											</span>
+										</div>
+
+
+										<div class="p-3 js-cart-gift-card-template" hidden>
+											<div class="d-flex flex-wrap-reverse flex-sm-nowrap justify-content-between gap-3">
+												<div class="card w-100 border-0 p-0 flex-fill">
+													<div
+														class="card-body p-0">
+														{#
+																																																<script
+																																																	src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+																																																<lottie-player src="https://assets7.lottiefiles.com/packages/lf20_3zbuyrkf.json"
+																																																	background="transparent" speed="0.5" loop autoplay class="w-50"></lottie-player> #}
+														<div class="form-floating mb-3">
+															<input type="text" class="form-control" id="senderName" value="{{cart.gift_card_details.sender_name}}" required>
+															<label for="senderName">{{ locals.cart_gift_card_sender_name }}</label>
+														</div>
+														<div class="form-floating mb-3">
+															<input type="text" class="form-control" id="receiverName" value="{{cart.gift_card_details.receiver_name}}" required>
+															<label for="receiverName">{{ locals.cart_gift_card_receiver_name }}</label>
+														</div>
+														{% if has_media_link == '1' %}
+															<div id="mediaLinkEmpty"></div>
+															<div class="form-floating mb-3">
+																<input type="url" class="form-control ltr" id="mediaLink" pattern="http.*" {% if cart.gift_card_details.media_link %} value="{{cart.gift_card_details.media_link}}" {% endif %}>
+																<label for="mediaLink">{{ locals.cart_gift_card_url }}<small class="text-body-secondary ms-1">{{ locals.gift.form.optional }}</small>
+																</label>
+															</div>
+
+
+														{% endif %}
+
+														<div id="giftMessageEmpty"></div>
+
+														{% if has_gift_message == '1' %}
+															<div class="form-floating mb-3">
+																<textarea class="form-control" id="giftMessage" style="height: 100px" maxlength="200">{{ cart.gift_card_details.gift_message }}</textarea>
+																<label for="giftMessage">{{ locals.cart_gift_card_message }}<small class="text-body-secondary ms-1">{{ locals.gift.form.optional }}</small>
+																</label>
+
+																{# 
+																<div class="input-group-append">
+																	<span class="input-group-text" id="listenButton">
+																	<i class="ti ti-wave-sine align-middle" aria-hidden="true"></i>
+																	</span>
+																	<span class="input-group-text" id="recordButton">
+																	<i class="ti ti-microphone align-middle" aria-hidden="true"></i>
+																	</span>
+																</div> #}
+
+
+																<div class="btn-group btn-group-sm gap-2" role="group" aria-label="Small button group" hidden>
+																	<button type="button" id="emojiPickerBtnHeart" class="btn btn-link text-decoration-none px-0">
+																		<i class="ti ti-heart align-middle" aria-hidden="true"></i>
+																	</button>
+																	<button type="button" id="emojiPickerBtnSmile" class="btn btn-link text-decoration-none px-0">
+																		<i class="ti ti-mood-smile-beam align-middle" aria-hidden="true"></i>
+																	</button>
+																	<button type="button" id="emojiPickerBtnCool" class="btn btn-link text-decoration-none px-0">
+																		<i class="ti ti-mood-heart align-middle" aria-hidden="true"></i>
+																	</button>
+																	<button type="button" id="emojiPickerBtnGift" class="btn btn-link text-decoration-none px-0">
+																		<i class="ti ti-sparkles align-middle" aria-hidden="true"></i>
+																	</button>
+																</div>
+																<span class="small float-end mt-1 text-primary">
+																	<b class="js-text-remaining-count"></b>
+
+																</span>
+															</div>
+															<script src="https://unpkg.com/twemoji@latest/dist/twemoji.min.js" crossorigin="anonymous"></script>
+															{# <script src="https://cdn.jsdelivr.net/npm/emoji-mart@latest/dist/browser.js"></script>
+																																																				<div class="form-floating mb-3">
+																																																				<textarea class="form-control" id="giftMessage" style="height: 100px"></textarea>
+																																																				<label for="giftMessage">{{ locals.cart_gift_card_message }}<small class="text-body-secondary ms-1">{{ locals.gift.form.optional }}</small></label>
+																																																				<button type="button" id="emojiPickerBtn" class="btn btn-outline-primary"><i class="ti ti-mood-heart align-middle" aria-hidden="true"></i></button>
+																																																				</div> #}
+
+
+														{% endif %}
+														<h6 class="fw-light text-body-secondary mb-2" {% if has_card_design == '0' %} hidden {% endif %}>{{ locals.cart_gift_card_design }}</h6>
+														{# overflow-auto js-scrollable-element" data-simplebar-direction="{% if session.lang.code == 'ar' %}rtl{% else %}ltr{% endif %}" style="max-height: 260px" #}
+														<div class="h-100">
+															<div id="{% if has_card_design == '1' %}cardsTemplate{% else %}cardsTemplateNoCard{% endif %}" class="card-design" {% if has_card_design == '0' %} hidden {% endif %}></div>
+														</div>
+
+
+													</div>
+												</div>
+
+												<div class="card border-secondary-subtle shadow-sm p-0 flex-shrink-1 w-50 overflow-auto d-sm-flex js-card-preview"></div>
+
+											</div>
+										</div>
+									</div>
+
+									<div class="m-3 spinner-border spinner-border-sm text-center text-primary mt-2 js-cart-gift-card-footer-spinner" role="status">
+										<span class="visually-hidden">
+											{{ locals.accessibility.spinner.label }}
+										</span>
+									</div>
+
+									<div class="p-3 js-cart-gift-card-footer-template" hidden>
+										<div class="d-flex flex-wrap-reverse flex-sm-row gap-3 gap-0 justify-content-center justify-content-sm-between align-items-center p-3 fixed-bottom bottom-0 bg-secondary-subtle">
+											{% if locals.cart_gift_card_notes %}
+												<div class="d-flex flex-wrap gap-sm-4 small fst-italic mb-2 mb-sm-0">
+													{% for note in locals.cart_gift_card_notes %}
+														<div data-key="{{ loop.index }}">
+															{% if loop.first %}
+																<i class="ti ti-gift-card align-middle fs-5" aria-hidden="true"></i>
+															{% elseif loop.index == 2 %}
+																<i class="ti ti-mailbox align-middle fs-5" aria-hidden="true"></i>
+															{% else %}
+																<i class="ti ti-check align-middle fs-5" aria-hidden="true"></i>
+															{% endif %}
+															<span class="ms-1">{{ note }}</span>
+														</div>
+													{% endfor %}
+												</div>
+											{% endif %}
+											{# {% if gift_card_details_length > 0 %}
+																						<button type="reset" id="resetButton" class="btn btn-secondary d-flex justify-content-between align-items-center css-btn-shine">
+																						<span class="d-none d-sm-flex">
+																							<i class="ti ti-clear-all align-middle fs-5" aria-hidden="true"></i>
+																						</span>
+																						<span class="px-sm-1">{{ locals.gift.form.reset }}</span>
+																						</button>
+																					{% endif %} #}
+
+
+											<div class="d-flex gap-2">
+												{# {% if gift_card_details_length > 0 %}
+													<button type="reset" id="deleteCardDesign" class="btn btn-outline-secondary d-flex justify-content-between align-items-center !css-btn-shine">
+														<span class="d-flex d-sm-flex">
+															<i class="ti ti-gift-off align-middle fs-5" aria-hidden="true"></i>
+														</span>
+														<span class="px-1">{{ locals.gift.form.delete }}</span>
+													</button>
+												{% endif %} #}
+
+
+												<button type="button" id="saveButton" class="btn btn-sm btn-primary d-flex justify-content-between align-items-center css-btn-shine">
+													<span class="d-flex d-sm-flex">
+														<i class="ti ti-device-floppy align-middle fs-5" aria-hidden="true"></i>
+													</span>
+													<span class="px-1">{{ locals.gift.form.save }}</span>
+												</button>
+											</div>
+
+										</div>
+
+									</div>
+
+				
+								<!-- #Card Form -->
+
+
+							</div>
+
+							</form>
+
+
+							<script>
+								const htmlDecode = (input) => {
+									if (!input) return;
+									const doc = new DOMParser().parseFromString(input, "text/html");
+									return JSON.parse(doc.documentElement.textContent);
+								};
+
+								const custom_cards_templates = htmlDecode('{{ store.gift_order_settings.gift_order_card_custom_template_design }}');
+								const selected_card_template = htmlDecode('{{ cart.gift_card_details.card_design }}');
+
+								const form_locales = {
+									success: '{{ locals.sent_successfully }}',
+									sorry: '{{ locals.sorry }}',
+									sender_name_validation: `${{ locals.cart_gift_card_sender_name }}{{ locals.required }}`,
+									sender_receiver_validation: `${{ locals.cart_gift_card_receiver_name }}{{ locals.required }}`
+								};
+
+							</script>
+
+							<script>
+								const giftCardDetails = {{ cart.gift_card_details|json_encode|raw }};
+								//console.log(giftCardDetails);
+							</script>
+							
+							<script defer src="{{ assetUrl('giftcard.js') }}"></script>
+
+							{% endif %}
+<!-- #offcanvas Gift Card Design -->
+
+	{% include 'toast.twig'%}
+{% endblock %}
+
+{% block footer %}
+	{{ include('footer.twig') }}
+{% endblock %}
+
+{% block footer_scripts %}
+	{{ cart_view_scripts|raw }}
+	{% if cart.products_count > 0 %}
+		<script>
+			var couponDataTemplate = {
+                coupon_applied_successfully: '{{ locals.coupon_applied_successfully }}',
+                coupon_message: '{{ locals.coupon_message }}',
+                coupon_removed_successfully: '{{ locals.coupon_removed_successfully }}'
+            };
+		</script>
+		<script defer src="{{ assetUrl('cart.js') }}"></script>
+		<script defer src="{{ assetUrl('cartCSSClasses.js') }}"></script>
+		<script defer src="{{ asset_url ~ 'tsparticles.preset.confetti.bundle.min.js' }}"></script>
+		<script defer src="{{ assetUrl('confettiCart.js') }}"></script>
+	{% endif %}
+
+{% endblock %}

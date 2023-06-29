@@ -1,0 +1,24 @@
+Questions:
+- Is there a coupon/discount applied to the store before user place orders?
+- Where `payment_session` is used?
+- What this page is for? /products/sales
+- What `template_for_store_messages` renders?
+- Why `<script type='text/javascript' src='/js/products_donation_availability.min.js?v=1.0.0.0'></script>` is loaded
+- How to implement the new menu {# {% for menu in main_navigation_menu.items %} #}
+- Ask about backgroubnd in `https://web.zid.sa/store-design#identity` 
+- From where to change the app store links
+
+Fixes:
+- Change url in `http://127.0.0.1:8080/storefrontThemes/default/assets/vat.svg`
+- Show the `commercial_registration_number`
+
+To Consider (Upcoming):
+- Add an info message to the Cookies schema (a default settings will apply if you left the fields empty)
+
+ToDo:
+- add featurs to Fitrina 
+- Add support for mobile photo to Sliders (Homepage)
+- Fix zoom icon when background is black 
+- Support for Logo in english version 
+- Fix sliders height
+- Fix site name lenght 

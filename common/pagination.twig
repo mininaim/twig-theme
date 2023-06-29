@@ -1,0 +1,49 @@
+{% if totalPages > 1 %}
+	<nav aria-label="{{ locals.accessibility.navigation.label }}">
+		<ul class="pagination pagination-sm justify-content-end mb-0">
+			<li class="page-item {% if currentPage == 1 %}disabled{% endif %}">
+				<a class="page-link {% if currentPage == 1 %}text-secondary-subtle{% endif %}" href="{{ requestAdd({page:(currentPage - 1)}) }}" tabindex="-1">
+					<i class="ti ti-chevrons-{% if session.lang.code == 'ar' %}right{% else %}left{% endif %} align-middle" aria-hidden="true"></i>
+					<span class="visually-hidden">{{ locals.previous }}</span>
+				</a>
+			</li>
+			{% if currentPage > 3 and totalPages > 5 %}
+				<li class="page-item">
+					<a class="page-link" href="{{ requestAdd({page:1}) }}">1</a>
+				</li>
+				<li class="page-item disabled">
+					<a class="page-link text-secondary-subtle">...</a>
+				</li>
+			{% endif %}
+			{% if currentPage <= 2 %}
+				{% set startPage = 1 %}
+			{% else %}
+				{% set startPage = (currentPage - 2) %}
+			{% endif %}
+			{% if (currentPage + 2) <= totalPages %}
+				{% set endPage = (currentPage + 2) %}
+			{% else %}
+				{% set endPage = totalPages %}
+			{% endif %}
+			{% for n in rangeN(startPage, endPage) %}
+				<li class="page-item{% if totalPages > 5 and (n - currentPage == 2 or currentPage - n == 2)  %} d-none {% endif %}">
+					<a class="page-link{% if currentPage == n %} active{% endif %}" {% if currentPage != n %} href="{{ requestAdd({page:n}) }}" {% endif %}>{{ n }}</a>
+				</li>
+			{% endfor %}
+			{% if currentPage < (totalPages - 3) and totalPages > 5 %}
+				<li class="page-item disabled">
+					<a class="page-link text-secondary-subtle">...</a>
+				</li>
+				<li class="page-item">
+					<a class="page-link" href="{{ requestAdd({page:totalPages}) }}">{{ totalPages }}</a>
+				</li>
+			{% endif %}
+			<li class="page-item {% if currentPage == totalPages %}disabled{% endif %}">
+				<a class="page-link {% if currentPage == totalPages %}text-secondary-subtle{% endif %}" href="{{ requestAdd({page:(currentPage + 1)}) }}" tabindex="-1">
+					<span class="visually-hidden">{{ locals.next }}</span>
+					<i class="ti ti-chevrons-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %} align-middle" aria-hidden="true"></i>
+				</a>
+			</li>
+		</ul>
+	</nav>
+{% endif %}

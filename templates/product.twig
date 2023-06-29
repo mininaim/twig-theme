@@ -1,0 +1,1084 @@
+{% extends "layout.twig" %}
+
+{% block header %} 
+    {{ include('header.twig') }} 
+{% endblock %}
+
+{% block css_files_inner %}
+	<link rel="stylesheet" href="{{ assetUrl('glightbox.min.css') }}">
+	<link rel="stylesheet" href="{{ assetUrl('swiper.gallery.css') }}">
+{% endblock %} 
+{% block js_files_inner %}
+	<script src="{{ assetUrl('countUp.js') }}"></script>
+	<script defer src="{{ assetUrl('moment.min.js') }}"></script>
+	<script defer src="{{ assetUrl('moment.ar.min.js') }}"></script>
+{% endblock %} 
+
+{% block main_content %}
+	{# {% if product.description == true or product.has_variants == true or store.is_product_reviews_enabled == true %} #}
+
+	<section class="py-3 js-details-section" id="js-details-id">
+			<div class="container">
+				<div class="row">
+					<div class="col">
+						<ul class="nav nav-tabs" id="nav-tab" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link active" id="nav-slider-tab" data-bs-toggle="tab" data-bs-target="#nav-slider" type="button" role="tab" aria-controls="nav-slider" aria-selected="true">
+									{{ locals.product_slider }}
+								</a>
+							</li>
+							{% if product.description %}
+								<li class="nav-item">
+									<a class="nav-link" id="nav-product-tab" data-bs-toggle="tab" data-bs-target="#nav-product" type="button" role="tab" aria-controls="nav-product" aria-selected="false">{{ locals.product_description }}</a>
+								</li>
+							{% endif %}
+							{% if product.has_variants %}
+								<li class="nav-item">
+									<a class="nav-link {% if product.description is empty %}{% endif %}" id="nav-settings-tab" data-bs-toggle="tab" data-bs-target="#nav-settings" type="button" role="tab" aria-controls="nav-settings" aria-selected="false">{{ locals.product_options }}</a>
+								</li>
+							{% endif %}
+							{% if store.is_product_reviews_enabled %}
+								<li class="nav-item">
+									<a class="nav-link {% if product.description is empty and not product.has_variants %}{% endif %}" id="nav-reviews-tab" data-bs-toggle="tab" data-bs-target="#nav-reviews" type="button" role="tab" aria-controls="nav-reviews" aria-selected="false">
+										{{ locals.product_reviews }} 
+										{# <span class="badge text-bg-primary rounded-pill ms-auto">{{ product.rating.total_count }}</span> #}
+									</a>
+								</li>
+							{% endif %}
+						</ul>
+						<div class="tab-content" id="nav-tabContent">
+							<div class="tab-pane fade show active" id="nav-slider" role="tabpanel" aria-labelledby="nav-slider-tab" tabindex="0">
+								<div class="py-3 js-product-page" id="productId">
+									<div class="container g-0">
+										<div class="row d-flex align-items-start">
+											<div class="order-1 order-lg-0 col-12 col-lg-6">
+												<div class="card mb-3 border-secondary border-opacity-10 shadow-sm">
+													<div class="card-header border-secondary border-opacity-10 d-flex flex-wrap-reverse justify-content-between align-items-start gap-2 p-3">
+														<h5 class="mb-0 lh-base mt-2 mt-sm-0">
+															{{ product.name }}
+														</h5>
+													 <div class="btn-group btn-group-sm" role="group" aria-label="{{ locals. accessibility.radio_group.label }}">
+															{# <button type="button" class="btn btn-outline-primary js-fav-button" data-product-id="{{ product.id }}">
+																<i class="ti ti-loader invisible align-middle" aria-hidden="true" data-bs-placement="top" data-bs-html="true" data-bs-toggle="tooltip" data-bs-offset="1,0"></i>
+																<span class="visually-hidden">{{ locals.product_fav_label }}</span>
+															</button>
+															#}
+															<div class="btn-group btn-group-sm" role="group">
+																<button type="button" class="btn btn-outline-primary" id="qrCode">
+																	<i class="ti ti-qrcode align-middle" aria-hidden="true" data-bs-placement="top" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="{{ locals.shareQrCode}}" data-bs-offset="0,10"></i>
+																	<span class="visually-hidden">{{ locals.shareQrCode }}</span>
+																</button> 
+																<button class="btn btn-outline-primary rounded-end !dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+																	<i class="ti ti-share align-middle fs-6" aria-hidden="true" aria-pressed="false" data-bs-placement="top" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="{{ locals.product_share_label}}" data-bs-offset="0,10"></i>
+																	<span class="visually-hidden">{{ locals.product_share_label }}</span>
+																</button>
+																<ul class="dropdown-menu dropdown-menu-lg-end shadow-lg border-0 rounded rounded-3">
+																	<li>
+																		<a class="dropdown-item py-2 animated slideIn" target="_blank" href="http://api.whatsapp.com/send?text={{ product.name }}%20{{ product.html_url }}">
+																			<i class="ti ti-brand-whatsapp align-middle fs-6" aria-hidden="true"></i>
+																			<span class="px-1">{{ locals.shareWhatsapp }}</span>
+																		</a>
+																	</li>
+																	<li>
+																		<a class="dropdown-item py-2 animated slideIn" target="_blank" href="http://t.me/share/url?url={{ product.html_url }}&amp;text={{ product.name }}">
+																			<i class="ti ti-brand-telegram align-middle fs-6" aria-hidden="true"></i>
+																			<span class="px-1">{{ locals.shareTelegram }}</span>
+																		</a>
+																	</li>
+																	<li>
+																		<a class="dropdown-item py-2 animated slideIn" target="_blank" href="http://www.facebook.com/sharer/sharer.php?u={{ product.html_url }}">
+																			<i class="ti ti-brand-facebook align-middle fs-6" aria-hidden="true"></i>
+																			<span class="px-1">
+																				{{ locals.shareFacebook }}</span>
+																		</a>
+																	</li>
+																	<li>
+																		<a class="dropdown-item py-2 animated slideIn" target="_blank" href="http://twitter.com/intent/tweet?text={{ product.name }}&amp;url={{ product.html_url }}">
+																			<i class="ti ti-brand-twitter align-middle fs-6" aria-hidden="true"></i>
+																			<span class="px-1">{{ locals.shareTwitter }}</span>
+																		</a>
+																	</li>
+																	<li>
+																		<hr class="dropdown-divider border-secondary border-opacity-10">
+																	</li>
+																	<li>
+																		<a class="dropdown-item py-2 animated slideIn" target="_blank" href="mailto:?subject={{ product.name }}&amp;body={{ product.html_url }}">
+																			<i class="ti ti-at align-middle fs-6" aria-hidden="true"></i>
+																			<span class="px-1">{{ locals.shareMail }}</span>
+																		</a>
+																	</li>
+																	{# <li>
+																		<button type="button" class="dropdown-item py-2 animated slideIn" id="qrCode">
+																			<i class="ti ti-qrcode align-middle fs-6" aria-hidden="true"></i>
+																			<span class="px-1">{{ locals.shareQrCode }}</span>
+																		</button>
+																	</li> #}
+																</ul>
+															</div>
+														</div> 
+													</div>
+													{% if product.sold_products_count  == true or product.low_stock_quantity == true or product.bundle_offer == true %}
+														<div class="d-flex flex-wrap justify-content-start align-items-start fl bg-body-subtle rounded-bottom gap-2 gap-sm-3 p-3 py-sm-2 px-sm-3 text-secondary-emphasis">
+															{% if product.sold_products_count %}
+																<span class="small animate__animated animate__fadeIn">
+																	<i class="ti ti-comet fs-6 align-middle !text-warning" aria-hidden="true"></i>
+																	<span class="px-sm-1">
+																		{% if product.sold_products_count == 1 %}
+																			{{ locals.product_sold_more_than_x_times.one | format(product.sold_products_count) }}
+																		{% else %}
+																			{{ locals.product_sold_more_than_x_times.other | format(product.sold_products_count) }}
+																		{% endif %}
+																	</span>
+																</span>
+															{% endif %}
+															{% if product.low_stock_quantity %}
+																{# <span class="vr"></span> #}
+																<span class="small animate__animated animate__fadeIn">
+																	<i class="ti ti-ballon fs-6 align-middle !text-danger" aria-hidden="true"></i>
+																	<span class="px-sm-1">
+																		{{ locals.product_cart_quantity_low_stock | format(product.low_stock_quantity) }}
+																	</span>
+																</span>
+															{% endif %}
+															{% if product.bundle_offer %}
+																{# <span class="vr"></span> #}
+																<span class="small animate__animated animate__fadeIn">
+																	<i class="ti ti-gift-card fs-6 align-middle" aria-hidden="true"></i>
+																	<span class="px-sm-1 float-end">
+																		{{ product.bundle_offer.name }}
+																	</span>
+																</span>
+															{% endif %}
+
+																 {% if not product.is_taxable %}
+																
+																	<span class="small animate__animated animate__fadeIn">
+																		<i class="ti ti-rubber-stamp fs-6 align-middle" aria-hidden="true"></i>
+																		<span class="px-sm-1">
+																			{{ locals.product_is_not_taxable }}
+																		</span>
+																	</span>
+															
+																{% endif %}
+
+														</div>
+													{% endif %}
+												</div>
+												{% if product.selected_product.out_of_stock == false %}
+
+												<div class="spinner-border spinner-border-sm text-primary js-product-deals-spinner mb-2" role="status">
+																		<span class="visually-hidden">
+																			{{ locals.accessibility.spinner.label }}
+																		</span>
+																	</div>
+
+													 <div class="js-product-deals-template" style="display: none;"> 
+													<div class="card border-0 mb-3 p-0">
+												
+																	
+													
+
+														
+												
+														<div class="d-flex flex-wrap justify-content-between gap-3 animate__animated animate__fadeIn text-secondary-emphasis">
+															{# <span class="vstack gap-0 p-3 border rounded border-secondary border-opacity-10 shadow-sm">
+																
+																<!-- <i class="ti ti-eye-check fs-5 align-middle" aria-hidden="true"></i> -->
+																<span class="fw-bold text-primary-emphasis">
+																	<span class="js-views-count"></span>
+																	{{ locals.product_people_prefix }}
+																</span>
+																<span>{{ locals.product_people_views }} </span>
+																
+															</span> #}
+
+															{% if product.bundle_offer %}
+														
+															{# <span class="vstack gap-0 p-3 border rounded border-secondary border-opacity-10 shadow-sm">
+																 <i class="ti ti-ballon fs-5 align-middle" aria-hidden="true"></i> 
+																<span class="fw-bold text-primary-emphasis js-product-timer"></span>
+																<span>{{ locals.product_offer_expire }} </span>
+															</span> #}
+															{% endif %}
+														</div>
+													</div>
+													</div>
+												{% endif %}
+												<div class="card border-0 p-0 mb-3 shadow-sm">
+													<ul class="list-group">
+														<li class="list-group-item d-flex justify-content-between align-items-center border-secondary border-opacity-10 px-3">
+															<div class="me-auto">
+																<div class="fw-bold">{{ locals.product_price }}</div>
+																<small class="text-secondary text-decoration-line-through js-product-old-price{% if product.selected_product.formatted_sale_price is empty %} d-none{% endif %}">
+																	{{ product.selected_product.formatted_price }}
+																</small>
+																<sup class="badge bg-primary text-primary bg-opacity-25 ms-2 js-product-discount-value{% if product.selected_product.formatted_sale_price is empty %} d-none{% endif %}">
+																	{{ locals.product_discount }}
+																	{{ product.discount_percentage }}%
+																</sup>
+															</div>
+															{% if product.selected_product.formatted_sale_price %}
+																<span class="badge bg-primary bg-opacity-10 text-primary rounded-pill fs-5 js-product-price">{{ product.selected_product.formatted_sale_price }}</span>
+															{% else %}
+																<span class="badge bg-primary bg-opacity-10 text-primary rounded-pill fs-5 js-product-price">{{ product.selected_product.formatted_price }}</span>
+															{% endif %}
+														</li>
+														<li class="list-group-item d-flex justify-content-between align-items-center border-secondary border-opacity-10 px-3 js-product-sku-section{% if product.selected_product.sku is empty %} d-none{% endif %}">
+															<div class="me-auto">
+																<div class="fw-bold">{{ locals.product_sku }}</div>
+															</div>
+															<span class="badge border-0 border-secondary border-opacity-10 !fw-light !bg-body-tertiary text-secondary rounded-pill !fs-6 d-flex align-items-center gap-1 flex-row-reverse text-truncate">
+																<span class="btn-clipboard sku-clipboard fs-5" data-clipboard-text="{{ product.selected_product.sku }}">
+																	<i title="{{ locals.copy }}" class="ti ti-link align-middle fs-6" aria-hidden="true"></i>
+																</span>
+																<small class="fs-6 js-product-sku-value">{{ product.selected_product.sku }}</small>
+															</sp>
+														</li>
+														{% if product.selected_product.weight.value > 0 %}
+															<li class="list-group-item d-flex justify-content-between align-items-center border-secondary border-opacity-10 px-3 js-product-weight-section{% if product.selected_product.weight.value is empty %} d-none{% endif %}">
+																<div class="me-auto">
+																	<div class="fw-bold">{{ locals.product_weight }}</div>
+																</div>
+																<span class="badge border-0 border-secondary border-opacity-10 !fw-light !bg-body-tertiary text-secondary rounded-pill ltr fs-6 js-product-weight-value">{{ product.selected_product.weight.value }}
+																	{{ product.selected_product.weight.unit }}</span>
+															</li>
+														{% endif %}
+														{% if product.rating %}
+															<li class="list-group-item d-flex justify-content-between border-secondary border-opacity-10 align-items-center px-3">
+																<div class="me-auto">
+																	<div class="fw-bold">{{ locals.product_reviews }}</div>
+																</div>
+																<div class="badge text-warning border-0 border-secondary border-opacity-10 rounded-pill" data-bs-placement="left" data-bs-html="true" data-bs-toggle="tooltip" data-bs-title="<small>{{ locals.product.total_reviews}} ({{ product.rating.total_count }}) {{ locals.product.total_reviews_suffix}} </small>" data-bs-offset="0,5">
+																	{% include 'product-rating.twig' with {'rating' : product.rating.average } %}
+																	{# <span class="text-muted">({{ product.rating.total_count }})</span> #}
+																</div>
+															</li>
+														{% endif %}
+
+														{% if product.categories|length > 0 %}
+														<li class="list-group-item d-flex flex-sm-row flex-column justify-content-between align-items-center border-secondary border-opacity-10 px-3">
+															
+																<div class="me-auto">
+																	<div class="fw-bold">{{ locals.product_tags }}</div>
+																</div>
+																<div class="my-2 d-flex flex-sm-row flex-wrap justify-content-sm-end gap-2 px-sm-2">
+																	{% for category in product.categories %}
+																		<a href="/categories/{{ category.id }}/{{ category.slug }}" class="link-primary text-decoration-underline small">
+																			
+																				<i class="ti ti-tag align-middle" aria-hidden="true"></i>
+																				{{ category.name }}
+																		
+																		</a>
+																	{% endfor %}
+																</div>
+															
+														</li>
+														{% endif %}
+													{% if product.selected_product.out_of_stock == false %}
+														{% if store.payment_methods|length > 0 %}
+															<li class="list-group-item d-flex flex-sm-row flex-column justify-content-between align-items-center border-secondary border-opacity-10 px-3">
+																<div class="me-auto">
+																	<div class="fw-bold">{{ locals.product_shipping_options }}</div>
+																</div>
+																<div class="my-2 d-flex flex-sm-row flex-wrap justify-content-sm-end gap-2 px-sm-2 !css-mode-toggle-wrapper">
+																	{% for paymentMethod in store.payment_methods %}
+																		<span class="text-capitalize badge fw-light rounde-pill small border border-secondary border-opacity-10 text-secondary-emphasis">
+																		<img loading="lazy" src="{{ imageUrl(paymentMethod.icon,{ h:60, q: 100 }) }}" alt="{{ session.lang.code == 'ar' ? paymentMethod.name : paymentMethod.name }}" style="height:15px" class="img-fluid object-fit-scale js-shipping-icon"> 
+																		{# {{ paymentMethod.name }} #}
+																		</span>
+
+																	{% endfor %}
+																</div>
+															
+														  </li>
+														  {% endif %}
+														 
+													{% endif %}
+
+													</ul>
+												</div>
+												{% if product.short_description is not empty %}
+													<div class="card border-secondary border-opacity-10 shadow-sm my-3 z-1">
+														<div class="card-header border-secondary border-opacity-10 text-body fw-bold">
+															{{ locals.product_description_heading }}
+														</div>
+														<div class="card-body text-body-emphasis">
+															{{ product.short_description | raw }}
+															<a data-scroll href="#js-details-id" class="link-secondary text-decoration-underline" hidden>
+																{{ locals.product_description_more }}
+															</a>
+														</div>
+													</div>
+												{% endif %}
+
+												<div class="card border-0 mt-3 text-body animate__animated animate__flipInX animate__delay-1s">
+													{{ template_for_product_payments_widget }}
+												</div>
+
+												<form id="product-form" class="{% if product.selected_product.out_of_stock %}d-none{% else %}d-block justify-content-center align-items-center gap-5{% endif %}">
+													<input id="product-id" type="hidden" value="{{ product.selected_product.id }}">
+													{% if product.has_variants or product.has_custom_input_fields %}
+														<div class="card my-3 border-0 border-secondary border-opacity-10">
+															{% if product.has_variants %}
+																<div class="card-header bg-transparent border-0 p-0 js-custom-variants">
+																	<div class="spinner-border spinner-border-sm text-primary js-product-variants-spinner" role="status">
+																		<span class="visually-hidden">
+																			{{ locals.accessibility.spinner.label }}
+																		</span>
+																	</div>
+																	<div class="js-product-variants-template" style="display: none;">
+																		{{ template_for_product_variants_dropdown }}
+																	</div>
+																</div>
+															{% endif %}
+															{% if product.has_custom_input_fields %}
+																<div class="card-body overflow-hidden border border-secondary border-opacity-10 !mt-3 rounded bg-transparent js-custom-fields">
+																	<div class="spinner-border spinner-border-sm text-primary js-product-custom-input-spinner" role="status">
+																		<span class="visually-hidden">
+																			{{ locals.accessibility.spinner.label }}
+																		</span>
+																	</div>
+																	<div class="js-product-custom-input-template" style="display: none;">
+																		{{ template_for_product_custom_input_fields }}
+																	</div>
+																</div>
+															{% endif %}
+														</div>
+													{% endif %}
+													<div class="fixed-bottom d-flex flex-wrap justify-content-between align-items-start gap-3 container z-3 border-secondary border-opacity-10 bg-light-subtle shadow-lg rounded-5 rounded-bottom-0 px-4 pt-4 pb-3 animate__animated animate__fadeIn animate__delay-1s js-quantity-add-buttons">
+
+														<div class="card border-secondary border-opacity-10 shadow-sm js-section-add-to-cart{% if product.selected_product.out_of_stock %} d-none{% else %} d-block{% endif %}">
+															<div class="input-group">
+																<button class="btn btn-link link-secondary text-decoration-none js-product-quantity-decrease" type="button" onclick="decreaseQuantity()">
+																	<i class="ti ti-minus align-middle fs-4" aria-hidden="true"></i>
+																	<span class="visually-hidden">{{ locals.decrease_quantity }}</span>
+																</button>
+																<input type="text" min="1" max="100" required value="1" pattern="[0-9]{1,3}" oninput="validity.valid||(value='1');" class="form-control border-0 fs-4 bg-transparent text-center form-control-no-focus js-product-quantity" id="product-quantity" style="width:70px !important">
+																<button class="btn btn-link link-secondary text-decoration-none js-product-quantity-increase" type="button" onclick="increaseQuantity()">
+																	<i class="ti ti-plus align-middle fs-4" aria-hidden="true"></i>
+																	<span class="visually-hidden">{{ locals.increase_quantity }}</span>
+																	
+																</button>
+															</div>
+														</div>
+
+														<div class="card border-0 flex-fill js-section-add-to-cart{% if product.selected_product.out_of_stock %} d-none{% endif %}">
+															<button id="product-view-add-to-cart" type="button" onclick="productAddToCart()" class="btn btn-lg btn-primary">
+																<span class="spinner-border spinner-border-sm d-none js-add-to-cart-progress" role="status" aria-hidden="true">
+																	<span class="visually-hidden">
+																		{{ locals.accessibility.spinner.label}}
+																	</span>
+																</span>
+																<span class="js-shopping-cart">
+																	<i class="ti ti-shopping-bag" aria-hidden="true"></i>
+																</span>
+																<span class="px-1">{{ locals.add_to_cart }}</span>
+															</button>
+
+															
+														</div>
+
+														<div class="card border-0 col-12 col-sm-3 col-lg-auto mx-auto d-none animate__animated animate__jackInTheBox js-cart-total-price-fixed">
+															<a href="/cart/view" class="btn btn-lg btn-outline-secondary js-button-checkout">
+																<span class="visually-hidden">{{ locals.offcanvasCart.footer.checkout }}</span>
+																<i class="ti ti-basket align-baseline animate__animated animate__delay-1s" aria-hidden="true"></i>
+																<span class="px-2 fw-bold js-cart-total-price-stirng"></span>
+															</a>
+														</div>
+
+
+													</div>
+												</form>
+
+												<div class="card p-3 border-secondary-subtle shadow-sm mt-3 js-section-out-of-stock{% if product.selected_product.out_of_stock %} d-block{% else %} d-none{% endif %}">
+													<span class="fs-6 text-danger">
+														<i class="ti ti-bulb !align-baseline fs-6 animated flash hinge" aria-hidden="true"></i>
+														<small class="px-0">{{ locals.lbl_error_product_out_of_stock }}
+														</small>
+													</span>
+													<p class="small text-secondary mb-2">
+														{{ locals.lbl_error_product_out_of_stock_description }}</p>
+													<div class="input-group">
+														<input type="hidden" class="js-send-notify-product-id" value="{{ product.selected_product.id }}">
+														<span class="input-group-text rounded-start">
+															<i class="ti ti-bell-ringing align-middle text-muted"></i>
+														</span>
+														<input type="email" class="form-control form-control-no-focus border-secondary border-opacity-25 bg-transparent text-start js-send-notify-email" placeholder="{{ locals.notify_me_hint }}" aria-label="{{ locals.accessibility.email.label }}" aria-describedby="ApplyEmailNotification" id="EmailNotification">
+														<button class="btn btn-primary border-start-0 rounded-0 rounded-end" disabled type="button" id="ApplyEmailNotification" onclick="sendProductNotifyMe()">
+															<span class="px-1">{{ locals.send }}</span>
+															<span class="spinner-border spinner-border-sm text-white d-none js-send-notify-progress" role="status">
+																<span class="visually-hidden">
+																	{{ locals.accessibility.spinner.label }}
+																</span>
+															</span>
+														</button>
+													</div>
+												</div>
+
+											</div>
+											<div class="order-0 order-lg-1 col-12 col-lg-6 mb-3 mb-lg-0">
+												<div class="tab-content animate__animated " id="pills-tabContent">
+											
+
+													<div class="tab-pane active" id="pills-slider" role="tabpanel" aria-labelledby="pills-slider-tab" tabindex="0">
+														<div class="spinner-border spinner-border-sm text-primary js-product-gallery-spinner" role="status">
+															<span class="visually-hidden">
+																{{ locals.accessibility.spinner.label }}
+															</span>
+														</div>
+														<div class="js-product-gallery-template" style="display: none;">
+															<div class="card shadow-sm border-secondary border-opacity-10">
+																{% if product.selected_product.images %}
+																	{% if product.selected_product.images | length > 1 %}
+																		<div class="overflow-hidden rounded js-product">
+																			<div class="swiper js-product-swiper" style="--swiper-navigation-color:var(--color-primary) !important; --swiper-pagination-color: var(--color-primary)">
+																				<div class="swiper-wrapper">
+																					{% for key, image  in product.selected_product.images %}
+																						<div class="swiper-slide position-relative">
+																							<img class="swiper-slide-image swiper-carousel-animate-opacity swiper-lazy object-fit-contain" data-swiper-parallax="10%"
+																							src="{{ image.image.full_size }}" alt="{{ image.alt_text }}">
+																							<a href="{{ image.image.full_size }}" class="glightbox" data-gallery="product-gallery" style="cursor: zoom-in;">
+																								<i class="d-inline-block border border-3 border-opacity-25 rounded border-primary rounded-pill p-1 ti ti-zoom-pan mt-3 top-0 end-0 position-absolute text-primary fs-3 translate-middle-x"></i>
+																							</a>
+																							<div class="swiper-lazy-preloader"></div>
+																						</div>
+																					{% endfor %}
+																				</div>
+																				<div class="swiper-pagination"></div>
+																				<div class="swiper-button-prev"></div>
+																				<div class="swiper-button-next"></div>
+																			</div>
+																		</div>
+																	{% else %}
+																		<img class="img-fluid card-img-top object-fit-cover" src="{{ product.selected_product.images[0].image.full_size }}" alt="{{ image.alt }}">
+
+																	{% endif %}
+																{% else %}
+																	<svg class="placeholder-img img-fluid mx-auto card-img-top text-primary rounded" width="235" height="235" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="{{ locals.category_placeholder_image }}" preserveaspectratio="xMidYMid slice" focusable="false">
+																		<title>{{locals.product_placeholder_no_image}}</title>
+																		<rect width="100%" height="100%" fill="currentColor"></rect>
+																		<text x="50%" y="50%" fill="#fff" dy=".3em">
+																			{{locals.product_placeholder_no_image}}
+																		</text>
+																	</svg>
+																{% endif %}
+															</div>
+															<!-- Controls for Product -->
+															{# {% if product.selected_product.images | length > 1 %}
+																<div class="card shadow-sm border-secondary border-opacity-10 my-3 p-3">
+																			carousel thumbnails here
+																</div>
+															{% endif %} #}
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							{% if product.description %}
+								<div class="tab-pane fade" id="nav-product" role="tabpanel" aria-labelledby="nav-product-tab" tabindex="0">
+									<div class="card border-0 px-0 py-3 position-relative user-select-auto text-secondary-emphasis js-product-description">
+										{% if product.description %}
+											{# {% set maxLength = 600 %}
+											{% set descriptionLength = product.description|length %}
+											{% if descriptionLength > maxLength %}
+												{% set shortenedDescription = product.description|slice(0, maxLength) %}
+												<div id="shortened-description" class="position-relative backdrop">
+													{{ shortenedDescription|raw }}
+												</div>
+												<button class="btn btn-sm btn-link link-primary text-decoration-none text-start px-0" id="show-more-button" onclick="showMore()">
+													<i class="ti ti-chevron-down align-middle fs-5" aria-hidden="true"></i>
+													<span class="px-0">{{ locals.product_show_more }}</span>
+												</button>
+												<div id="full-description" style="display: none;">
+													{{ product.description|raw }}
+												</div>
+											{% else %}
+												{{ product.description|raw }}
+											{% endif %} #}
+											{{ product.description|raw }}
+										{% endif %}
+									</div>
+								</div>
+							{% endif %}
+							{% if product.has_variants %}
+								<div class="tab-pane fade {% if product.description is empty %} {% endif %}" id="nav-settings" role="tabpanel" aria-labelledby="nav-settings-tab" tabindex="0">
+									<div class="card my-3 border-0 p-0">
+										<div class="table-responsive">
+											<table class="table table-sm !table-striped !table-hover !js-anime-widget">
+												<thead>
+													<tr>
+														{% for option in product.options %}
+															<th scope="col">{{option.name}}</th>
+														{% endfor %}
+														<th scope="col">{{ locals.product_price }}</th>
+													</tr>
+												</thead>
+												<tbody class="text-body-tertiary">
+													{% for variant in product.variants %}
+														{% if not variant.unavailable %}
+															<tr>
+																{% for key, attribute in variant.attributes %}
+																	<td>{{ attribute.value }}</td>
+																{% endfor %}
+																{% if variant.formatted_sale_price %}
+																	<td>{{ variant.formatted_sale_price }}
+																		<del>{{ variant.formatted_price }}</del>
+																	</td>
+																{% else %}
+																	<td>{{ variant.formatted_price }}</td>
+																{% endif %}
+															</tr>
+														{% endif %}
+													{% endfor %}
+												</tbody>
+											</table>
+
+											{# ! ToDO: rwrite this code #}
+											<hr>
+                                                <div class="col">
+                                                        {% if variant.images | length > 0 %}
+                                                            <div class="d-flex m-col">
+                                                                {% for key, image in variant.images %}
+                                                                    <div class="variant-image-wrapper">
+                                                                        <div class="box-1-1">
+                                                                            <div class="content">
+                                                                                <a href="{{ image.image.large }}" class="d-flex align-items-center justify-content-center" style="width: 100%; height: 100%;" >
+                                                                                    <img src="{{ image.image.small }}" >
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+
+                                                                    </div>
+                                                                {% endfor %}
+                                                            </div>
+                                                        {% else %}
+                                                            <span class="d-none d-lg-inline">{{ locals.variants_no_image }}</span>
+                                                        {% endif %}
+                                                </div>
+											<hr>
+										</div>
+									</div>
+								</div>
+							{% endif %}
+							{% if store.is_product_reviews_enabled %}
+								<div class="tab-pane fade {% if product.description is empty and not product.has_variants %}{% endif %}" id="nav-reviews" role="tabpanel" aria-labelledby="nav-reviews-tab" tabindex="0">
+									<div class="card my-3 border-0">
+										<div class="row">
+											<div class="col-sm-4 col-lg-3">
+												<div class="card p-0 border-0">
+													<div>
+														<div class="d-grid gap-2 mb-3">
+																{% if customer %}
+																{# {% if bought_this_item %} #}
+																<a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addReviewModal">
+																	<i class="ti ti-message-plus align-middle fs-5" aria-hidden="true"></i>
+																	<span class="px-1">
+																		{{ locals.reviews.add}}
+																	</span>
+																</a>
+																{# {% endif %} #}
+															{% else %}
+																<div class="card bg-light-subtle shadow-sm p-3 border-secondary-subtle text-body-tertiary vstack gap-2">
+																	{# <i class="ti ti-fingerprint align-middle fs-2" aria-hidden="true"></i> #}
+																	<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-fingerprint" width="30" height="30" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+																		<path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+																		<path d="M18.9 7a8 8 0 0 1 1.1 5v1a6 6 0 0 0 .8 3"></path>
+																		<path d="M8 11a4 4 0 0 1 8 0v1a10 10 0 0 0 2 6"></path>
+																		<path d="M12 11v2a14 14 0 0 0 2.5 8"></path>
+																		<path d="M8 15a18 18 0 0 0 1.8 6"></path>
+																		<path d="M4.9 19a22 22 0 0 1 -.9 -7v-1a8 8 0 0 1 12 -6.95"></path>
+																	</svg>
+																	<span class="px-1">{{ locals.reviews.login_to_add}}</span>
+																	<p>
+																		<a href="/auth/login?redirect_to=products/{{ product.slug }}" class="small link-primary">
+																			<span class="px-0">
+																				{{ locals.reviews.login}}
+																			</span>
+																			<i class="ti ti-arrow-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %} align-middle" aria-hidden="true"></i>
+																		</a>
+																	</p>
+																</div>
+															{% endif %}
+														</div>
+															<form>
+																<input type="hidden" id="selected_rating" name="selected_rating" value="1">
+																<div class="modal fade" id="addReviewModal" tabindex="-1" aria-labelledby="addReviewModalLabel" aria-hidden="true">
+																	<div class="modal-dialog modal-dialog-centered">
+																		<div class="modal-content border-0">
+																			<div class="modal-header border-secondary border-opacity-10">
+																				<h5 class="modal-title" id="addReviewModalLabel">
+																					{{ locals.reviews.add}}
+																				</h5>
+																				<button type="button" class="btn-none p-0 text-body-emphasis grow" data-bs-dismiss="modal" aria-label="{{locals.accessibility.close.label}}">
+																					<i class="ti ti-x align-middle fs-5" aria-hidden="true"></i>
+																				</button>
+																			</div>
+																			<div class="modal-body">
+																				{% include 'product-review-modal.twig' %}
+																			</div>
+																			<div class="modal-footer border-0 my-0 bg-secondary bg-opacity-10">
+																				<span class="spinner-border spinner-border-sm text-primary d-none js-add-review-progress" role="status" aria-hidden="true">
+																					<span class="visually-hidden">
+																						{{ locals.accessibility.spinner.label }}
+																					</span>
+																				</span>
+																				<button type="button" class="btn btn-primary btn-sm js-btn-submit-review" onclick="submitReview()" disabled>
+																					<i class="ti ti-circle-plus align-middle" aria-hidden="true"></i>
+																					<span class="px-1">{{ locals.reviews.submit }}</span>
+																				</button>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</form>
+														{% if product.rating %}
+															<span class="d-flex flex-wrap align-items-center justify-content-center my-3 border border-secondary-subtle rounded p-2">
+																<span class="mx-3 text-primary">
+																	{% include 'product-rating.twig' with {'rating' : product.rating.average } %}
+																</span>
+																<span class="vr d-none d-lg-inline-block"></span>
+																<strong class="mx-3 text-secondary">{{ product.rating.average }}</strong>
+																<span class="vr d-none d-lg-inline-block"></span>
+																<span class="mx-3 text-muted">
+																	{% if product.rating.total_count == 1 %}
+																		{{ product.rating.total_count  }}
+																		{{ locals.product_reviews_x_count.one }}
+																	{% else %}
+																		{{ product.rating.total_count  }}
+																		{{ locals.product_reviews_x_count.other }}
+																	{% endif %}
+																</span>
+															</span>
+														{% endif %}
+													</div>
+													<div class="mb-3 border border-secondary-subtle rounded p-3 shadow-sm">
+														<div class="d-flex justify-content-between align-items-center mb-2">
+															<div class="w-75">
+																<div class="progress" role="progressbar" aria-label="{{locals.product.rating.star5}}" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="height: 6px">
+																	<div class="progress-bar bg-primary" style="width: 100%"></div>
+																</div>
+															</div>
+															<div class="w-25 text-nowrap ms-3 text-muted d-flex justify-content-evenly">
+																<span class="text-muted">{{ product.rating['5_ratings'].count }}</span>
+																<span class="d-inline-block align-middle text-muted">{{ locals.reviews_rating_5 }}
+																</span>
+															</div>
+														</div>
+														<div class="d-flex justify-content-between align-items-center my-2">
+															<div class="w-75">
+																<div class="progress" role="progressbar" aria-label="{{locals.product.rating.star4}}" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="height: 6px">
+																	<div class="progress-bar bg-primary" style="width: 75%"></div>
+																</div>
+															</div>
+															<div class="w-25 text-nowrap ms-3 text-muted d-flex justify-content-evenly">
+																<span class="text-muted">{{ product.rating['4_ratings'].count }}</span>
+																<span class="d-inline-block align-middle text-muted">{{ locals.reviews_rating_4 }}
+																</span>
+															</div>
+														</div>
+														<div class="d-flex justify-content-between align-items-center mb-2">
+															<div class="w-75">
+																<div class="progress" role="progressbar" aria-label="{{locals.product.rating.star3}}" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="height: 6px">
+																	<div class="progress-bar bg-primary" style="width: 50%"></div>
+																</div>
+															</div>
+															<div class="w-25 text-nowrap ms-3 text-muted d-flex justify-content-evenly">
+																<span class="text-muted">{{ product.rating['3_ratings'].count }}</span>
+																<span class="d-inline-block align-middle text-muted">{{ locals.reviews_rating_3 }}
+																</span>
+															</div>
+														</div>
+														<div class="d-flex justify-content-between align-items-center mb-2">
+															<div class="w-75">
+																<div class="progress" role="progressbar" aria-label="{{locals.product.rating.star2}}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 6px">
+																	<div class="progress-bar bg-primary" style="width: 25%"></div>
+																</div>
+															</div>
+															<div class="w-25 text-nowrap ms-3 text-muted d-flex justify-content-evenly">
+																<span class="text-muted">{{ product.rating['2_ratings'].count }}</span>
+																<span class="d-inline-block align-middle text-muted">{{ locals.reviews_rating_2 }}
+																</span>
+															</div>
+														</div>
+														<div class="d-flex justify-content-between align-items-center mb-2">
+															<div class="w-75">
+																<div class="progress" role="progressbar" aria-label="{{locals.product.rating.star1}}" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100" style="height: 6px">
+																	<div class="progress-bar bg-primary" style="width: 1%"></div>
+																</div>
+															</div>
+															<div class="w-25 text-nowrap ms-3 text-muted d-flex justify-content-evenly">
+																<span class="text-muted">{{ product.rating['1_ratings'].count }}</span>
+																<span class="d-inline-block align-middle text-muted">{{ locals.reviews_rating_1 }}
+																</span>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-8 col-lg-9">
+												{% include 'product-review-list.twig' with {'reviews' : product.reviews.data } %}
+												{% if product.reviews.next_page > 1 %}
+
+													<div class="row mt-2 mt-md-3">
+														<div class="col text-end">
+															<button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#reviewsModal">
+																<span class="px-1">{{ locals.reviews.all }}</span>
+																<i class="ti ti-arrow-narrow-{% if session.lang.code == 'ar' %}left{% else %}right{% endif %} align-middle" aria-hidden="true"></i>
+															</button>
+														</div>
+													</div>
+
+													<div class="modal fade" id="reviewsModal" tabindex="-1" aria-labelledby="reviewsModalLabel" aria-hidden="true">
+														<div class="modal-dialog modal-lg modal-dialog-centered">
+															<div class="modal-content border-0">
+																<div class="modal-header text-secondary fw-bold border-secondary border-opacity-10">
+																	<h5 class="modal-title" id="reviewsModalLabel">{{ product.name }}</h5>
+																	<button type="button" class="btn-none p-0 text-body-emphasis grow" data-bs-dismiss="modal" aria-label="{{locals.accessibility.close.label}}">
+																		<i class="ti ti-x align-middle fs-5"></i>
+																	</button>
+																</div>
+																<div class="modal-body">
+																	<div id="reviewsSpinner" class="text-center">
+																		<div class="spinner-border" role="status">
+																			<span class="visually-hidden">Loading...</span>
+																		</div>
+																	</div>
+																	<div id="reviewsContent" style="display: none;"></div>
+																</div>
+																<div class="modal-footer">
+																	<button type="button" class="btn btn-sm btn-secondary" data-bs-dismiss="modal">
+																		<span class="px-0">{{ locals.reviews.message.close }}</span>
+																	</button>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<script>
+														var reviewsModal = document.getElementById('reviewsModal');
+														var reviewsContent = reviewsModal.querySelector('#reviewsContent');
+														var currentPage = 1;
+														var totalPages = {{ product.reviews.last_page }};
+
+														reviewsModal.addEventListener('show.bs.modal', function (event) {
+															fetchReviews(currentPage);
+														});
+
+														function fetchReviews(page) {
+															document.getElementById('reviewsSpinner').style.display = 'block';
+															var xhr = new XMLHttpRequest();
+															xhr.open('GET', '/products/{{ product.id }}/reviews?page=' + encodeURIComponent(page), true);
+															xhr.onreadystatechange = function () {
+																if (xhr.readyState === 4) {
+																	if (xhr.status === 200) {
+																		document.getElementById('reviewsSpinner').style.display = 'none';
+																		reviewsContent.innerHTML = xhr.responseText;
+																		reviewsContent.style.display = 'block';
+																	} else {
+																		console.error('Error fetching reviews:', xhr.status);
+																		document.getElementById('reviewsSpinner').style.display = 'none';
+																	}
+																}
+															};
+															xhr.send();
+														}
+
+														function changePage(page) {
+															currentPage = page;
+															fetchReviews(currentPage);
+														}
+
+														reviewsModal.addEventListener('click', function (event) {
+															var target = event.target;
+															if (target.classList.contains('page-link')) {
+																event.preventDefault();
+																var page = parseInt(target.dataset.page);
+																changePage(page);
+															}
+														});
+													</script>
+
+
+												{% endif %}
+											</div>
+										</div>
+									</div>
+								</div>
+							{% endif %}
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	{# {% endif %} #}
+	{% if product.bundle_offer %}
+		<section class="py-4 p-sm-5 border-secondary border-opacity-10 border-top bg-light-subtle js-bundle-section reveal-fx reveal-fx--clip-y" data-reveal-fx-delay="100">
+			<div class="container">
+				<div class="d-flex align-items-between align-items-center mb-sm-3 mb-2">
+					<div class="flex-grow-1">
+						<h2 class="h5 py-0 py-sm-2 fw-bold mb-0">
+							{{ product.bundle_offer.name }}
+						</h2>
+						<p class="text-body-tertiary">
+							{# <i class="ti ti-gift align-middle float-start" aria-hidden="true"></i> #}
+							<span class="px-0">{{ product.bundle_offer.description }}</span>
+						</p>
+					</div>
+					<div class="position-relative mt-3 mt-sm-3 z-1">
+						<div class="swiper-button-next swiper-button-next-sm swiper-button-next-bundle link-secondary bg-light-subtle rounded-pill gradient-link"></div>
+						<div class="swiper-button-prev swiper-button-prev-sm swiper-button-prev-bundle link-secondary bg-light-subtle rounded-pill gradient-link"></div>
+					</div>
+				</div>
+				<div class="swiper-container" data-swiper='{
+							"navigation": {
+								{% if session.lang.code == 'ar' %}
+									"nextEl": ".swiper-button-prev-bundle",
+									"prevEl": ".swiper-button-next-bundle"
+								{% else %}
+									"nextEl": ".swiper-button-next-bundle",
+									"prevEl": ".swiper-button-prev-bundle"
+								{% endif %}
+							}
+					}'>
+						<div class="swiper-wrapper">
+							{% for key, product in product.bundle_offer.products.results %}
+								<div class="swiper-slide position-relative">
+									{% include 'product-item.twig' with {'product' : product, 'index': key, 'swiper': true} %}
+								</div>
+							{% endfor %}
+						</div>
+				</div>
+			</div>
+		</section>
+	{% endif %}
+	{% if (product.related_products | length) >  0 %}
+		<section class="py-4 p-sm-5 border-secondary border-opacity-10 border-top js-related-section reveal-fx reveal-fx--clip-y" data-reveal-fx-delay="100">
+			<div class="container">
+				<div class="d-flex align-items-between align-items-center mb-sm-3 mb-2">
+					<div class="flex-grow-1">
+						<h2 class="h5 py-0 py-sm-2 fw-bold">
+							{{ locals.similar_products_title }}
+						</h2>
+					</div>
+					<div class="position-relative mt-3 mt-sm-3 z-1">
+						<div class="swiper-button-next swiper-button-next-sm swiper-button-next-related link-secondary bg-light-subtle rounded-pill gradient-link"></div>
+						<div class="swiper-button-prev swiper-button-prev-sm swiper-button-prev-related link-secondary bg-light-subtle rounded-pill gradient-link"></div>
+					</div>
+				</div>
+				<div class="swiper-container" data-swiper='{
+							"navigation": {
+								{% if session.lang.code == 'ar' %}
+									"nextEl": ".swiper-button-prev-related",
+									"prevEl": ".swiper-button-next-related"
+								{% else %}
+									"nextEl": ".swiper-button-next-related",
+									"prevEl": ".swiper-button-prev-related"
+								{% endif %}
+							}
+					}'>
+					<div class="swiper-wrapper">
+						{% for key,product in product.related_products %}
+							<div class="swiper-slide position-relative">
+								{% include 'product-item.twig' with {'product' : product, 'index': key, 'swiper': true} %}
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</section>
+	{% endif %}
+
+	{% include 'toast.twig'%}
+{% endblock %}
+
+
+{% block footer_scripts %} 
+    {{ product_view_scripts|raw }}
+    <script>
+        var productImages = {{ product.selected_product.images | json_encode() | raw }};
+
+		// ToDo: To rewrite the two functions
+        function productOptionsChanged(selected_product) {
+			if (selected_product) {
+				$("#product-id").val(selected_product.id);
+				$(".js-send-notify-product-id").val(selected_product.id);
+
+				if (!selected_product.unavailable) {
+				if (selected_product.formatted_sale_price) {
+					$(".js-product-old-price").removeClass("d-none");
+					$(".js-product-discount-value").removeClass("d-none");
+
+					$(".js-product-price").html(selected_product.formatted_sale_price);
+					$(".js-product-old-price").html(selected_product.formatted_price);
+					$(".js-product-discount-value").html(
+					"{{ locals.product_discount }}" +
+						" " +
+						selected_product.discount_percentage +
+						"%"
+					);
+				} else {
+					$(".js-product-old-price").addClass("d-none");
+					$(".js-product-discount-value").addClass("d-none");
+
+					$(".js-product-price").html(selected_product.formatted_price);
+					$(".js-product-old-price").html("");
+					$(".js-product-discount-value").html("");
+				}
+
+				if (selected_product.weight.value) {
+					$(".js-product-weight-section").removeClass("d-none");
+					$(".js-product-weight-value").html(
+					selected_product.weight.value + " " + selected_product.weight.unit
+					);
+				} else {
+					$(".js-product-weight-section").addClass("d-none");
+				}
+
+				if (selected_product.sku) {
+					$(".js-product-sku-section").removeClass("d-none");
+					$(".js-product-sku-value").html(selected_product.sku);
+					$(".js-product-sku-value .sku-clipboard").attr(
+					"data-clipboard-text",
+					"" + selected_product.sku
+					);
+				} else {
+					$(".js-product-sku-section").addClass("d-none");
+				}
+
+				{% if store.is_low_stock_label_enabled %}
+				var store_low_stock_limit = {{ store.low_stock_quantity_limit }};
+				var low_stock_message = '{{ locals.product_cart_quantity_low_stock }}';
+				
+				if(!selected_product.is_infinite &&  selected_product.quantity < store_low_stock_limit){
+					$('.low-quantity-section').addClass('d-inline-block');
+					$('.low-quantity-section .low-quantity').html(low_stock_message.replace('%s', selected_product.quantity))
+				}else{
+					$('.low-quantity-section').addClass('none');
+				}
+				{% endif %}
+
+				$(".js-section-out-of-stock").addClass("d-none");
+				$(".js-section-add-to-cart").removeClass("d-none");
+
+				$(".js-product-price").addClass("animate__animated animate__zoomIn");
+				setTimeout(function () {
+					$(".js-product-price").removeClass("animate__animated animate__zoomIn");
+				}, 1000);
+				updateProductImages(selected_product);
+
+				} else {
+					console.log('else function');
+					updateProductImages(selected_product);
+				$(".js-section-out-of-stock").removeClass("d-none");
+				$(".js-section-add-to-cart").addClass("d-none");
+				}
+			} else {
+				$(".js-section-out-of-stock").removeClass("d-none");
+				$(".js-section-add-to-cart").removeClass("d-none");
+
+				$(".js-section-add-to-cart").html("{{ locals.error_item_unavailable }}");
+			}
+			updateProductImages(selected_product);
+
+        }
+		function updateProductImages(selected_product) {
+            if(selected_product.images && selected_product.images.length > 0){
+                productImages = selected_product.images;
+                $('#pills-slider .swiper-wrapper').html('');
+                for(var z = 0; z < productImages.length; z++){
+                    var prImage = productImages[z];
+					$('#pills-slider .swiper-wrapper').append(`	<div class="swiper-slide position-relative">
+						<img class="swiper-slide-image swiper-carousel-animate-opacity swiper-lazy object-fit-contain" data-swiper-parallax="10%"
+						src="${ prImage.image.full_size }" alt="${ selected_product.name }">
+						<a href="${ prImage.image.full_size }" class="glightbox" data-gallery="product-gallery" style="cursor: zoom-in;">
+							<i class="d-inline-block border border-3 border-opacity-25 rounded border-primary rounded-pill p-1 ti ti-zoom-pan mt-3 top-0 end-0 position-absolute text-primary fs-3 translate-middle-x"></i>
+						</a>
+						<div class="swiper-lazy-preloader"></div>
+					</div>`);
+                }
+				initSwiper();
+				$('.swiper-lazy-preloader').hide();
+            }else{
+                $('.product-images-carousel').addClass('d-none');
+                $('.product-images-carousel-thumbs').addClass('d-none-important');
+                $('.product-images-empty').removeClass('d-none');
+            }
+        }
+		{# async function updateProductImages(selectedProduct) {
+		const productImages = selectedProduct.images;
+		const sliderWrapper = $('#pills-slider .swiper-wrapper');
+		if (productImages?.length) {
+			sliderWrapper.empty();
+			const imagesHtml = await Promise.all(productImages.map(async (productImage) => {
+			const { image: { large } } = productImage;
+			const response = await fetch(large);
+			const blob = await response.blob();
+			const objectUrl = URL.createObjectURL(blob);
+			return `
+				<div class="swiper-slide position-relative">
+				<img class="swiper-slide-image swiper-carousel-animate-opacity swiper-lazy object-fit-contain"
+					data-swiper-parallax="10%" src="${objectUrl}"
+					alt="${selectedProduct.name}">
+				<a href="${large}" class="glightbox" data-gallery="product-gallery" style="cursor: zoom-in;"
+					onclick="revokeObjectUrl(this)">
+					<i class="d-inline-block border border-3 border-opacity-25 rounded border-primary rounded-pill p-1 ti ti-zoom-pan mt-3 top-0 end-0 position-absolute text-primary fs-3 translate-middle-x"></i>
+				</a>
+				<div class="swiper-lazy-preloader"></div>
+				</div>
+			`;
+			}));
+			sliderWrapper.append(imagesHtml.join(''));
+			initSwiper();
+			$('.swiper-lazy-preloader').hide();
+		} else {
+			$('.product-images-carousel, .product-images-carousel-thumbs').addClass('d-none');
+			$('.product-images-empty').removeClass('d-none');
+		}
+		}
+
+		function revokeObjectUrl(link) {
+		const img = link.previousElementSibling;
+		URL.revokeObjectURL(img.src);
+		} #}
+
+    </script>
+
+	<!-- // ToDo: to use mustach.js -->
+	<script>
+		var productToastDataTemplate = {
+			sent_successfully: '{{locals.sent_successfully}}',
+			notify_me_failed: '{{locals.notify_me_failed}}',
+			message_already_in_cart: '{{locals.product.message.already_in_cart}}',
+			message_failed: '{{locals.product.message.failed}}',
+			message_success: '{{locals.product.message.success}}',
+		};
+	</script>
+
+
+	<!-- Vendors Scripts -->
+	<script defer src="{{ asset_url ~ 'qrious.min.js' }}"></script>
+	<script defer src="{{ asset_url ~ 'rater.js' }}"></script>
+	<script defer src="{{ asset_url ~ 'glightbox.min.js' }}"></script>
+	<script defer src="{{ asset_url ~ 'clipboard.min.js' }}"></script>
+	<script defer src="{{ asset_url ~ 'confetti.browser.min.js' }}"></script>
+
+	<!-- Custom Scripts -->
+	<script defer src="{{ assetUrl('product.js') }}"></script>
+	<script defer src="{{ assetUrl('productCssClasses.js') }}"></script>
+	<script defer src="{{ assetUrl('productSwiper.js') }}"></script>
+	<script defer src="{{ assetUrl('printPage.js') }}"></script>
+	<script defer src="{{ assetUrl('qrcodeInit.js') }}"></script>
+	<script defer src="{{ assetUrl('raterInit.js') }}"></script>
+	<script defer src="{{ assetUrl('glightboxInit.js') }}"></script>
+	<script defer src="{{ assetUrl('recentlyVisited.js') }}"></script>
+	<script defer src="{{ assetUrl('clipboardInit.js') }}"></script>
+	<script defer src="{{ assetUrl('createFavoritesToggle.js') }}"></script>
+	
+{% endblock %}
+
+{% block footer %} 
+    {{ include('footer.twig') }} 
+{% endblock %}
